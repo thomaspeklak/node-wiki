@@ -1,0 +1,24 @@
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href='http://cdn.aloha-editor.org/latest/css/aloha.css', rel='stylesheet', type='text/css')
+    script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/require.js')
+    script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/vendor/jquery-1.7.2.js')
+    script(src='http://cdn.aloha-editor.org/latest/lib/aloha.js', data-aloha-plugins='common/ui, common/format, common/list, common/link, common/highlighteditables')
+    script(type='text/javascript')
+      Aloha.ready( function() {
+        var $ = Aloha.jQuery;
+        $('.editable').aloha();
+        Aloha.bind('aloha-editable-deactivated', function(){
+            $.post(document.location.href, {data: $('.content.editable').html()}).success(saved);
+        });
+      });
+      var saved = function(){
+          var el = $("<div>Saved</div>").appendTo('body');
+          setTimeout(function(){ el.remove();}, 2e3);
+      };
+  body
+    .content.editable
+      block content
