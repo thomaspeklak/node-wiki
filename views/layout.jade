@@ -11,13 +11,15 @@ html
       Aloha.ready( function() {
         var $ = Aloha.jQuery;
         $('.editable').aloha();
-        Aloha.bind('aloha-editable-deactivated', function(){
+        var save = function(){
             $.post(document.location.href, {
               content: $('.content.editable').html(),
-              title: $('#title').val(),
-              tags: $('#tags').val()
+              title: $('h1.title').html(),
+              tags: $(".tags div").html()
             }).success(saved);
-        });
+        };
+        Aloha.bind('aloha-editable-deactivated', save);
+        $('.edit').blur(save);
       });
       var saved = function(){
           var el = $("<div>Saved</div>").appendTo('body');

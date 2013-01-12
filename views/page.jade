@@ -1,15 +1,11 @@
 extends layout
 
 block content
-    .control-group
-        label(for="title", class="control-label") Title
-        .controls
-            input.span6(type="text", name="title", id="title", value=title)
+    h1.title.edit(contenteditable)= title
 
-    .control-group
-        label(for="tags", class="control-label") Tags
-        .controls
-            input(type="text", name="tags", id="tags", value=tags)
+    div.tags
+        h2 Tags
+        div.edit(contenteditable)= tags.join(", ")
 
     .content.editable
         != content
