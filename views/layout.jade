@@ -12,7 +12,11 @@ html
         var $ = Aloha.jQuery;
         $('.editable').aloha();
         Aloha.bind('aloha-editable-deactivated', function(){
-            $.post(document.location.href, {data: $('.content.editable').html()}).success(saved);
+            $.post(document.location.href, {
+              content: $('.content.editable').html(),
+              title: $('#title').val(),
+              tags: $('#tags').val()
+            }).success(saved);
         });
       });
       var saved = function(){
@@ -20,5 +24,4 @@ html
           setTimeout(function(){ el.remove();}, 2e3);
       };
   body
-    .content.editable
       block content
