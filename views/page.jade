@@ -1,4 +1,15 @@
 extends layout
 
 block content
-    != data
+    .control-group
+        label(for="title", class="control-label") Title
+        .controls
+            input.span6(type="text", name="title", id="title", value=title)
+
+    .control-group
+        label(for="tags", class="control-label") Tags
+        .controls
+            input(type="text", name="tags", id="tags", value=tags)
+
+    .content.editable
+        != content

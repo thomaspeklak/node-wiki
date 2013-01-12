@@ -1,15 +1,36 @@
-var pages = {};
+var Page = require('../models/page');
 
-exports.index = function(req, res) {
-    if (pages[req.url]) {
-        return res.render("page", {title: "Test", data: pages[req.url]});
-    }
-    res.render('index', {
-        title: 'Express'
+exports.loadPage = function(req,res, next) {
+    Page.findOne({ path : req.path }, function(err, page) {
+       if (err) { return next(err); }
+        
+        res.locals.page = page;
+        next();
     });
 };
 
-exports.indexPost = function(req, res) {
-    pages[req.url] = req.body.data;
-    res.send(200);
+exports.showPage = function(req, res) {
+    if (!res.locals.page) {
+        res.locals.page = new Page({ title : "new page", tags: [], content: "" });
+    }
+
+    return res.render("page", res.locals.page);
+};
+
+exports.savePage = function(req, res) {
+    var page = res.locals.page;
+    
+    if (!page) {
+        page= new Page(req.body);
+        page.path = req.path;
+    } else {
+        page.title = req.body.title;
+        page.content = req.body.content;
+        page.tags = req.body.tags;        
+    }
+    
+    page.save(function(err) {
+        // TODO: Err!
+        res.send(200);
+    });
 };
