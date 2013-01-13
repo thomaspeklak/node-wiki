@@ -27,3 +27,21 @@ html
       };
   body
       block content
+      
+      block navigation
+
+          h2 Latest Pages
+          ul
+              each page in latest
+                  li
+                      a(href=page.path)= page.title
+
+          h2 Recent Changes
+          ul
+              each page in recentChanges
+                  li
+                      a(href=page.path)= page.title
+          
+          form(action="/search", method="GET")
+              input(type="text", name="q", id="q")
+              input(type="submit")

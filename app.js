@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/nodewiki', function(err) {
         process.exit(1);
     }
 });
+require('express-mongoose');
 
 var app = express();
 app.disable('x-powered-by');
@@ -27,14 +28,16 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
+
   app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.get('/search', routes.searchPages);
 
 app.all('*', routes.loadPage);
 app.get('*', routes.showPage);

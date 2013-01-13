@@ -1,11 +1,11 @@
 extends layout
 
 block content
-    h1.title.edit(contenteditable)= title
+    h1.title.edit(contenteditable)= page.title
 
     div.tags
         h2 Tags
-        div.edit(contenteditable)= tags.join(", ")
+        div.edit(contenteditable)= page.tags.join(", ")
 
     .content.editable
-        != content
+        != page.content
