@@ -9,6 +9,6 @@
     "express": "3.0.x",
     "jade": "*",
     "mongoose": "3.5.x",
-    "mongoose-express": "0.1.x"
+    "express-mongoose": "0.1.x"
   }
 }

@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/nodewiki', function(err) {
         process.exit(1);
     }
 });
+require('express-mongoose');
 
 var app = express();
 app.disable('x-powered-by');
