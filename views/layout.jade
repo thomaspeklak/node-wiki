@@ -1,7 +1,7 @@
 doctype 5
 html
   head
-    title= title
+    title= page.title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://cdn.aloha-editor.org/latest/css/aloha.css', rel='stylesheet', type='text/css')
     script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/require.js')
@@ -27,3 +27,14 @@ html
       };
   body
       block content
+      
+      block navigation
+          ul
+              each page in latest
+                  li
+                      a(href=page.path)= page.title
+
+          ul
+              each page in recentChanges
+                  li
+                      a(href=page.path)= page.title

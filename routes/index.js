@@ -14,7 +14,7 @@ exports.showPage = function(req, res) {
         res.locals.page = new Page({ title : "new page", tags: "add tags as comma seperated list", content: "Content" });
     }
 
-    return res.render("page", res.locals.page);
+    return res.render("page", { page : res.locals.page, latest : Page.latest(), recentChanges: Page.recentChanges() });
 };
 
 exports.savePage = function(req, res) {
