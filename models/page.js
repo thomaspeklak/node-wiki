@@ -25,4 +25,31 @@ Page.path('tags').set(function(tags) {
     return tags.split(',');
 });
 
+// Pre-defined Queries
+Page.statics.all = function(cb) {
+    return this
+        .find({})
+        .select('title path')
+        .sort('title')
+        .exec(cb);
+}
+
+Page.statics.latest = function(count, cb) {
+    return this
+        .find({})
+        .limit(count)
+        .sort('-created')
+        .select('title path')
+        .exec(cb);
+}
+
+Page.statics.recentChanges = function(count, cb) {
+    return this
+        .find({})
+        .limit(count)
+        .sort('-lastModified')
+        .select('title path')
+        .exec(cb);
+}
+
 module.exports = mongoose.model('Page', Page);
