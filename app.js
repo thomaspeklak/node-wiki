@@ -37,6 +37,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.get('/search', routes.searchPages);
 
 app.all('*', routes.loadPage);
 app.get('*', routes.showPage);

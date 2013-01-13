@@ -1,7 +1,7 @@
 doctype 5
 html
   head
-    title= page.title
+    title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://cdn.aloha-editor.org/latest/css/aloha.css', rel='stylesheet', type='text/css')
     script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/require.js')
@@ -29,12 +29,19 @@ html
       block content
       
       block navigation
+
+          h2 Latest Pages
           ul
               each page in latest
                   li
                       a(href=page.path)= page.title
 
+          h2 Recent Changes
           ul
               each page in recentChanges
                   li
                       a(href=page.path)= page.title
+          
+          form(action="/search", method="GET")
+              input(type="text", name="q", id="q")
+              input(type="submit")

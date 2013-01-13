@@ -14,7 +14,7 @@ exports.showPage = function(req, res) {
         res.locals.page = new Page({ title : "new page", tags: "add tags as comma seperated list", content: "Content" });
     }
 
-    return res.render("page", { page : res.locals.page, latest : Page.latest(), recentChanges: Page.recentChanges() });
+    return res.render("page", { title : res.locals.page.title, page : res.locals.page, latest : Page.latest(), recentChanges: Page.recentChanges() });
 };
 
 exports.savePage = function(req, res) {
@@ -34,3 +34,12 @@ exports.savePage = function(req, res) {
         res.send(200);
     });
 };
+
+exports.searchPages = function(req, res) {
+    var query = req.param('q');
+    
+    Page.search(query, function(err, results) {
+        // TODO: err
+        return res.render('search', { title: 'search ' + query,  results : results, latest : Page.latest(), recentChanges: Page.recentChanges() });
+    });
+}

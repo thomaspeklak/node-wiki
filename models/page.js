@@ -52,4 +52,18 @@ Page.statics.recentChanges = function(count, cb) {
         .exec(cb);
 }
 
+Page.statics.search = function(query, count, cb) {
+    if (typeof(count) == 'function') {
+        cb = count;
+        count = 100;
+    }
+
+    return this
+        .find({ $or : [ { title : { $regex : query }}, { content:  { $regex : query }} ]})
+        .limit(count)
+        .sort('title')
+        .select('title path')
+        .exec(cb);
+}
+
 module.exports = mongoose.model('Page', Page);
