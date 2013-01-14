@@ -22,7 +22,7 @@ Page.pre('save', function(next) {
 });
 
 Page.path('tags').set(function(tags) {
-    return tags.split(',');
+    return tags.split(',').map(function(tag) { return tag.trim(); });
 });
 
 // Pre-defined Queries
