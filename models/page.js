@@ -1,4 +1,5 @@
-var mongoose = require('mongoose'),
+var utils = require('utils'),
+    mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var Page = new Schema({
@@ -22,6 +23,10 @@ Page.pre('save', function(next) {
 });
 
 Page.path('tags').set(function(tags) {
+    if (utils.isArray(tags)) {
+        return tags;
+    }
+
     return tags.split(',').map(function(tag) { return tag.trim(); });
 });
 
