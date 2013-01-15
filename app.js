@@ -37,6 +37,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.all("*", routes.loadNavigation);
+
 app.get('/search', routes.searchPages);
 
 app.all('*', routes.loadPage);

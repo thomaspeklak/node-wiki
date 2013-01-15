@@ -9,12 +9,25 @@ exports.loadPage = function(req,res, next) {
     });
 };
 
+exports.loadNavigation = function(req,res, next) {
+    Page.getTree(function(err, navigation) {
+        res.locals.navigation = navigation;
+        
+       next(err, navigation); 
+    });
+}
+
 exports.showPage = function(req, res) {
     if (!res.locals.page) {
-        res.locals.page = new Page({ title : "new page", tags: "add tags as comma seperated list", content: "Content" });
+        res.locals.page = new Page({ title : "new page", tags: "add tags as comma separated list", content: "Content" });
     }
 
-    return res.render("page", { title : res.locals.page.title, page : res.locals.page, latest : Page.latest(), recentChanges: Page.recentChanges() });
+    return res.render("page", { 
+        title : res.locals.page.title, 
+        page : res.locals.page,
+        latest : Page.latest(),
+        recentChanges: Page.recentChanges()
+    });
 };
 
 exports.savePage = function(req, res) {
@@ -40,6 +53,11 @@ exports.searchPages = function(req, res) {
     
     Page.search(query, function(err, results) {
         // TODO: err
-        return res.render('search', { title: 'search ' + query,  results : results, latest : Page.latest(), recentChanges: Page.recentChanges() });
+        return res.render('search', { 
+            title: 'search ' + query, 
+            results : results,
+            latest : Page.latest(),
+            recentChanges: Page.recentChanges() 
+        });
     });
 }
