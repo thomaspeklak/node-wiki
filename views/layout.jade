@@ -33,9 +33,11 @@ html
           .navbar-inner
               a.brand(href="/") TODO: Title
               .nav
+                  li
+                    a(href="/pages") All Pages
                   li.dropdown
                       a.dropdown-toggle(href="#", data-toggle="dropdown") 
-                          | Pages 
+                          | Changes 
                           b.caret
             
                       ul.dropdown-menu
@@ -56,10 +58,8 @@ html
       .container
           .row
               .span3
-                  block navigation
-                      ul.nav.nav-list
-                          li.nav-header Pages
-                          mixin renderNavigation(navigation)
+                  block navigation                          
+                      mixin renderNavigation(navigation)
 
               .span9
                   block content

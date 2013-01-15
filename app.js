@@ -12,6 +12,7 @@ var express = require('express')
 mongoose.connect('mongodb://localhost/nodewiki', function(err) {
     if (err) {
         console.log('Could not connect to database "' + 'mongodb://localhost/nodewiki' + '". Ensure that a mongo db instance is up and running.');
+        console.log(err);
         process.exit(1);
     }
 });
@@ -40,6 +41,7 @@ app.configure('development', function(){
 app.all("*", routes.loadNavigation);
 
 app.get('/search', routes.searchPages);
+app.get('/pages', routes.allPages);
 
 app.all('*', routes.loadPage);
 app.get('*', routes.showPage);

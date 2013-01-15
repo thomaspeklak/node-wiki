@@ -39,77 +39,17 @@ Page.statics.all = function(cb) {
         .exec(cb);
 }
 
-Page.methods.getPathSegments = function() {
-    if (this.path == '/') {
-        return ['/'];
-    }
+Page.statics.subNodes = function(path, cb) {
     
-    var path = this.path;
-    if (path[path.length-1] == '/') {
-        path = path.substr(0, path.length -1);
-    }
-    
-    var segments = path.split('/');
-    segments[0] = '/';
-    
-    return segments;
-}
-
-var findNode = function(nodes, segment) {
-    for (var i=0;i<nodes.length;i++) {
-        if (nodes[i].segment == segment) {
-            return nodes[i];
-        }
-    }
-}
-
-var ensurePath = function(nodes, segments) {
-    var currentNode;
-
-    segments.forEach(function(segment) {
-        currentNode = findNode(nodes, segment);
-
-        if (!currentNode) {
-            currentNode = { segment : segment, nodes : [] }
-            nodes.push(currentNode);
-        }
-
-        nodes = currentNode.nodes;
-    });
-    
-    return currentNode;
-}
-
-Page.statics.buildTree = function(pages) {
-    var tree = [];
-
-    pages.forEach(function(page) {
-        var currentNode = ensurePath(tree, page.getPathSegments());
-
-        if (currentNode) {
-            // Last segment was reached
-            currentNode.path = page.path;
-            currentNode.title = page.title;            
-        }
-    });
-    
-    return tree;
-}
-
-Page.statics.getTree = function(cb) {
-    var self = this;
+    // Build a regex from a path by escaping regex chars
+    var escapedPath = path.replace(/([\\\^\$*+[\]?{}.=!:(|)])/g,"\\$1");
+    var pathRegex = new RegExp('^' + escapedPath + '[^\\/]+$');
     
     return this
-        .find({})
+        .find({ path : { $regex: pathRegex }})
         .select('title path')
         .sort('title')
-        .exec(function(err, pages) {
-            if (err) {
-                return cb(err);
-            }
-
-            cb(undefined, self.buildTree(pages));
-        });
+        .exec(cb);
 }
 
 Page.statics.latest = function(count, cb) {

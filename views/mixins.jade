@@ -1,8 +1,8 @@
-mixin renderNavigation(nodes)
-    each node in nodes
-        li
-            a(href=node.path)= node.title
-    
-            - if (node.nodes)
-              ul.nav.nav-list
-                  mixin renderNavigation(node.nodes)
+
+mixin renderNavigation(navigationItems)
+    ul.nav.nav-list
+        li.nav-header Pages
+          
+        each navigationItem in navigationItems
+            li
+                a(href=navigationItem.path)= navigationItem.title

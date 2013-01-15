@@ -10,10 +10,10 @@ exports.loadPage = function(req,res, next) {
 };
 
 exports.loadNavigation = function(req,res, next) {
-    Page.getTree(function(err, navigation) {
-        res.locals.navigation = navigation;
-        
-       next(err, navigation); 
+    Page.subNodes(req.path, function(err, subPages) {
+        res.locals.navigation = subPages;
+
+        next(err);        
     });
 }
 
@@ -58,6 +58,18 @@ exports.searchPages = function(req, res) {
             results : results,
             latest : Page.latest(),
             recentChanges: Page.recentChanges() 
+        });
+    });
+}
+
+exports.allPages = function(req, res) {
+    Page.all(function(err, pages) {
+        // TODO: err
+        return res.render('pages', {
+            title: 'All Pages',
+            pages : pages,
+            latest : Page.latest(),
+            recentChanges: Page.recentChanges()
         });
     });
 }
