@@ -8,7 +8,7 @@ var express = require('express')
   , http = require('http')
   , mongoose = require('mongoose');
 
-// TODO: Refactor db connection string 
+// TODO: Refactor db connection string
 mongoose.connect('mongodb://localhost/nodewiki', function(err) {
     if (err) {
         console.log('Could not connect to database "' + 'mongodb://localhost/nodewiki' + '". Ensure that a mongo db instance is up and running.');
@@ -42,6 +42,7 @@ app.all("*", routes.loadNavigation);
 
 app.get('/search', routes.searchPages);
 app.get('/pages', routes.allPages);
+app.get('/tags', routes.allTags);
 
 app.all('*', routes.loadPage);
 app.get('*', routes.showPage);
