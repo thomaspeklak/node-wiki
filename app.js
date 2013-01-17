@@ -43,6 +43,7 @@ app.all("*", routes.loadNavigation);
 app.get('/search', routes.searchPages);
 app.get('/pages', routes.allPages);
 app.get('/tags', routes.allTags);
+app.get('/tags/:tag', routes.tag);
 
 app.all('*', routes.loadPage);
 app.get('*', routes.showPage);

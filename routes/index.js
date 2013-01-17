@@ -121,3 +121,22 @@ exports.allTags = function(req, res) {
         });
     });
 };
+
+exports.tag = function(req, res) {
+    console.dir(req.params.tag);
+    Page.find({
+        tags: req.params.tag
+    }, function(err, result) {
+        if (err) {
+            res.send(500);
+        }
+
+        res.render("tag", {
+            title: "Tag: " + req.params.tag,
+            pages: result,
+            latest: Page.latest(),
+            recentChanges: Page.recentChanges()
+        });
+    });
+
+};
