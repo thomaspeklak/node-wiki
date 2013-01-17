@@ -1,0 +1,8 @@
+
+mixin renderNavigation(navigationItems)
+    ul.nav.nav-list
+        li.nav-header Pages
+          
+        each navigationItem in navigationItems
+            li
+                a(href=navigationItem.path)= navigationItem.title

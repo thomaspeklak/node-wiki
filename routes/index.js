@@ -9,12 +9,25 @@ exports.loadPage = function(req,res, next) {
     });
 };
 
+exports.loadNavigation = function(req,res, next) {
+    Page.subNodes(req.path, function(err, subPages) {
+        res.locals.navigation = subPages;
+
+        next(err);        
+    });
+}
+
 exports.showPage = function(req, res) {
     if (!res.locals.page) {
-        res.locals.page = new Page({ title : "new page", tags: "add tags as comma seperated list", content: "Content" });
+        res.locals.page = new Page({ title : "new page", tags: "add tags as comma separated list", content: "Content" });
     }
 
-    return res.render("page", { title : res.locals.page.title, page : res.locals.page, latest : Page.latest(), recentChanges: Page.recentChanges() });
+    return res.render("page", { 
+        title : res.locals.page.title, 
+        page : res.locals.page,
+        latest : Page.latest(),
+        recentChanges: Page.recentChanges()
+    });
 };
 
 exports.savePage = function(req, res) {
@@ -40,6 +53,23 @@ exports.searchPages = function(req, res) {
     
     Page.search(query, function(err, results) {
         // TODO: err
-        return res.render('search', { title: 'search ' + query,  results : results, latest : Page.latest(), recentChanges: Page.recentChanges() });
+        return res.render('search', { 
+            title: 'search ' + query, 
+            results : results,
+            latest : Page.latest(),
+            recentChanges: Page.recentChanges() 
+        });
+    });
+}
+
+exports.allPages = function(req, res) {
+    Page.all(function(err, pages) {
+        // TODO: err
+        return res.render('pages', {
+            title: 'All Pages',
+            pages : pages,
+            latest : Page.latest(),
+            recentChanges: Page.recentChanges()
+        });
     });
 }

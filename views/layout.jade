@@ -1,11 +1,14 @@
+include mixins
 doctype 5
 html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
     link(href='http://cdn.aloha-editor.org/latest/css/aloha.css', rel='stylesheet', type='text/css')
     script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/require.js')
     script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/vendor/jquery-1.7.2.js')
+    script(type='text/javascript', src='/vendor/bootstrap/js/bootstrap.js')
     script(src='http://cdn.aloha-editor.org/latest/lib/aloha.js', data-aloha-plugins='common/ui, common/format, common/list, common/link, common/highlighteditables')
     script(type='text/javascript')
       Aloha.ready( function() {
@@ -22,26 +25,45 @@ html
         $('.edit').blur(save);
       });
       var saved = function(){
-          var el = $("<div>Saved</div>").appendTo('body');
+          var el = $("<div class='alert alert-success'>Saved</div>").appendTo('body .container');
           setTimeout(function(){ el.remove();}, 2e3);
       };
   body
-      block content
+      .navbar.navbar-static-top.navbar-inverse
+          .navbar-inner
+              a.brand(href="/") TODO: Title
+              .nav
+                  li
+                    a(href="/pages") All Pages
+                  li.dropdown
+                      a.dropdown-toggle(href="#", data-toggle="dropdown") 
+                          | Changes 
+                          b.caret
+            
+                      ul.dropdown-menu
+                    
+                          li.nav-header Latest Pages
+                          each page in latest
+                              li
+                                  a(href=page.path)= page.title
+
+                          li.nav-header Recent Changes
+                          each page in recentChanges
+                              li
+                                  a(href=page.path)= page.title
+
+              form.navbar-search.pull-right(action="/search", method="GET")
+                  input.search-query(type="text", placeholder="Search", name="q", id="q")
+                      
+      .container
+          .row
+              .span3
+                  block navigation                          
+                      mixin renderNavigation(navigation)
+
+              .span9
+                  block content
       
-      block navigation
+      
 
-          h2 Latest Pages
-          ul
-              each page in latest
-                  li
-                      a(href=page.path)= page.title
-
-          h2 Recent Changes
-          ul
-              each page in recentChanges
-                  li
-                      a(href=page.path)= page.title
-          
-          form(action="/search", method="GET")
-              input(type="text", name="q", id="q")
-              input(type="submit")
+         

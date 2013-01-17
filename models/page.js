@@ -1,4 +1,5 @@
-var mongoose = require('mongoose'),
+var util = require('util'),
+    mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var Page = new Schema({
@@ -22,13 +23,30 @@ Page.pre('save', function(next) {
 });
 
 Page.path('tags').set(function(tags) {
-    return tags.split(',');
+    if (util.isArray(tags)) {
+        return tags;
+    }
+
+    return tags.split(',').map(function(tag) { return tag.trim(); });
 });
 
 // Pre-defined Queries
 Page.statics.all = function(cb) {
     return this
         .find({})
+        .select('title path')
+        .sort('title')
+        .exec(cb);
+}
+
+Page.statics.subNodes = function(path, cb) {
+    
+    // Build a regex from a path by escaping regex chars
+    var escapedPath = path.replace(/([\\\^\$*+[\]?{}.=!:(|)])/g,"\\$1");
+    var pathRegex = new RegExp('^' + escapedPath + '[^\\/]+$');
+    
+    return this
+        .find({ path : { $regex: pathRegex }})
         .select('title path')
         .sort('title')
         .exec(cb);
