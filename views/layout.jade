@@ -46,7 +46,14 @@ html
                       mixin renderNavigation(navigation)
 
               .span9
+                  -if (breadcrumbs.length)
+                      ul.breadcrumb
+                          each breadcrumb in breadcrumbs
+                              li
+                                  a(href=breadcrumb.path)= breadcrumb.segment
+                                  span.divider #
+
                   block content
-      
-        script(src="/javascripts/application.js")
+
+       script(src="/javascripts/application.js")
          

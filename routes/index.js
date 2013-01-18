@@ -21,6 +21,30 @@ exports.loadNavigation = function(req, res, next) {
     });
 }
 
+exports.buildBreadcrumbs = function(req, res, next) {
+    if (req.path=='/') {
+        res.locals.breadcrumbs = [];
+        return next();
+    }
+
+    var segments = req.path.split('/');
+
+    var breadcrumbs = [];
+    var currentPath = [];
+    
+    for (var i=0;i<segments.length;i++) {
+        var segment = segments[i];
+
+        currentPath.push(segment);
+        var path = currentPath.join('/');
+
+        breadcrumbs.push({ path : path.length?path:'/', segment : segment.length?segment:'/' });
+    }
+
+    res.locals.breadcrumbs = breadcrumbs;
+    next();
+}
+
 exports.showPage = function(req, res) {
     if (!res.locals.page) {
         res.locals.page = new Page({
@@ -33,8 +57,8 @@ exports.showPage = function(req, res) {
     return res.render("page", {
         title: res.locals.page.title,
         page: res.locals.page,
-        latest: Page.latest(),
-        recentChanges: Page.recentChanges()
+        latest: Page.latest(10),
+        recentChanges: Page.recentChanges(10)
     });
 };
 
@@ -64,8 +88,8 @@ exports.searchPages = function(req, res) {
         return res.render('search', {
             title: 'search ' + query,
             results: results,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
 };
@@ -76,8 +100,8 @@ exports.allPages = function(req, res) {
         return res.render('pages', {
             title: 'All Pages',
             pages: pages,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
 };
@@ -116,8 +140,8 @@ exports.allTags = function(req, res) {
         res.render('tags', {
             title: 'All Pages',
             tags: result,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
 };
@@ -134,9 +158,8 @@ exports.tag = function(req, res) {
         res.render("tag", {
             title: "Tag: " + req.params.tag,
             pages: result,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
-
 };

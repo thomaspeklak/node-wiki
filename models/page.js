@@ -40,10 +40,13 @@ Page.statics.all = function(cb) {
 }
 
 Page.statics.subNodes = function(path, cb) {
-    
+    if (path == '/') {
+        path = '';
+    }
+
     // Build a regex from a path by escaping regex chars
     var escapedPath = path.replace(/([\\\^\$*+[\]?{}.=!:(|)])/g,"\\$1");
-    var pathRegex = new RegExp('^' + escapedPath + '[^\\/]+$');
+    var pathRegex = new RegExp('^' + escapedPath + '\/[^\\/]+$');
     
     return this
         .find({ path : { $regex: pathRegex }})
