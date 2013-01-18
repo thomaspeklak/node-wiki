@@ -39,6 +39,8 @@ app.configure('development', function(){
 });
 
 app.all("*", routes.loadNavigation);
+app.all("*", routes.buildBreadcrumbs);
+
 
 app.get('/search', routes.searchPages);
 app.get('/pages', routes.allPages);
