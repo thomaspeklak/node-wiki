@@ -16,3 +16,19 @@ a {
 .tags div{
     display: inline-block;
 }
+
+.drop-here {
+    border: 4px dashed #ccc;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 15px;
+    font-weight: bold;
+    color: #ccc;
+    text-align: center;
+}
+
+.drop-here.active {
+    border-color: #aaa;
+    color: #aaa;
+}
+

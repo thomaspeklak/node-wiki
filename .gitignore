@@ -18,3 +18,5 @@ npm-debug.log
 # Things
 README.html
 *.tgz
+
+public/attachments/*

@@ -6,3 +6,13 @@ mixin renderNavigation(navigationItems)
         each navigationItem in navigationItems
             li
                 a(href=navigationItem.path)= navigationItem.title
+
+mixin fileDropper
+    #drop-zone.drop-here drop files here    
+
+mixin attachments(files)
+    h3 Attachments
+    ul#attachments.attachments
+        for file in files
+            li: a(href="/attachments/#{page._id}/#{file}")= file
+    

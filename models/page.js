@@ -8,6 +8,7 @@ var Page = new Schema({
     path : { type : String, required : true},
     tags : [String],
 
+    attachments : [String],
     lastModified : Date,
     created : Date
 });
@@ -37,7 +38,7 @@ Page.statics.all = function(cb) {
         .select('title path')
         .sort('title')
         .exec(cb);
-}
+};
 
 Page.statics.subNodes = function(path, cb) {
     if (path == '/') {
@@ -47,7 +48,7 @@ Page.statics.subNodes = function(path, cb) {
     // Build a regex from a path by escaping regex chars
     var escapedPath = path.replace(/([\\\^\$*+[\]?{}.=!:(|)])/g,"\\$1");
     var pathRegex = new RegExp('^' + escapedPath + '\/[^\\/]+$');
-    
+
     return this
         .find({ path : { $regex: pathRegex }})
         .select('title path')
