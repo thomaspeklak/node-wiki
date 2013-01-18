@@ -33,8 +33,8 @@ exports.showPage = function(req, res) {
     return res.render("page", {
         title: res.locals.page.title,
         page: res.locals.page,
-        latest: Page.latest(),
-        recentChanges: Page.recentChanges()
+        latest: Page.latest(10),
+        recentChanges: Page.recentChanges(10)
     });
 };
 
@@ -64,8 +64,8 @@ exports.searchPages = function(req, res) {
         return res.render('search', {
             title: 'search ' + query,
             results: results,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
 };
@@ -76,8 +76,8 @@ exports.allPages = function(req, res) {
         return res.render('pages', {
             title: 'All Pages',
             pages: pages,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
 };
@@ -116,8 +116,8 @@ exports.allTags = function(req, res) {
         res.render('tags', {
             title: 'All Pages',
             tags: result,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
 };
@@ -134,9 +134,8 @@ exports.tag = function(req, res) {
         res.render("tag", {
             title: "Tag: " + req.params.tag,
             pages: result,
-            latest: Page.latest(),
-            recentChanges: Page.recentChanges()
+            latest: Page.latest(10),
+            recentChanges: Page.recentChanges(10)
         });
     });
-
 };
