@@ -1,3 +1,18 @@
 a {
   color: #00B7FF;
 }
+
+.tags{
+    margin: 1em 0;
+    color: darkgreen;
+}
+
+.tags h2{
+    font-size: 14px;
+    display:inline-block;
+    margin-right: 1em;
+}
+
+.tags div{
+    display: inline-block;
+}
