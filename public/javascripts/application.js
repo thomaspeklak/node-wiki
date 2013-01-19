@@ -1,3 +1,20 @@
+(function($){
+    $.message = function(type, message, delay){
+        delay = delay || 5e3
+        var html = '<div class="alert alert-' + type +'"> \
+        <button type="button" class="close" data-dismiss="alert">&times;</button> \
+        ' + message + '\
+        </div>';
+
+        $(html).appendTo('#messages').delay(delay).fadeOut(remove);
+    }
+
+    function remove(){
+        $(this).remove();
+    }
+}(jQuery));
+
+
 Aloha.ready(function() {
     var $ = Aloha.jQuery;
     $('.editable').aloha();
@@ -17,25 +34,10 @@ Aloha.ready(function() {
     });
 });
 var saved = function() {
-    var el = $("<div class='alert alert-success'>Saved</div>").appendTo('body .container');
-    setTimeout(function() {
-        el.remove();
-    }, 2e3);
+    $.message('success', 'Page saved', 2e3);
 };
 
 (function($){
-    function alert(type, message){
-        var html = '<div class="alert alert-' + type +'"> \
-                    <button type="button" class="close" data-dismiss="alert">&times;</button> \
-                    ' + message + '\
-                </div>';
-
-        $(html).appendTo('#messages').delay(5000).fadeOut(remove);
-    }
-
-    function remove(){
-        $(this).remove();
-    }
 
     $(function(){
         if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -81,19 +83,19 @@ var saved = function() {
             if(!finished && xhr.status == 200){
                 finished = true;
                 handleResponse(xhr.responseText);
-                alert("success", "Successfully uploaded")
+                $.message("success", "Successfully uploaded")
             }
 
             if(xhr.status >= 500){
-                alert('error', 'Internal Server Error');
+                $.message('error', 'Internal Server Error');
             }
 
             if(xhr.status == 415){
-                alert('error', 'Unsupported media type');
+                $.message('error', 'Unsupported media type');
             }
 
             if(xhr.status == 400){
-                alert("error", "I don't know");
+                $.message("error", "I don't know");
             }
         };
 
