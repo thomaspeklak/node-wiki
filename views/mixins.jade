@@ -14,5 +14,8 @@ mixin attachments(files)
     h3 Attachments
     ul#attachments.attachments
         for file in files
-            li: a(href="/attachments/#{page._id}/#{file}")= file
+            li 
+                a(href="/attachments/#{page._id}/#{file}")
+                    i.icon-file
+                    = file
     

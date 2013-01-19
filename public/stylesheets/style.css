@@ -33,3 +33,13 @@ a {
     margin-left: -25%;
     width: 50%;
 }
+
+.attachments{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.attachments i{
+    margin: 0 .2em;
+}

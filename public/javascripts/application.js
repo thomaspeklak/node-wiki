@@ -122,7 +122,7 @@ var saved = function() {
     var handleResponse = function(res){
         var response = JSON.parse(res);
         response.attachments.forEach(function(attachment){
-            $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "'>" + attachment + "</a></li>");
+            $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "'><i class='icon-file'></i>" + attachment + "</a></li>");
         });
     };
 }(jQuery));
