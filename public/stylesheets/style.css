@@ -29,6 +29,7 @@ a {
 .messages {
     position: fixed;
     top: 0;
+    left: 50%;
+    margin-left: -25%;
     width: 50%;
-    margin: auto;
 }
