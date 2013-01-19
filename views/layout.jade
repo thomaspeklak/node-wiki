@@ -15,9 +15,9 @@ html
               a.brand(href="/") TODO: Title
               .nav
                   li
-                    a(href="/pages") All Pages
+                      a(href="/pages") All Pages
                   li
-                    a(href="/tags") All Tags
+                      a(href="/tags") All Tags
                   li.dropdown
                       a.dropdown-toggle(href="#", data-toggle="dropdown") 
                           | Changes 
@@ -57,5 +57,7 @@ html
 
                     block content
 
-        script(src='/vendor/aloha/lib/aloha.js', data-aloha-plugins='common/ui, common/format, common/list, common/link, common/highlighteditables')
-        script(src="/javascripts/application.js")
+        .scripts
+            script(type="text/javascript", src='/vendor/aloha/lib/aloha.js', data-aloha-plugins='common/ui, common/format, common/list, common/link, common/highlighteditables')
+            script(type="text/javascript", src="/javascripts/application.js")
+
