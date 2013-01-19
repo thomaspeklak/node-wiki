@@ -1,22 +1,18 @@
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
-
-.tags{
+.tags {
     margin: 1em 0;
     color: darkgreen;
 }
-
-.tags h2{
+.tags h2 {
     font-size: 14px;
     display:inline-block;
     margin-right: 1em;
 }
-
-.tags div{
+.tags div {
     display: inline-block;
 }
-
 .drop-here {
     border: 4px dashed #ccc;
     margin-top: 2em;
@@ -26,9 +22,13 @@ a {
     color: #ccc;
     text-align: center;
 }
-
 .drop-here.active {
     border-color: #aaa;
     color: #aaa;
 }
-
+.messages {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    margin: auto;
+}

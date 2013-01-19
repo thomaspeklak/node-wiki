@@ -24,6 +24,19 @@ var saved = function() {
 };
 
 (function($){
+    function alert(type, message){
+        var html = '<div class="alert alert-' + type +'"> \
+                    <button type="button" class="close" data-dismiss="alert">&times;</button> \
+                    ' + message + '\
+                </div>';
+
+        $(html).appendTo('#messages').delay(5000).fadeOut(remove);
+    }
+
+    function remove(){
+        $(this).remove();
+    }
+
     $(function(){
         if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
             return $('.drop-here').hide();
@@ -68,18 +81,19 @@ var saved = function() {
             if(!finished && xhr.status == 200){
                 finished = true;
                 handleResponse(xhr.responseText);
+                alert("success", "Successfully uploaded")
             }
 
             if(xhr.status >= 500){
-                alert('Internal Server Error');
+                alert('error', 'Internal Server Error');
             }
 
             if(xhr.status == 415){
-                alert('Unsupported media type');
+                alert('error', 'Unsupported media type');
             }
 
             if(xhr.status == 400){
-                alert("I don't know");
+                alert("error", "I don't know");
             }
         };
 
