@@ -5,11 +5,10 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
-    link(href='http://cdn.aloha-editor.org/latest/css/aloha.css', rel='stylesheet', type='text/css')
-    script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/require.js')
-    script(type='text/javascript', src='http://cdn.aloha-editor.org/latest/lib/vendor/jquery-1.7.2.js')
+    link(href='/vendor/aloha/css/aloha.css', rel='stylesheet', type='text/css')
+    script(type='text/javascript', src='/vendor/requirejs/require.min.js')
+    script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
     script(type='text/javascript', src='/vendor/bootstrap/js/bootstrap.js')
-    script(src='http://cdn.aloha-editor.org/latest/lib/aloha.js', data-aloha-plugins='common/ui, common/format, common/list, common/link, common/highlighteditables')
   body
       .navbar.navbar-static-top.navbar-inverse
           .navbar-inner
@@ -55,5 +54,5 @@ html
 
                   block content
 
-       script(src="/javascripts/application.js")
-         
+        script(src='/vendor/aloha/lib/aloha.js', data-aloha-plugins='common/ui, common/format, common/list, common/link, common/highlighteditables')
+        script(src="/javascripts/application.js")
