@@ -4,7 +4,9 @@ block content
     h1.title.edit(contenteditable)= page.title
 
     div.tags
-        h2.label.label-success Tags
+        h2.label.label-success
+            i.icon-tags 
+            | &nbsp;Tags
         div.edit(contenteditable)= page.tags.join(", ")
 
     .content.editable
