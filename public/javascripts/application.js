@@ -86,6 +86,16 @@ var saved = function() {
         $(ev.target).toggleClass('active');
     }
 
+    var ProgressBar = function(){
+        return $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo('#attachments')[0];
+    };
+
+    var remove = function(progressBar){
+        $(progressBar).fadeOut(function(){
+            $(this).remove();
+        });
+    };
+
     function uploadFiles(url, files) {
         var formData = new FormData();
 
@@ -100,7 +110,7 @@ var saved = function() {
             if(!finished && xhr.status == 200){
                 finished = true;
                 handleResponse(xhr.responseText);
-                $.message("success", "Successfully uploaded")
+                $.message("success", "Successfully uploaded");
             }
 
             if(xhr.status >= 500){
@@ -115,6 +125,21 @@ var saved = function() {
                 $.message("error", "I don't know");
             }
         };
+
+
+        var progressBar = new ProgressBar();
+
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                progressBar.value = (e.loaded / e.total) * 100;
+                progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
+
+                if(progressBar.value == 100){
+                    remove(progressBar);
+                }
+            }
+        };
+
 
         xhr.send(formData);  // multipart/form-data
     }
