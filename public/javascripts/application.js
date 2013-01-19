@@ -1,29 +1,46 @@
 (function($){
     $.message = function(type, message, delay){
-        delay = delay || 5e3
+        delay = delay || 5e3;
         var html = '<div class="alert alert-' + type +'"> \
         <button type="button" class="close" data-dismiss="alert">&times;</button> \
         ' + message + '\
         </div>';
 
         $(html).appendTo('#messages').delay(delay).fadeOut(remove);
-    }
+    };
 
     function remove(){
         $(this).remove();
     }
 }(jQuery));
 
-
 Aloha.ready(function() {
-    var $ = Aloha.jQuery;
-    $('.editable').aloha();
-    var save = function() {
-        $.post(document.location.href, {
+    var getData = function(){
+        return {
             content: $('.content.editable').html(),
             title: $('h1.title').html(),
             tags: $(".tags div").html()
-        }).success(saved);
+        };
+    };
+
+    var data = getData();
+
+    var A$ = Aloha.jQuery;
+    A$('.editable').aloha();
+    var save = function() {
+        var newData = getData();
+        var changed = ["content", "title", "tags"].some(function(key){
+            return data[key] != newData[key];
+        });
+
+        if(changed){
+            data  = newData;
+            $.post(document.location.href, {
+                content: $('.content.editable').html(),
+                title: $('h1.title').html(),
+                tags: $(".tags div").html()
+            }).success(saved);
+        }
     };
     Aloha.bind('aloha-editable-deactivated', save);
     $('.edit').blur(save).keydown(function(e) {
