@@ -205,7 +205,7 @@ exports.attachments = function(req, res){
                 return res.send(400);
             }
 
-            page.attachments = attachments;
+            page.attachments = page.attachments.concat(attachments);
             page.save(function(err){
                 if(err) return res.send(500);
 
