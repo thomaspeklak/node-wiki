@@ -11,3 +11,7 @@ block content
 
     .content.editable
         != page.content
+
+block pagemeta
+    mixin fileDropper
+    mixin attachments(page.attachments)

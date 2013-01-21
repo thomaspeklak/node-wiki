@@ -1,7 +1,4 @@
-
-/**
- * Module dependencies.
- */
+"use strict";
 
 var express = require('express')
   , routes = require('./routes')
@@ -38,19 +35,11 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.all("*", routes.loadNavigation);
-app.all("*", routes.buildBreadcrumbs);
+app.all("*", require("./middleware/load-navigation"));
+app.all("*", require("./middleware/build-breadcrumbs"));
+app.all('*', require("./middleware/load-page"));
 
-
-app.get('/search', routes.searchPages);
-app.get('/pages', routes.allPages);
-app.get('/tags', routes.allTags);
-app.get('/tags/:tag', routes.tag);
-app.post('/attachments', routes.attachments);
-
-app.all('*', routes.loadPage);
-app.get('*', routes.showPage);
-app.post('*', routes.savePage);
+require("./routes")(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

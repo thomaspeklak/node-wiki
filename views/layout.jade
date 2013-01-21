@@ -44,8 +44,7 @@ html
                 .span3
                     block navigation                                                    
                         mixin renderNavigation(navigation)
-                        mixin fileDropper
-                        mixin attachments(page.attachments)
+                    block pagemeta
 
                 .span9
                     -if (breadcrumbs.length)
