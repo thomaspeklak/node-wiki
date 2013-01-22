@@ -35,7 +35,7 @@
 Aloha.ready(function() {
     var getData = function(){
         return {
-            content: $('.content.editable').html(),
+            content: $('.content.editable').html().replace(" class=\"aloha-link-text\"", ""),
             title: $('h1.title').html(),
             tags: $(".tags div").html()
         };
@@ -60,6 +60,9 @@ Aloha.ready(function() {
             }).success(saved);
         }
     };
+
+    setInterval(save, 6e4);
+
     Aloha.bind('aloha-editable-deactivated', save);
     $('.edit').blur(save).keydown(function(e) {
         if (e.keyCode == 13) {
