@@ -1,4 +1,14 @@
 (function($){
+    $(".content.editable").on("mousedown", function(e){
+        if(e.target.tagName == "A" && !$(this).hasClass("aloha-editable-active")){
+            location.href = e.target.href;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+    });
+}(jQuery));
+
+(function($){
     $.message = function(type, message, delay){
         delay = delay || 5e3;
         var html = '<div class="alert alert-' + type +'"> \
