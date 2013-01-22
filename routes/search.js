@@ -10,9 +10,7 @@ module.exports = function (app) {
             // TODO: err
             return res.render('search', {
                 title: 'search ' + query,
-                results: results,
-                latest: Page.latest(10),
-                recentChanges: Page.recentChanges(10)
+                results: results
             });
         });
     });

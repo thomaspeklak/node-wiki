@@ -14,8 +14,6 @@ module.exports = function (app) {
             res.render('tags', {
                 title: 'All Pages',
                 tags: result,
-                latest: Page.latest(10),
-                recentChanges: Page.recentChanges(10)
             });
         });
     });
@@ -30,9 +28,7 @@ module.exports = function (app) {
 
             res.render("tag", {
                 title: "Tag: " + req.params.tag,
-                pages: result,
-                latest: Page.latest(10),
-                recentChanges: Page.recentChanges(10)
+                pages: result
             });
         });
     });

@@ -8,9 +8,7 @@ module.exports = function (app) {
             // TODO: err
             return res.render('pages', {
                 title: 'All Pages',
-                pages: pages,
-                latest: Page.latest(10),
-                recentChanges: Page.recentChanges(10)
+                pages: pages
             });
         });
     });
@@ -26,9 +24,7 @@ module.exports = function (app) {
 
         return res.render("page", {
             title: res.locals.page.title,
-            page: res.locals.page,
-            latest: Page.latest(10),
-            recentChanges: Page.recentChanges(10)
+            page: res.locals.page
         });
     });
 
