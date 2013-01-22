@@ -1,10 +1,18 @@
 (function($){
+    clickingLink = false;
     $(".content.editable").on("mousedown", function(e){
         if(e.target.tagName == "A" && !$(this).hasClass("aloha-editable-active")){
+           clickingLink = true;
+           e.preventDefault();
+           e.stopImmediatePropagation();
+        }
+    }).on("mouseup", function(e){
+        if(clickingLink){
             location.href = e.target.href;
             e.preventDefault();
             e.stopImmediatePropagation();
         }
+        clickingLink = false;
     });
 }(jQuery));
 

@@ -33,13 +33,17 @@ a {
     margin-left: -25%;
     width: 50%;
 }
-
-.attachments{
+.attachments {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
-.attachments i{
+.attachments i {
     margin: 0 .2em;
+}
+.aloha-editable a {
+    cursor: pointer;
+}
+.aloha-editable-active a {
+    cursor: text;
 }
