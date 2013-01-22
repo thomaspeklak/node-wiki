@@ -4,35 +4,12 @@ var Page = require("../models/page");
 
 module.exports = function (app) {
 
+
     app.get('/tags', function (req, res) {
-        var map = function () {
-            if (!this.tags) {
-                return;
-            }
-
-            for (var index in this.tags) {
-                if (this.tags[index]) {
-                    emit(this.tags[index], 1);
-                }
-            }
-        };
-
-        var reduce = function (previous, current) {
-            var count = 0;
-
-            for (var index in current) {
-                if (current.hasOwnProperty(index)) {
-                    count += current[index];
-                }
-            }
-
-            return count;
-        };
 
         Page.mapReduce({
             map: map,
             reduce: reduce
-
         }, function (err, result) {
             if (err) {
                 return res.send(500);
@@ -63,4 +40,28 @@ module.exports = function (app) {
             });
         });
     });
+};
+
+var map = function () {
+    if (!this.tags) {
+        return;
+    }
+
+    for (var index in this.tags) {
+        if (this.tags[index]) {
+            emit(this.tags[index], 1);
+        }
+    }
+};
+
+var reduce = function (previous, current) {
+    var count = 0;
+
+    for (var index in current) {
+        if (current.hasOwnProperty(index)) {
+            count += current[index];
+        }
+    }
+
+    return count;
 };
