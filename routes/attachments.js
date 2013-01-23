@@ -3,18 +3,7 @@
 var Page = require("../models/page");
 var parse = require("url").parse;
 var moveFiles = require("../lib/move-files");
-
-var supportedTypes = [
-    "text/plain",
-    "application/zip",
-    "application/pdf",
-    "image/gif",
-    "image/jpeg",
-    "image/pjpeg",
-    "image/png",
-    "image/svg+xml",
-    "text/csv"
-];
+var supportedMediaTypes = require("../config").supportedMediaTypes;
 
 module.exports = function (app) {
 
@@ -24,7 +13,7 @@ module.exports = function (app) {
         var files = req.files.attachments[0] ? req.files.attachments : [req.files.attachments];
 
         var unsupportedMedia = files.some(function (file) {
-            return supportedTypes.indexOf(file.type) === -1;
+            return supportedMediaTypes.indexOf(file.type) === -1;
         });
 
         if (unsupportedMedia) {
