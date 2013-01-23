@@ -9,7 +9,7 @@ block content
             | &nbsp;Tags
         div.edit(contenteditable)= page.tags.join(", ")
 
-    .content.editable
+    #content.content.editable(contenteditable)
         != page.content
 
 block pagemeta

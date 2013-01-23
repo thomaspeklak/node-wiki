@@ -2,9 +2,9 @@
     clickingLink = false;
     $(".content.editable").on("mousedown", function(e){
         if(e.target.tagName == "A" && !$(this).hasClass("aloha-editable-active")){
-           clickingLink = true;
-           e.preventDefault();
-           e.stopImmediatePropagation();
+            clickingLink = true;
+            e.preventDefault();
+            e.stopImmediatePropagation();
         }
     }).on("mouseup", function(e){
         if(clickingLink){
@@ -32,7 +32,7 @@
     }
 }(jQuery));
 
-Aloha.ready(function() {
+(function(CKEDITOR){
     var getData = function(){
         return {
             content: $('.content.editable').html().replace(" class=\"aloha-link-text\"", ""),
@@ -40,11 +40,7 @@ Aloha.ready(function() {
             tags: $(".tags div").html()
         };
     };
-
     var data = getData();
-
-    var A$ = Aloha.jQuery;
-    A$('.editable').aloha();
     var save = function() {
         var newData = getData();
         var changed = ["content", "title", "tags"].some(function(key){
@@ -63,17 +59,24 @@ Aloha.ready(function() {
 
     setInterval(save, 6e4);
 
-    Aloha.bind('aloha-editable-deactivated', save);
+    CKEDITOR.inline('content', {
+        on: {
+            blur: save
+        }
+    });
+
     $('.edit').blur(save).keydown(function(e) {
         if (e.keyCode == 13) {
             e.preventDefault();
             $(this).blur();
         }
     });
-});
-var saved = function() {
-    $.message('success', 'Page saved', 2e3);
-};
+
+    var saved = function() {
+        $.message('success', 'Page saved', 2e3);
+    };
+
+}(CKEDITOR));
 
 (function($){
 
