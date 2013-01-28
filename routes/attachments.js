@@ -7,8 +7,10 @@ var supportedMediaTypes = require("../config").supportedMediaTypes;
 
 module.exports = function (app) {
 
-    app.post('/attachments', function (req, res) {
-        if (!req.headers.referer || !req.files.attachments) { return res.send(400); }
+    app.post("/attachments", function (req, res) {
+        if (!req.headers.referer || !req.files.attachments) {
+            return res.send(400);
+        }
 
         var files = req.files.attachments[0] ? req.files.attachments : [req.files.attachments];
 
