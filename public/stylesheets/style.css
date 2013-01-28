@@ -14,13 +14,14 @@ a {
     display: inline-block;
 }
 .drop-here {
-    border: 4px dashed #ccc;
+    border: 5px dashed #ccc;
     margin-top: 2em;
     margin-bottom: 2em;
-    padding: 15px;
+    padding: 25px;
     font-weight: bold;
     color: #ccc;
     text-align: center;
+    text-transform: uppercase;
 }
 .drop-here.active {
     border-color: #aaa;
@@ -41,9 +42,4 @@ a {
 .attachments i {
     margin: 0 .2em;
 }
-.aloha-editable a {
-    cursor: pointer;
-}
-.aloha-editable-active a {
-    cursor: text;
-}
+

@@ -1,15 +1,18 @@
 {
-  "name": "node-wiki",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "nodemon --harmony app.js -w lib -w models -w routes"
-  },
-  "dependencies": {
-    "express": "3.0.x",
-    "jade": "*",
-    "mongoose": "3.5.x",
-    "express-mongoose": "0.1.x",
-    "async" : "*"
-  }
+    "name": "node-wiki",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "nodemon --harmony app.js -w lib -w models -w routes"
+    },
+    "dependencies": {
+        "express": "3.0.x",
+        "jade": "*",
+        "mongoose": "3.5.x",
+        "express-mongoose": "0.1.x",
+        "async" : "*"
+    },
+    "devDependencies" : {
+        "livereload" : "*"
+    }
 }
