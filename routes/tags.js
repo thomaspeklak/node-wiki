@@ -3,7 +3,7 @@
 var Page = require("../models/page");
 
 module.exports = function (app) {
-    app.get('/tags', function (req, res) {
+    app.get("/tags", function (req, res) {
         Page.mapReduce({
             map: map,
             reduce: reduce
@@ -11,14 +11,14 @@ module.exports = function (app) {
             if (err) {
                 return res.send(500);
             }
-            res.render('tags', {
-                title: 'All Pages',
+            res.render("tags", {
+                title: "All Pages",
                 tags: result,
             });
         });
     });
 
-    app.get('/tags/:tag', function (req, res) {
+    app.get("/tags/:tag", function (req, res) {
         Page.find({
             tags: req.params.tag
         }, function (err, result) {
