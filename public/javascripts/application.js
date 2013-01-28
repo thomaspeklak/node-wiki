@@ -53,7 +53,8 @@
                 content: $('.content.editable').html(),
                 title: $('h1.title').html(),
                 tags: $(".tags div").html()
-            }).success(saved);
+            }).success(saved)
+            .error(savingError);
         }
     };
 
@@ -74,6 +75,9 @@
 
     var saved = function() {
         $.message('success', 'Page saved', 2e3);
+    };
+    var savingError = function() {
+        $.message('error', 'Page could not be saved, please try again later', 2e3);
     };
 
 }(CKEDITOR));

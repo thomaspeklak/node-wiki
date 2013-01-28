@@ -1,13 +1,27 @@
 "use strict";
 
-var Page = require('../models/page');
+var Page = require("../models/page");
+var setProps = require("../lib/set-props");
+
+var setPage = function (req, res) {
+    var page = res.locals.page;
+
+    if (page) {
+        setProps(req.body, ["title", "content", "tags"], page);
+    } else {
+        page = new Page(req.body);
+        page.path = req.path;
+    }
+
+    return page;
+};
 
 module.exports = function (app) {
-    app.get('/pages', function (req, res) {
+    app.get("/pages", function (req, res) {
         Page.all(function (err, pages) {
             // TODO: err
-            return res.render('pages', {
-                title: 'All Pages',
+            return res.render("pages", {
+                title: "All Pages",
                 pages: pages
             });
         });
@@ -29,19 +43,13 @@ module.exports = function (app) {
     });
 
     app.post("*", function (req, res) {
-        var page = res.locals.page;
-
-        if (!page) {
-            page = new Page(req.body);
-            page.path = req.path;
-        } else {
-            page.title = req.body.title;
-            page.content = req.body.content;
-            page.tags = req.body.tags;
-        }
+        var page = setPage(req, res);
 
         page.save(function (err) {
-            // TODO: Err!
+            if (err) {
+                return res.send(400);
+            }
+
             res.send(200);
         });
     });
