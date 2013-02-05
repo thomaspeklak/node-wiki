@@ -34,12 +34,41 @@ a {
     margin-left: -25%;
     width: 50%;
 }
-.attachments {
+.plain-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-.attachments i {
+.plain-list li {
+    position:relative;
+    display:block;
+    padding-right: 16px;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow:hidden;
+}
+.plain-list i {
     margin: 0 .2em;
 }
+.plain-list .icon-remove-sign{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    opacity:.3;
+}
+.plain-list .icon-remove-sign:hover{
+    opacity: 1;
+}
 
+.content:before{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #ccc;
+    font-size:9px;
+    text-transform: uppercase;
+    content: "drop images into content";
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}

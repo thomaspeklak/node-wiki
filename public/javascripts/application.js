@@ -59,6 +59,7 @@
     };
 
     setInterval(save, 6e4);
+    $("body").bind("save", save);
 
     CKEDITOR.inline('content', {
         on: {
@@ -175,7 +176,7 @@
     var handleResponse = function(res){
         var response = JSON.parse(res);
         response.attachments.forEach(function(attachment){
-            $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "'><i class='icon-file'></i>" + attachment + "</a></li>");
+            $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "' title='" + attachment + "'><i class='icon-file'></i>" + attachment + "</a><a href='#' class='icon-remove-sign'</li>");
         });
     };
 }(jQuery));
@@ -198,6 +199,11 @@
     function handleFileSelect(evt) {
         evt.stopPropagation();
         evt.preventDefault();
+
+        var uri = evt.dataTransfer.getData("text/uri-list");
+        if (uri) {
+            return handleUriDrop(uri, evt.toElement);
+        }
 
         uploadFiles(document.location.href, evt.dataTransfer.files, evt.toElement);
     }
@@ -270,11 +276,36 @@
         xhr.send(formData);  // multipart/form-data
     }
 
+    var handleUriDrop = function (uri, targetElement) {
+        $(targetElement).append("<img class='polaroid' src='" + uri + "'/>");
+        $("body").trigger("save");
+    };
+
     var handleResponse = function(res){
         var targetElement = $(this);
         var response = JSON.parse(res);
         response.images.forEach(function(image){
-            targetElement.append("<img src='/images/" + response.pageId + "/" + image + "'/>");
+            targetElement.append("<img class='polaroid' src='/images/" + response.pageId + "/" + image + "'/>");
+            $('#images').append("<li><a href='/images/" + response.pageId + "/" + image + "' title='" + image + "'><i class='icon-file'></i>" + image + "</a><a href='#' class='icon-remove-sign'</li>");
         });
+        $("body").trigger("save");
     };
+}(jQuery));
+
+(function($) {
+    $(".plain-list").on("click", ".icon-remove-sign", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var li = $(this).closest('li');
+        var type = $(this).closest(".plain-list")[0].id;
+        $.ajax({
+            url: "/" + type,
+            type: "DELETE",
+            data: {
+                file: $(this).prev("a")[0].title
+            }
+        }).done(function(){
+            li.remove();
+        });
+    });
 }(jQuery));
