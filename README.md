@@ -13,7 +13,22 @@ Contrary to other wikis you simply type an URL and if the page does not exist, e
 
 Then simply open http://localhsot:3000 and edit the page. Or go to another url and edit this page.
 
+#Usage Guide
+
+###Create new page
+
+type an url that has not been used yet
+
+###Upload Attachments
+
+drag files from your computer to the drop zone marked with _drop files here_
+
+###Add images to content
+
+- drag and drop image files from your computer into the content area where you want the images to appear
+- drag an image url from the Images side bar box or from another website to the content area.
+
 ##What to expect nextgroup
 
-- Images/Media in the editor
+- <del>Images/Media in the editor</del>
 - Versioning
