@@ -15,7 +15,7 @@ module.exports = function (app) {
         var files = req.files.attachments[0] ? req.files.attachments : [req.files.attachments];
 
         var unsupportedMedia = files.some(function (file) {
-            return supportedMediaTypes.indexOf(file.type) === -1;
+            return supportedMediaTypes.media.indexOf(file.type) === -1;
         });
 
         if (unsupportedMedia) {
@@ -30,7 +30,7 @@ module.exports = function (app) {
                 return res.send(400);
             }
 
-            moveFiles(page, files, function (err, attachments) {
+            moveFiles(page, files, "attachments", function (err, attachments) {
                 if (err) {
                     console.error(err);
                     return res.send(400);
@@ -48,4 +48,56 @@ module.exports = function (app) {
             });
         });
     });
+
+    app.post("/images", function (req, res) {
+        if (!req.headers.referer) {
+            res.send(400);
+        }
+        if(req.files.images) {
+            return uploadImages(req, res);
+        }
+
+        if(req.body.images) {
+            return storeUrlReferences(req, res);
+        }
+
+    });
+
+    var uploadImages = function (req, res) {
+        var files = req.files.images[0] ? req.files.images : [req.files.images];
+
+        var unsupportedImageType = files.some(function (file) {
+            return supportedMediaTypes.images.indexOf(file.type) === -1;
+        });
+
+        var referer = parse(req.headers.referer);
+
+        Page.findOne({path: referer.path}, function (err, page) {
+            if(err) {
+                console.error(err);
+                return res.send(400);
+            }
+
+            moveFiles(page, files, "images", function (err, images) {
+                if (err) {
+                    console.error(err);
+                    return res.send(400);
+                }
+
+                page.images = page.images.concat(images);
+                page.save(function (err) {
+                    if (err) {
+                        console.error(err);
+                        return res.send(500);
+                    }
+
+                    res.send({
+                        images: images,
+                        pageId: page._id
+                    });
+                });
+
+            });
+        });
+    };
 };

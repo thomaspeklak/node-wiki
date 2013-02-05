@@ -179,3 +179,102 @@
         });
     };
 }(jQuery));
+
+(function($){
+
+    $(function(){
+        if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
+            return $('.drop-here').hide();
+        }
+
+        // Setup the dnd listeners.
+        var dropZone = document.getElementById('content');
+        dropZone.addEventListener('dragover', handleDragOver, false);
+        dropZone.addEventListener('dragenter', toggleState, false);
+        dropZone.addEventListener('dragleave', toggleState, false);
+        dropZone.addEventListener('drop', handleFileSelect, false);
+    });
+
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        uploadFiles(document.location.href, evt.dataTransfer.files, evt.toElement);
+    }
+
+    function handleDragOver(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    }
+
+    function toggleState(ev){
+        $(ev.target).toggleClass('active');
+    }
+
+    var ProgressBar = function(){
+        return $('<progress min="0" max="100" value="0">0% complete</progress>').after('#content')[0];
+    };
+
+    var remove = function(progressBar){
+        $(progressBar).fadeOut(function(){
+            $(this).remove();
+        });
+    };
+
+    function uploadFiles(url, files, targetElement) {
+        var formData = new FormData();
+
+        for (var i = 0, file; file = files[i]; ++i) {
+            formData.append("images", file);
+        }
+
+        var xhr = new XMLHttpRequest();
+        var finished = false;
+        xhr.open('POST', "/images", true);
+        xhr.onload = function(e) {
+            if(!finished && xhr.status == 200){
+                finished = true;
+                handleResponse.bind(targetElement)(xhr.responseText);
+                $.message("success", "Successfully uploaded");
+            }
+
+            if(xhr.status >= 500){
+                $.message('error', 'Internal Server Error');
+            }
+
+            if(xhr.status == 415){
+                $.message('error', 'Unsupported media type');
+            }
+
+            if(xhr.status == 400){
+                $.message("error", "I don't know");
+            }
+        };
+
+
+        var progressBar = new ProgressBar();
+
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                progressBar.value = (e.loaded / e.total) * 100;
+                progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
+
+                if(progressBar.value == 100){
+                    remove(progressBar);
+                }
+            }
+        };
+
+
+        xhr.send(formData);  // multipart/form-data
+    }
+
+    var handleResponse = function(res){
+        var targetElement = $(this);
+        var response = JSON.parse(res);
+        response.images.forEach(function(image){
+            targetElement.append("<img src='/images/" + response.pageId + "/" + image + "'/>");
+        });
+    };
+}(jQuery));

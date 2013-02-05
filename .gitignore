@@ -20,3 +20,4 @@ README.html
 *.tgz
 
 public/attachments/*
+public/images/*

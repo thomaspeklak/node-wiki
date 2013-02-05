@@ -3,14 +3,15 @@ var util = require('util'),
     Schema = mongoose.Schema;
 
 var Page = new Schema({
-    title : { type : String, required : true},
-    content : { type : String, required : true },
-    path : { type : String, required : true},
-    tags : [String],
+    title        : { type    : String, required : true},
+    content      : { type    : String, required : true },
+    path         : { type    : String, required : true},
+    tags         : [String],
 
-    attachments : [String],
+    attachments  : [String],
+    images       : [String],
     lastModified : Date,
-    created : Date
+    created      : Date
 });
 
 Page.pre('save', function(next) {
