@@ -202,10 +202,10 @@
 
         var uri = evt.dataTransfer.getData("text/uri-list");
         if (uri) {
-            return handleUriDrop(uri, evt.toElement);
+            return handleUriDrop(uri, evt.target);
         }
 
-        uploadFiles(document.location.href, evt.dataTransfer.files, evt.toElement);
+        uploadFiles(document.location.href, evt.dataTransfer.files, evt.target);
     }
 
     function handleDragOver(evt) {
