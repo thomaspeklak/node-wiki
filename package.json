@@ -1,9 +1,9 @@
 {
     "name": "node-wiki",
-    "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation"
+    "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
     "version": "0.0.1",
     "scripts": {
-        "start": "nodemon --harmony -w lib -w models -w routes app.js "
+        "start": "nodemon -w lib -w models -w routes app.js"
     },
     "dependencies": {
         "express": "3.0.x",

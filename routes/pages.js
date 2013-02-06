@@ -13,6 +13,7 @@ var setPage = function (req, res) {
         page.path = req.path;
     }
 
+    page.modifiedBy = req.cookies.username || "";
     return page;
 };
 

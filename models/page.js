@@ -10,6 +10,7 @@ var Page = new Schema({
 
     attachments  : [String],
     images       : [String],
+    modifiedBy   : String,
     lastModified : Date,
     created      : Date
 });

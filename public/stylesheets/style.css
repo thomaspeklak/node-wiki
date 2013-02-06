@@ -72,3 +72,12 @@ a {
     border-right: 1px solid #ccc;
     border-top: 1px solid #ccc;
 }
+
+.modified-by{
+    color:#ccc;
+    text-align:right;
+}
+
+.modified-by strong{
+    color: #666;
+}
