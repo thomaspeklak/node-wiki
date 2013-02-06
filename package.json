@@ -3,7 +3,7 @@
     "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation"
     "version": "0.0.1",
     "scripts": {
-        "start": "nodemon --harmony app.js -w lib -w models -w routes"
+        "start": "nodemon --harmony -w lib -w models -w routes app.js "
     },
     "dependencies": {
         "express": "3.0.x",

@@ -1,4 +1,57 @@
 (function($){
+    function createCookie(name,value,days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        }
+        else var expires = "";
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+    if(readCookie("username")) return;
+
+    function handleSubmit (e) {
+        e.preventDefault();
+        var username = $("input[name=username]").val();
+        if(!username.length){
+            return $("input[name=username]").parent().addClass('error');
+        }
+        createCookie("username", username, 720);
+        modal.modal("hide");
+
+    }
+
+    var modal = $('<form id="saveUsername" class="modal hide fade">\
+      <div class="modal-header">\
+      <h3>Identify yourself</h3>\
+      </div>\
+      <div class="modal-body">\
+      <p>Just type a username, node wiki ain\'t no high security vault.</p>\
+      <p class="control-group"><input placeholder="Username" name="username" required/><br/><br/></p>\
+      </div>\
+      <div class="modal-footer">\
+        <button type="submit" class="btn btn-primary">Save changes</button>\
+      </div>\
+      </form>')
+      .appendTo("body")
+      .modal("show");
+    $("#saveUsername").on("submit",handleSubmit);
+
+}(jQuery));
+
+(function($){
     clickingLink = false;
     $(".content.editable").on("mousedown", function(e){
         if(e.target.tagName == "A" && !$(this).hasClass("aloha-editable-active")){
