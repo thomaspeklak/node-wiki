@@ -28,7 +28,6 @@ drag files from your computer to the drop zone marked with _drop files here_
 - drag and drop image files from your computer into the content area where you want the images to appear
 - drag an image url from the Images side bar box or from another website to the content area.
 
-##What to expect nextgroup
+##What to expect next?
 
-- <del>Images/Media in the editor</del>
-- Versioning
+Take a look at the [issue list](https://github.com/thomaspeklak/node-wiki/issues?labels=enhancement&state=open)
