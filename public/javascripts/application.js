@@ -1,3 +1,5 @@
+var app = {};
+
 function createCookie(name,value,days) {
     if (days) {
         var date = new Date();
@@ -142,8 +144,8 @@ function readCookie(name) {
 
 }(CKEDITOR));
 
-(function($) {
-    $.ProgressBar = function (target) {
+(function(app) {
+    app.ProgressBar = function (target) {
         this.element = $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo(target)[0];
         Object.defineProperties(this, {
             value : {
@@ -160,36 +162,30 @@ function readCookie(name) {
         });
     };
 
-    $.ProgressBar.prototype.remove = function(){
+    app.ProgressBar.prototype.remove = function(){
         $(this.element).fadeOut(function(){
             $(this).remove();
         });
     };
 
-})(jQuery);
+})(app);
 
+(function(app) {
+    var Dropzone = function (options) {
+        this.element = options.element;
+        this.toggleState = options.toggleState || toggleState;
+        this.handleDragOver = options.handleDragOver || handleDragOver;
+        this.handleFileSelect = options.handleFileSelect || handleFileSelect;
 
-(function($){
+        this.addEventListeners();
+    };
 
-    $(function(){
-        if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
-            return $('.drop-here').hide();
-        }
-
-        // Setup the dnd listeners.
-        var dropZone = document.getElementById('drop-zone');
-        dropZone.addEventListener('dragover', handleDragOver, false);
-        dropZone.addEventListener('dragenter', toggleState, false);
-        dropZone.addEventListener('dragleave', toggleState, false);
-        dropZone.addEventListener('drop', handleFileSelect, false);
-    });
-
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        uploadFiles(document.location.href, evt.dataTransfer.files);
-    }
+    Dropzone.prototype.addEventListeners = function() {
+        this.element.addEventListener('dragover'  , this.handleDragOver   , false);
+        this.element.addEventListener('dragenter' , this.toggleState      , false);
+        this.element.addEventListener('dragleave' , this.toggleState      , false);
+        this.element.addEventListener('drop'      , this.handleFileSelect , false);
+    };
 
     function handleDragOver(evt) {
         evt.stopPropagation();
@@ -201,6 +197,33 @@ function readCookie(name) {
         $(ev.target).toggleClass('active');
     }
 
+
+
+
+    app.Dropzone = Dropzone;
+}(app));
+
+
+(function($){
+
+    $(function(){
+        if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
+            return $('.drop-here').hide();
+        }
+
+        // Setup the dnd listeners.
+        new app.Dropzone({
+            element: document.getElementById('drop-zone'),
+            handleFileSelect: handleFileSelect
+        });
+    });
+
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        uploadFiles(document.location.href, evt.dataTransfer.files);
+    }
 
     function uploadFiles(url, files) {
         var formData = new FormData();
@@ -233,7 +256,7 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new $.ProgressBar('#attachments');
+        var progressBar = new app.ProgressBar('#attachments');
 
         xhr.upload.onprogress = function(e) {
             if (e.lengthComputable) {
@@ -266,11 +289,10 @@ function readCookie(name) {
         }
 
         // Setup the dnd listeners.
-        var dropZone = document.getElementById('content');
-        dropZone.addEventListener('dragover', handleDragOver, false);
-        dropZone.addEventListener('dragenter', toggleState, false);
-        dropZone.addEventListener('dragleave', toggleState, false);
-        dropZone.addEventListener('drop', handleFileSelect, false);
+        new app.Dropzone({
+            element: document.getElementById('content'),
+            handleFileSelect: handleFileSelect
+        });
     });
 
     function handleFileSelect(evt) {
@@ -283,16 +305,6 @@ function readCookie(name) {
         }
 
         uploadFiles(document.location.href, evt.dataTransfer.files, evt.target);
-    }
-
-    function handleDragOver(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-    }
-
-    function toggleState(ev){
-        $(ev.target).toggleClass('active');
     }
 
     function uploadFiles(url, files, targetElement) {
@@ -326,7 +338,7 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new $.ProgressBar("#content");
+        var progressBar = new app.ProgressBar("#content");
 
         xhr.upload.onprogress = function(e) {
             if (e.lengthComputable) {
