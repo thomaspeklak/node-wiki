@@ -10,9 +10,10 @@
         "jade": "*",
         "mongoose": "3.5.x",
         "express-mongoose": "0.1.x",
-        "async" : "*"
+        "async": "*",
+        "mkdirp": "0.3.x"
     },
-    "devDependencies" : {
-        "livereload" : "*"
+    "devDependencies": {
+        "livereload": "*"
     }
 }

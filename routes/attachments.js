@@ -68,6 +68,9 @@ module.exports = function (app) {
             return supportedMediaTypes.images.indexOf(file.type) === -1;
         });
 
+        if (unsupportedImageType) {
+            return res.send(415);
+        }
 
         var page = req.page;
         moveFiles(page, files, "images", function (err, images) {
