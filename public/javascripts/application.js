@@ -38,20 +38,20 @@ function readCookie(name) {
     }
 
     var modal = $('<form id="saveUsername" class="modal hide fade">\
-      <div class="modal-header">\
-      <h3>Identify yourself</h3>\
-      </div>\
-      <div class="modal-body">\
-      <p>Just type a username, node wiki ain\'t no high security vault.</p>\
-      <p class="control-group"><input placeholder="Username" name="username" required/><br/><br/></p>\
-      </div>\
-      <div class="modal-footer">\
-        <button type="submit" class="btn btn-primary">Save changes</button>\
-      </div>\
-      </form>')
-      .appendTo("body")
-      .modal("show");
-    $("#saveUsername").on("submit",handleSubmit);
+                  <div class="modal-header">\
+                  <h3>Identify yourself</h3>\
+                  </div>\
+                  <div class="modal-body">\
+                  <p>Just type a username, node wiki ain\'t no high security vault.</p>\
+                  <p class="control-group"><input placeholder="Username" name="username" required/><br/><br/></p>\
+                  </div>\
+                  <div class="modal-footer">\
+                  <button type="submit" class="btn btn-primary">Save changes</button>\
+                  </div>\
+                  </form>')
+                  .appendTo("body")
+                  .modal("show");
+                  $("#saveUsername").on("submit",handleSubmit);
 
 }(jQuery));
 
@@ -355,7 +355,17 @@ function readCookie(name) {
     }
 
     var handleUriDrop = function (uri, targetElement) {
-        $(targetElement).append("<img class='polaroid' src='" + uri + "'/>");
+        if(uri.indexOf("youtube.com/watch") !== -1) {
+            var youtube = uri.match(/v=(.*?)(?:$|&)/);
+            if(!youtube[1]) return;
+            $(targetElement).append('<iframe width="640" height="480" src="http://www.youtube.com/embed/'+youtube[1]+'" frameborder="0" allowfullscreen></iframe>');
+        } else if(uri.indexOf("vimeo.com/") !== -1) {
+            var vimeo = uri.match(/vimeo.com\/(.*?)(?:$|\?)/);
+            if(!vimeo[1]) return;
+            $(targetElement).append('<iframe src="http://player.vimeo.com/video/'+vimeo[1]+'" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+        } else {
+            $(targetElement).append("<img class='polaroid' src='" + uri + "'/>");
+        }
         $("body").trigger("save");
     };
 
