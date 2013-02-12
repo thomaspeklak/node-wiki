@@ -142,6 +142,33 @@ function readCookie(name) {
 
 }(CKEDITOR));
 
+(function($) {
+    $.ProgressBar = function (target) {
+        this.element = $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo(target)[0];
+        Object.defineProperties(this, {
+            value : {
+                get: function(){return this.element.value;},
+                set: function(value) {this.element.value = value;},
+                writeable: true
+            },
+
+            textContent : {
+                get: function(){return this.element.textContent;},
+                set: function(value) {this.element.textContent = value; },
+                writeable: true
+            }
+        });
+    };
+
+    $.ProgressBar.prototype.remove = function(){
+        $(this.element).fadeOut(function(){
+            $(this).remove();
+        });
+    };
+
+})(jQuery);
+
+
 (function($){
 
     $(function(){
@@ -174,15 +201,6 @@ function readCookie(name) {
         $(ev.target).toggleClass('active');
     }
 
-    var ProgressBar = function(){
-        return $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo('#attachments')[0];
-    };
-
-    var remove = function(progressBar){
-        $(progressBar).fadeOut(function(){
-            $(this).remove();
-        });
-    };
 
     function uploadFiles(url, files) {
         var formData = new FormData();
@@ -215,15 +233,15 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new ProgressBar();
+        var progressBar = new $.ProgressBar('#attachments');
 
         xhr.upload.onprogress = function(e) {
             if (e.lengthComputable) {
-                progressBar.value = (e.loaded / e.total) * 100;
+                progressBar.value= (e.loaded / e.total) * 100;
                 progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
 
                 if(progressBar.value == 100){
-                    remove(progressBar);
+                    progressBar.remove();
                 }
             }
         };
@@ -277,16 +295,6 @@ function readCookie(name) {
         $(ev.target).toggleClass('active');
     }
 
-    var ProgressBar = function(){
-        return $('<progress min="0" max="100" value="0">0% complete</progress>').after('#content')[0];
-    };
-
-    var remove = function(progressBar){
-        $(progressBar).fadeOut(function(){
-            $(this).remove();
-        });
-    };
-
     function uploadFiles(url, files, targetElement) {
         var formData = new FormData();
 
@@ -318,19 +326,18 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new ProgressBar();
+        var progressBar = new $.ProgressBar("#content");
 
         xhr.upload.onprogress = function(e) {
             if (e.lengthComputable) {
-                progressBar.value = (e.loaded / e.total) * 100;
+                progressBar.value= (e.loaded / e.total) * 100;
                 progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
 
                 if(progressBar.value == 100){
-                    remove(progressBar);
+                    progressBar.remove();
                 }
             }
         };
-
 
         xhr.send(formData);  // multipart/form-data
     }
