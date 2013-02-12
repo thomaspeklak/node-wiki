@@ -55,7 +55,7 @@ function readCookie(name) {
 (function($){
     clickingLink = false;
     $(".content.editable").on("mousedown", function(e){
-        if(e.target.tagName == "A" && !$(this).hasClass("aloha-editable-active")){
+        if(e.target.tagName == "A" && !$(this).hasClass("cke_focus")){
             clickingLink = true;
             e.preventDefault();
             e.stopImmediatePropagation();
