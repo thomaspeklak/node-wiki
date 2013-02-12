@@ -354,19 +354,45 @@ function readCookie(name) {
         xhr.send(formData);  // multipart/form-data
     }
 
+    var appendAssetStrategy = {
+        image: function(uri) {
+            return "<img class='polaroid' src='" + uri + "'/>";
+        },
+        video: function(uri) {
+            return "<video class='polaroid' width='640' height='480' src='" + uri + "'/>";
+        },
+        audio: function(uri) {
+            return "<audio controls src='" + uri + "'/>";
+        },
+        text: function(uri) {
+            return "<a href='" + uri + "'>Link Title</a>";
+        }
+    };
+
     var handleUriDrop = function (uri, targetElement) {
         if(uri.indexOf("youtube.com/watch") !== -1) {
             var youtube = uri.match(/v=(.*?)(?:$|&)/);
             if(!youtube[1]) return;
             $(targetElement).append('<iframe width="640" height="480" src="http://www.youtube.com/embed/'+youtube[1]+'" frameborder="0" allowfullscreen></iframe>');
+            $("body").trigger("save");
         } else if(uri.indexOf("vimeo.com/") !== -1) {
             var vimeo = uri.match(/vimeo.com\/(.*?)(?:$|\?)/);
             if(!vimeo[1]) return;
             $(targetElement).append('<iframe src="http://player.vimeo.com/video/'+vimeo[1]+'" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+            $("body").trigger("save");
         } else {
-            $(targetElement).append("<img class='polaroid' src='" + uri + "'/>");
+            $.get("/detect-content-type", {uri: uri}, function(data) {
+                var type = data.replace(/\/.*/, "");
+                if (appendAssetStrategy[type]) {
+                    $(targetElement).append(
+                        appendAssetStrategy[type](uri)
+                    );
+                    $("body").trigger("save");
+                } else {
+                    $.message('warn', "I dunno know this ditti");
+                }
+            });
         }
-        $("body").trigger("save");
     };
 
     var handleResponse = function(res){
