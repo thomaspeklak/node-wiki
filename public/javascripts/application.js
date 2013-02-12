@@ -20,6 +20,7 @@ function readCookie(name) {
 }
 
 (function($){
+    //prompt user for a username if he has not already provided one
 
     if(readCookie("username")) return;
 
@@ -53,6 +54,7 @@ function readCookie(name) {
 }(jQuery));
 
 (function($){
+    //Enable link clicking if editor is not active
     clickingLink = false;
     $(".content.editable").on("mousedown", function(e){
         if(e.target.tagName == "A" && !$(this).hasClass("cke_focus")){
@@ -71,6 +73,7 @@ function readCookie(name) {
 }(jQuery));
 
 (function($){
+    //provide an interface to display a message to the user
     $.message = function(type, message, delay){
         delay = delay || 5e3;
         var html = '<div class="alert alert-' + type +'"> \
@@ -87,6 +90,7 @@ function readCookie(name) {
 }(jQuery));
 
 (function(CKEDITOR){
+    //initize CK editor and page save events
     var getData = function(){
         return {
             content: $('.content.editable').html().replace(" class=\"aloha-link-text\"", ""),
