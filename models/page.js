@@ -82,8 +82,10 @@ Page.statics.search = function(query, count, cb) {
         count = 100;
     }
 
+    var search = new RegExp(query, "i");
+
     return this
-        .find({ $or : [ { title : { $regex : query }}, { content:  { $regex : query }} ]})
+        .find({ $or : [ { title : { $regex : search }}, { content:  { $regex : search }} ]})
         .limit(count)
         .sort('title')
         .select('title path')
