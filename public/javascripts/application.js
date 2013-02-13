@@ -145,12 +145,29 @@ function readCookie(name) {
 }(CKEDITOR));
 
 (function(app) {
-    app.ProgressBar = function (target) {
+    app.ProgressBar = function (target, upload) {
+        var self = this;
+
         this.element = $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo(target)[0];
+
+        upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                self.value= (e.loaded / e.total) * 100;
+            }
+        };
+
         Object.defineProperties(this, {
             value : {
                 get: function(){return this.element.value;},
-                set: function(value) {this.element.value = value;},
+                set: function(value) {
+                    this.element.value = value;
+                    this.textContent = this.value; // Fallback for unsupported browsers.
+
+                    if(this.value == 100){
+                        this.remove();
+                    }
+
+                },
                 writeable: true
             },
 
@@ -256,19 +273,7 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new app.ProgressBar('#attachments');
-
-        xhr.upload.onprogress = function(e) {
-            if (e.lengthComputable) {
-                progressBar.value= (e.loaded / e.total) * 100;
-                progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-
-                if(progressBar.value == 100){
-                    progressBar.remove();
-                }
-            }
-        };
-
+        var progressBar = new app.ProgressBar('#attachments', xhr.upload);
 
         xhr.send(formData);  // multipart/form-data
     }
@@ -338,18 +343,7 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new app.ProgressBar("#content");
-
-        xhr.upload.onprogress = function(e) {
-            if (e.lengthComputable) {
-                progressBar.value= (e.loaded / e.total) * 100;
-                progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-
-                if(progressBar.value == 100){
-                    progressBar.remove();
-                }
-            }
-        };
+        var progressBar = new app.ProgressBar("#content", xhr.upload);
 
         xhr.send(formData);  // multipart/form-data
     }
