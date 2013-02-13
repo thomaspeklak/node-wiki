@@ -374,17 +374,22 @@ function readCookie(name) {
             if(!vimeo[1]) return;
             $(targetElement).append('<iframe src="http://player.vimeo.com/video/'+vimeo[1]+'" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
             $("body").trigger("save");
+        } else if (uri.indexOf("www.slideshare.net/" !== -1)) {
+            $.getJSON("http://www.slideshare.net/api/oembed/2?url="+ uri +"&format=jsonp&callback=?", function(data) {
+                $(targetElement).append(data.html);
+                $("body").trigger("save");
+            });
         } else {
             $.get("/detect-content-type", {uri: uri}, function(data) {
                 var type = data.replace(/\/.*/, "");
-                if (appendAssetStrategy[type]) {
-                    $(targetElement).append(
-                        appendAssetStrategy[type](uri)
-                    );
-                    $("body").trigger("save");
-                } else {
-                    $.message('warn', "I dunno know this ditti");
-                }
+if (appendAssetStrategy[type]) {
+    $(targetElement).append(
+        appendAssetStrategy[type](uri)
+    );
+    $("body").trigger("save");
+} else {
+    $.message('warn', "I dunno know this ditti");
+}
             });
         }
     };

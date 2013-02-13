@@ -33,6 +33,7 @@ __Drop a ...__
 - __vimeo__ link to embed a vimeo video
 - __audio__ link to create an audio element
 - __video__ link to create a video element
+- __slideshare__ link to embed a slideshare presentation
 
 ##What to expect next?
 
