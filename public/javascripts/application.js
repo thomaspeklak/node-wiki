@@ -145,12 +145,29 @@ function readCookie(name) {
 }(CKEDITOR));
 
 (function(app) {
-    app.ProgressBar = function (target) {
+    app.ProgressBar = function (target, upload) {
+        var self = this;
+
         this.element = $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo(target)[0];
+
+        upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                self.value= (e.loaded / e.total) * 100;
+            }
+        };
+
         Object.defineProperties(this, {
             value : {
                 get: function(){return this.element.value;},
-                set: function(value) {this.element.value = value;},
+                set: function(value) {
+                    this.element.value = value;
+                    this.textContent = this.value; // Fallback for unsupported browsers.
+
+                    if(this.value == 100){
+                        this.remove();
+                    }
+
+                },
                 writeable: true
             },
 
@@ -256,19 +273,7 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new app.ProgressBar('#attachments');
-
-        xhr.upload.onprogress = function(e) {
-            if (e.lengthComputable) {
-                progressBar.value= (e.loaded / e.total) * 100;
-                progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-
-                if(progressBar.value == 100){
-                    progressBar.remove();
-                }
-            }
-        };
-
+        var progressBar = new app.ProgressBar('#attachments', xhr.upload);
 
         xhr.send(formData);  // multipart/form-data
     }
@@ -338,18 +343,7 @@ function readCookie(name) {
         };
 
 
-        var progressBar = new app.ProgressBar("#content");
-
-        xhr.upload.onprogress = function(e) {
-            if (e.lengthComputable) {
-                progressBar.value= (e.loaded / e.total) * 100;
-                progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-
-                if(progressBar.value == 100){
-                    progressBar.remove();
-                }
-            }
-        };
+        var progressBar = new app.ProgressBar("#content", xhr.upload);
 
         xhr.send(formData);  // multipart/form-data
     }
@@ -380,17 +374,22 @@ function readCookie(name) {
             if(!vimeo[1]) return;
             $(targetElement).append('<iframe src="http://player.vimeo.com/video/'+vimeo[1]+'" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
             $("body").trigger("save");
+        } else if (uri.indexOf("www.slideshare.net/" !== -1)) {
+            $.getJSON("http://www.slideshare.net/api/oembed/2?url="+ uri +"&format=jsonp&callback=?", function(data) {
+                $(targetElement).append(data.html);
+                $("body").trigger("save");
+            });
         } else {
             $.get("/detect-content-type", {uri: uri}, function(data) {
                 var type = data.replace(/\/.*/, "");
-                if (appendAssetStrategy[type]) {
-                    $(targetElement).append(
-                        appendAssetStrategy[type](uri)
-                    );
-                    $("body").trigger("save");
-                } else {
-                    $.message('warn', "I dunno know this ditti");
-                }
+if (appendAssetStrategy[type]) {
+    $(targetElement).append(
+        appendAssetStrategy[type](uri)
+    );
+    $("body").trigger("save");
+} else {
+    $.message('warn', "I dunno know this ditti");
+}
             });
         }
     };
