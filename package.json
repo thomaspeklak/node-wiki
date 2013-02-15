@@ -11,7 +11,8 @@
         "mongoose": "3.5.x",
         "express-mongoose": "0.1.x",
         "async": "*",
-        "mkdirp": "0.3.x"
+        "mkdirp": "0.3.x",
+		"mongoose-version": "0.2.x"
     },
     "devDependencies": {
         "livereload": "*"

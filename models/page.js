@@ -1,6 +1,7 @@
 var util = require('util'),
     mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    version = require('mongoose-version');
 
 var Page = new Schema({
     title        : { type    : String, required : true},
@@ -89,5 +90,7 @@ Page.statics.search = function(query, count, cb) {
         .select('title path')
         .exec(cb);
 }
+
+Page.plugin(version);
 
 module.exports = mongoose.model('Page', Page);

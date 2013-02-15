@@ -1,0 +1,17 @@
+var Page = require('../models/page');
+
+module.exports = function(app) {
+    app.get("/versions/:pageId", function(req, res) {
+        var pageId = req.param('pageId');
+        
+        if (!pageId) {
+            return res.send(400);
+        }
+
+        res.render('versions', { 
+            document : Page.VersionedModel.findOne({ refId : pageId }), 
+            page : Page.findOne({ _id : pageId }), 
+            title : 'Versions' });
+    });
+}
+   

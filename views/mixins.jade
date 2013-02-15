@@ -29,4 +29,7 @@ mixin images(files)
                     i.icon-picture
                     = file
                 a.icon-remove-sign
-    
+
+mixin versionLink(page)
+    h3 Version History
+    a(href="/versions/#{page._id}") Show versions
