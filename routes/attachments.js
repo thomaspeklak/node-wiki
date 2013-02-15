@@ -6,6 +6,7 @@ var moveFiles = require("../lib/move-files");
 var supportedMediaTypes = require("../config").supportedMediaTypes;
 var fs = require("fs");
 var path = require("path");
+var request = require("request");
 
 
 var loadPage = function (req, res, next) {
@@ -137,5 +138,19 @@ module.exports = function (app) {
             });
         }
         res.send(404);
+    });
+
+    app.get('/detect-content-type', function(req, res) {
+        if(!req.query.uri) return res.send(400);
+
+        request.head(req.query.uri, function(err, data) {
+            if (err) return res.send(401);
+
+            if(data && data.headers && data.headers["content-type"]) {
+                return res.send(data.headers["content-type"]);
+            }
+
+            res.send("unknown/type");
+        });
     });
 };

@@ -12,6 +12,7 @@
         "express-mongoose": "0.1.x",
         "async": "*",
         "mkdirp": "0.3.x",
+		"request": "~2.12.0",
 		"mongoose-version": "0.2.x"
     },
     "devDependencies": {
