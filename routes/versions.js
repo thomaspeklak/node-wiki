@@ -1,6 +1,14 @@
 var Page = require('../models/page');
 
 module.exports = function(app) {
+    app.get("/versions", function(req, res) {
+        Page.VersionedModel.latest(100, function(err, pages) {
+            res.render('versionedpages', {
+                pages : pages,
+                title : 'Page Versions' }); 
+        });
+    });
+    
     app.get("/versions/:pageId", function(req, res) {
         var pageId = req.param('pageId');
         

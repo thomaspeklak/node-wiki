@@ -84,7 +84,7 @@ Page.statics.search = function(query, count, cb) {
     }
 
     var queryRegex = new RegExp(query,'i');
-    
+
     return this
         .find({ $or : [ { title : { $regex : queryRegex }}, { content:  { $regex : queryRegex }} ]})
         .limit(count)
@@ -93,6 +93,6 @@ Page.statics.search = function(query, count, cb) {
         .exec(cb);
 }
 
-Page.plugin(version);
+Page.plugin(version, { documentProperty : 'title' });
 
 module.exports = mongoose.model('Page', Page);
