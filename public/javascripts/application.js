@@ -93,6 +93,7 @@ function readCookie(name) {
 
 (function(CKEDITOR){
     //initize CK editor and page save events
+    if ($(".content.editabler").length == 0 ) return;
     var getData = function(){
         return {
             content: $('.content.editable').html().replace(" class=\"aloha-link-text\"", ""),
@@ -284,14 +285,12 @@ function readCookie(name) {
         $(ev.target).toggleClass('active');
     }
 
-
-
-
     app.Dropzone = Dropzone;
 }(app));
 
 
 (function($){
+    if ($(".drop-here").length == 0) return;
 
     $(function(){
         if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -357,6 +356,7 @@ function readCookie(name) {
 }(jQuery));
 
 (function($){
+    if ($("#content.edit").length == 0) return;
 
     $(function(){
         if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
