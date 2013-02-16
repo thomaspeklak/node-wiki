@@ -13,7 +13,8 @@
         "async": "*",
         "mkdirp": "0.3.x",
         "request" : "2.12.x",
-        "validator" : "0.4.x"
+        "validator" : "0.4.x",
+        "mongoose-version": "0.2.x"
     },
     "devDependencies": {
         "livereload": "*"

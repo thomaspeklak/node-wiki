@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    table.table.table-bordered
+        tr
+            th Title
+            th Modified By
+            th Date Modified
+            th Date Created
+        each version in document.versions
+            tr
+                td= version.title
+                td= version.modifiedBy
+                td= version.lastModified
+                td= version.created
+                  
+    a.btn.btn-primary(href="#{page.path}") Back to page
