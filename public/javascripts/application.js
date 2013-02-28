@@ -93,7 +93,7 @@ function readCookie(name) {
 
 (function(CKEDITOR){
     //initize CK editor and page save events
-    if ($(".content.editabler").length == 0 ) return;
+    if ($(".content.editable").length == 0 ) return;
     var getData = function(){
         return {
             content: $('.content.editable').html().replace(" class=\"aloha-link-text\"", ""),
