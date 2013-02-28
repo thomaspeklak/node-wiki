@@ -1,36 +1,40 @@
+"use strict";
+
 var app = {};
 
-function createCookie(name,value,days) {
+function createCookie(name, value, days) {
+    var expires = "";
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
     }
-    else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/";
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
 
 function readCookie(name) {
     var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
 
-(function($){
+(function ($) {
     //prompt user for a username if he has not already provided one
 
-    if(readCookie("username")) return;
+    if (readCookie("username")) return;
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
         e.preventDefault();
         var username = $("input[name=username]").val();
-        if(!username.length){
-            return $("input[name=username]").parent().addClass('error');
+        if (!username.length) {
+            return $("input[name=username]")
+                .parent()
+                .addClass("error");
         }
         createCookie("username", username, 720);
         modal.modal("hide");
@@ -49,23 +53,27 @@ function readCookie(name) {
                   <button type="submit" class="btn btn-primary">Save changes</button>\
                   </div>\
                   </form>')
-                  .appendTo("body")
-                  .modal("show");
-                  $("#saveUsername").on("submit",handleSubmit);
+        .appendTo("body")
+        .modal("show");
+    $("#saveUsername")
+        .on("submit", handleSubmit);
 
 }(jQuery));
 
-(function($){
+(function ($) {
     //Enable link clicking if editor is not active
     clickingLink = false;
-    $(".content.editable").on("mousedown", function(e){
-        if(e.target.tagName == "A" && !$(this).hasClass("cke_focus")){
+    $(".content.editable")
+        .on("mousedown", function (e) {
+        if (e.target.tagName == "A" && !$(this)
+            .hasClass("cke_focus")) {
             clickingLink = true;
             e.preventDefault();
             e.stopImmediatePropagation();
         }
-    }).on("mouseup", function(e){
-        if(clickingLink){
+    })
+        .on("mouseup", function (e) {
+        if (clickingLink) {
             location.href = e.target.href;
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -74,73 +82,85 @@ function readCookie(name) {
     });
 }(jQuery));
 
-(function($){
+(function ($) {
     //provide an interface to display a message to the user
-    $.message = function(type, message, delay){
-        delay = delay || 5e3;
-        var html = '<div class="alert alert-' + type +'"> \
+    $.message = function (type, message, delay) {
+        delay = delay ||  5e3;
+        var html = '<div class="alert alert-' + type + '"> \
         <button type="button" class="close" data-dismiss="alert">&times;</button> \
         ' + message + '\
         </div>';
 
-        $(html).appendTo('#messages').delay(delay).fadeOut(remove);
+        $(html)
+            .appendTo('#messages')
+            .delay(delay)
+            .fadeOut(remove);
     };
 
-    function remove(){
+    function remove() {
         $(this).remove();
     }
 }(jQuery));
 
-(function(CKEDITOR){
+(function (CKEDITOR) {
     //initize CK editor and page save events
-    if ($(".content.editable").length == 0 ) return;
-    var getData = function(){
+    if ($(".content.editable")
+        .length == 0) return;
+    var getData = function () {
         return {
-            content: $('.content.editable').html().replace(" class=\"aloha-link-text\"", ""),
+            content: $('.content.editable')
+                .html()
+                .replace(" class=\"aloha-link-text\"", ""),
             title: $('h1.title').html(),
             tags: $(".tags div").html()
         };
     };
     var data = getData();
-    var save = function() {
+    var save = function () {
         var newData = getData();
-        var changed = ["content", "title", "tags"].some(function(key){
+        var changed = ["content", "title", "tags"].some(function (key) {
             return data[key] != newData[key];
         });
 
-        if(changed){
-            data  = newData;
+        if (changed) {
+            data = newData;
             $.post(document.location.href, {
-                content: $('.content.editable').html(),
-                title: $('h1.title').html(),
+                content: $(".content.editable").html(),
+                title: $("h1.title").html(),
                 tags: $(".tags div").html()
-            }).success(saved)
-            .error(savingError);
+            })
+                .success(saved)
+                .error(savingError);
         }
     };
 
     setInterval(save, 6e4);
-    $("body").bind("save", save);
+    $("body")
+        .bind("save", save);
 
-    CKEDITOR.inline('content', {
+    CKEDITOR.inline("content", {
         on: {
             blur: save
         }
     });
 
-    $('.edit').blur(save).keydown(function(e) {
+    $(".edit")
+        .blur(save)
+        .keydown(function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
-            $(this).blur();
+            $(this)
+                .blur();
         }
     });
 
-    var saved = function() {
-        $.message('success', 'Page saved', 2e3);
-        $(".modified-by strong").text(readCookie("username"));
+    var saved = function () {
+        $.message("success", "Page saved", 2e3);
+        $(".modified-by strong")
+            .text(readCookie("username"));
     };
-    var savingError = function() {
-        $.message('error', 'Page could not be saved, please try again later', 2e3);
+    var savingError = function () {
+        $.message("error", "Page could not be saved, please try again later", 2e3);
     };
 
 }(CKEDITOR));
@@ -166,21 +186,20 @@ function readCookie(name) {
             range.selectNodeContents(el);
             var textNodes = getTextNodesIn(el);
             var foundStart = false;
-            var charCount = 0, endCharCount;
+            var charCount = 0,
+                endCharCount;
 
-            for (var i = 0, textNode; textNode = textNodes[i++]; ) {
+            for (var i = 0, textNode; textNode = textNodes[i++];) {
                 endCharCount = charCount + textNode.length;
-                if (!foundStart && start >= charCount
-                    && (start < endCharCount ||
-                        (start == endCharCount && i < textNodes.length))) {
-                        range.setStart(textNode, start - charCount);
-                        foundStart = true;
-                    }
-                    if (foundStart && end <= endCharCount) {
-                        range.setEnd(textNode, end - charCount);
-                        break;
-                    }
-                    charCount = endCharCount;
+                if (!foundStart && start >= charCount && (start < endCharCount || (start == endCharCount && i < textNodes.length))) {
+                    range.setStart(textNode, start - charCount);
+                    foundStart = true;
+                }
+                if (foundStart && end <= endCharCount) {
+                    range.setEnd(textNode, end - charCount);
+                    break;
+                }
+                charCount = endCharCount;
             }
 
             var sel = window.getSelection();
@@ -196,7 +215,8 @@ function readCookie(name) {
         }
     }
 
-    $(".tags .edit").focus(function () {
+    $(".tags .edit")
+        .focus(function () {
         if (this.innerText == "add tags as comma separated list") {
             var el = this;
             setTimeout(function () {
@@ -205,7 +225,8 @@ function readCookie(name) {
         }
     });
 
-    $("h1.edit").focus(function () {
+    $("h1.edit")
+        .focus(function () {
         if (this.innerText == "new page") {
             var el = this;
             setTimeout(function () {
@@ -215,26 +236,29 @@ function readCookie(name) {
     });
 }(jQuery));
 
-(function(app) {
+(function (app) {
     app.ProgressBar = function (target, upload) {
         var self = this;
 
-        this.element = $('<progress min="0" max="100" value="0">0% complete</progress>').appendTo(target)[0];
+        this.element = $('<progress min="0" max="100" value="0">0% complete</progress>')
+            .appendTo(target)[0];
 
-        upload.onprogress = function(e) {
+        upload.onprogress = function (e) {
             if (e.lengthComputable) {
-                self.value= (e.loaded / e.total) * 100;
+                self.value = (e.loaded / e.total) * 100;
             }
         };
 
         Object.defineProperties(this, {
-            value : {
-                get: function(){return this.element.value;},
-                set: function(value) {
+            value: {
+                get: function () {
+                    return this.element.value;
+                },
+                set: function (value) {
                     this.element.value = value;
                     this.textContent = this.value; // Fallback for unsupported browsers.
 
-                    if(this.value == 100){
+                    if (this.value == 100) {
                         this.remove();
                     }
 
@@ -242,37 +266,41 @@ function readCookie(name) {
                 writeable: true
             },
 
-            textContent : {
-                get: function(){return this.element.textContent;},
-                set: function(value) {this.element.textContent = value; },
+            textContent: {
+                get: function () {
+                    return this.element.textContent;
+                },
+                set: function (value) {
+                    this.element.textContent = value;
+                },
                 writeable: true
             }
         });
     };
 
-    app.ProgressBar.prototype.remove = function(){
-        $(this.element).fadeOut(function(){
+    app.ProgressBar.prototype.remove = function () {
+        $(this.element).fadeOut(function () {
             $(this).remove();
         });
     };
 
 })(app);
 
-(function(app) {
+(function (app) {
     var Dropzone = function (options) {
         this.element = options.element;
-        this.toggleState = options.toggleState || toggleState;
-        this.handleDragOver = options.handleDragOver || handleDragOver;
-        this.handleFileSelect = options.handleFileSelect || handleFileSelect;
+        this.toggleState = options.toggleState ||  toggleState;
+        this.handleDragOver = options.handleDragOver ||  handleDragOver;
+        this.handleFileSelect = options.handleFileSelect ||  handleFileSelect;
 
         this.addEventListeners();
     };
 
-    Dropzone.prototype.addEventListeners = function() {
-        this.element.addEventListener('dragover'  , this.handleDragOver   , false);
-        this.element.addEventListener('dragenter' , this.toggleState      , false);
-        this.element.addEventListener('dragleave' , this.toggleState      , false);
-        this.element.addEventListener('drop'      , this.handleFileSelect , false);
+    Dropzone.prototype.addEventListeners = function () {
+        this.element.addEventListener('dragover', this.handleDragOver, false);
+        this.element.addEventListener('dragenter', this.toggleState, false);
+        this.element.addEventListener('dragleave', this.toggleState, false);
+        this.element.addEventListener('drop', this.handleFileSelect, false);
     };
 
     function handleDragOver(evt) {
@@ -281,7 +309,7 @@ function readCookie(name) {
         evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     }
 
-    function toggleState(ev){
+    function toggleState(ev) {
         $(ev.target).toggleClass('active');
     }
 
@@ -289,11 +317,11 @@ function readCookie(name) {
 }(app));
 
 
-(function($){
+(function ($) {
     if ($(".drop-here").length == 0) return;
 
-    $(function(){
-        if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
+    $(function () {
+        if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
             return $('.drop-here').hide();
         }
 
@@ -321,22 +349,22 @@ function readCookie(name) {
         var xhr = new XMLHttpRequest();
         var finished = false;
         xhr.open('POST', "/attachments", true);
-        xhr.onload = function(e) {
-            if(!finished && xhr.status == 200){
+        xhr.onload = function (e) {
+            if (!finished && xhr.status == 200) {
                 finished = true;
                 handleResponse(xhr.responseText);
                 $.message("success", "Successfully uploaded");
             }
 
-            if(xhr.status >= 500){
+            if (xhr.status >= 500) {
                 $.message('error', 'Internal Server Error');
             }
 
-            if(xhr.status == 415){
+            if (xhr.status == 415) {
                 $.message('error', 'Unsupported media type');
             }
 
-            if(xhr.status == 400){
+            if (xhr.status == 400) {
                 $.message("error", "I don't know");
             }
         };
@@ -344,28 +372,28 @@ function readCookie(name) {
 
         var progressBar = new app.ProgressBar('#attachments', xhr.upload);
 
-        xhr.send(formData);  // multipart/form-data
+        xhr.send(formData); // multipart/form-data
     }
 
-    var handleResponse = function(res){
+    var handleResponse = function (res) {
         var response = JSON.parse(res);
-        response.attachments.forEach(function(attachment){
+        response.attachments.forEach(function (attachment) {
             $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "' title='" + attachment + "'><i class='icon-file'></i>" + attachment + "</a><a href='#' class='icon-remove-sign'</li>");
         });
     };
 }(jQuery));
 
-(function($){
+(function ($) {
     if ($("#content.edit").length == 0) return;
 
-    $(function(){
-        if(!(window.File && window.FileReader && window.FileList && window.Blob)) {
-            return $('.drop-here').hide();
+    $(function () {
+        if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+            return $(".drop-here").hide();
         }
 
         // Setup the dnd listeners.
         new app.Dropzone({
-            element: document.getElementById('content'),
+            element: document.getElementById("content"),
             handleFileSelect: handleFileSelect
         });
     });
@@ -392,22 +420,22 @@ function readCookie(name) {
         var xhr = new XMLHttpRequest();
         var finished = false;
         xhr.open('POST', "/images", true);
-        xhr.onload = function(e) {
-            if(!finished && xhr.status == 200){
+        xhr.onload = function (e) {
+            if (!finished && xhr.status == 200) {
                 finished = true;
                 handleResponse.bind(targetElement)(xhr.responseText);
                 $.message("success", "Successfully uploaded");
             }
 
-            if(xhr.status >= 500){
+            if (xhr.status >= 500) {
                 $.message('error', 'Internal Server Error');
             }
 
-            if(xhr.status == 415){
+            if (xhr.status == 415) {
                 $.message('error', 'Unsupported media type');
             }
 
-            if(xhr.status == 400){
+            if (xhr.status == 400) {
                 $.message("error", "I don't know");
             }
         };
@@ -415,84 +443,100 @@ function readCookie(name) {
 
         var progressBar = new app.ProgressBar("#content", xhr.upload);
 
-        xhr.send(formData);  // multipart/form-data
+        xhr.send(formData); // multipart/form-data
     }
 
     var appendAssetStrategy = {
-        image: function(uri) {
+        image: function (uri) {
             return "<img class='polaroid' src='" + uri + "'/>";
         },
-        video: function(uri) {
+        video: function (uri) {
             return "<video class='polaroid' width='640' height='480' src='" + uri + "'/>";
         },
-        audio: function(uri) {
+        audio: function (uri) {
             return "<audio controls src='" + uri + "'/>";
         },
-        text: function(uri) {
+        text: function (uri) {
             return "<a href='" + uri + "'>Link Title</a>";
         }
     };
 
     var handleUriDrop = function (uri, targetElement) {
-        if(uri.indexOf("youtube.com/watch") !== -1) {
+        if (uri.indexOf("youtube.com/watch") !== -1) {
             var youtube = uri.match(/v=(.*?)(?:$|&)/);
-            if(!youtube[1]) return;
-            $(targetElement).append('<iframe width="640" height="480" src="http://www.youtube.com/embed/'+youtube[1]+'" frameborder="0" allowfullscreen></iframe>');
-            $("body").trigger("save");
-        } else if(uri.indexOf("vimeo.com/") !== -1) {
+            if (!youtube[1]) return;
+            $(targetElement)
+                .append('<iframe width="640" height="480" src="http://www.youtube.com/embed/' + youtube[1] + '" frameborder="0" allowfullscreen></iframe>');
+            $("body")
+                .trigger("save");
+        } else if (uri.indexOf("vimeo.com/") !== -1) {
             var vimeo = uri.match(/vimeo.com\/(.*?)(?:$|\?)/);
-            if(!vimeo[1]) return;
-            $(targetElement).append('<iframe src="http://player.vimeo.com/video/'+vimeo[1]+'" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-            $("body").trigger("save");
+            if (!vimeo[1]) return;
+            $(targetElement)
+                .append('<iframe src="http://player.vimeo.com/video/' + vimeo[1] + '" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+            $("body")
+                .trigger("save");
         } else if (uri.indexOf("www.slideshare.net/" !== -1)) {
-            $.getJSON("http://www.slideshare.net/api/oembed/2?url="+ uri +"&format=jsonp&callback=?", function(data) {
+            $.getJSON("http://www.slideshare.net/api/oembed/2?url=" + uri + "&format=jsonp&callback=?", function (data) {
                 $(targetElement).append(data.html);
                 $("body").trigger("save");
             });
         } else {
-            $.get("/detect-content-type", {uri: uri}, function(data) {
+            $.get("/detect-content-type", {
+                uri: uri
+            }, function (data) {
                 var type = data.replace(/\/.*/, "");
-if (appendAssetStrategy[type]) {
-    $(targetElement).append(
-        appendAssetStrategy[type](uri)
-    );
-    $("body").trigger("save");
-} else {
-    $.message('warn', "I dunno know this ditti");
-}
+                if (appendAssetStrategy[type]) {
+                    $(targetElement)
+                        .append(
+                    appendAssetStrategy[type](uri));
+                    $("body")
+                        .trigger("save");
+                } else {
+                    $.message('warn', "I dunno know this ditti");
+                }
             });
         }
     };
 
-    var handleResponse = function(res){
+    var handleResponse = function (res) {
         var targetElement = $(this);
         var response = JSON.parse(res);
-        response.images.forEach(function(image){
+        response.images.forEach(function (image) {
             targetElement.append("<img class='polaroid' src='/images/" + response.pageId + "/" + image + "'/>");
-            $('#images').append("<li><a href='/images/" + response.pageId + "/" + image + "' title='" + image + "'><i class='icon-file'></i>" + image + "</a><a href='#' class='icon-remove-sign'</li>");
+            $('#images')
+                .append("<li><a href='/images/" + response.pageId + "/" + image + "' title='" + image + "'><i class='icon-file'></i>" + image + "</a><a href='#' class='icon-remove-sign'</li>");
         });
-        $("body").trigger("save");
+        $("body")
+            .trigger("save");
     };
 }(jQuery));
 
-(function($) {
-    $(".plain-list").on("click", ".icon-remove-sign", function(e) {
+(function ($) {
+    $(".plain-list")
+        .on("click", ".icon-remove-sign", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        var li = $(this).closest('li');
-        var type = $(this).closest(".plain-list")[0].id;
+        var li = $(this)
+            .closest('li');
+        var type = $(this)
+            .closest(".plain-list")[0].id;
         $.ajax({
             url: "/" + type,
             type: "DELETE",
             data: {
-                file: $(this).prev("a")[0].title
+                file: $(this)
+                    .prev("a")[0].title
             }
-        }).done(function(){
+        })
+            .done(function () {
             li.remove();
         });
     });
 }(jQuery));
 
-(function($){
-    $('pre, code').each(function(i, e) {hljs.highlightBlock(e)});
+(function ($) {
+    $('pre, code').each(function (i, e) {
+        hljs.highlightBlock(e)
+    });
 }(jQuery));
