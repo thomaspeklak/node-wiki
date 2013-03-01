@@ -13,7 +13,7 @@ var setPage = function (req, res) {
         page.path = req.path;
     }
 
-    page.modifiedBy = req.cookies.username || "";
+    page.modifiedBy = req.cookies.username || "";
     return page;
 };
 
@@ -47,11 +47,47 @@ module.exports = function (app) {
         var page = setPage(req, res);
 
         page.save(function (err) {
-            if (err) {
+            if (err)  {
                 return res.send(400);
             }
 
             res.send(200);
         });
+    });
+
+    app.put("*", function (req, res) {
+        if (!res.locals.page) {
+            return res.send(404);
+        }
+
+        var page = res.locals.page;
+        Page.findOne({
+            path: req.body.newPath
+        }, function (err, existingPage) {
+            if (err) {
+                console.error(err);
+                return res.send(500);
+            }
+
+            if (existingPage) {
+                return res.json({
+                    status: "page-exists"
+                });
+            }
+
+            page.path = req.body.newPath;
+            page.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.send(500);
+                }
+
+                res.json({
+                    status: "page-moved",
+                    target: req.body.newPath
+                });
+            });
+        });
+
     });
 };

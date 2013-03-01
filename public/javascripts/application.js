@@ -43,16 +43,16 @@ function readCookie(name) {
 
     var modal = $('<form id="saveUsername" class="modal hide fade">\
                   <div class="modal-header">\
-                  <h3>Identify yourself</h3>\
-                  </div>\
-                  <div class="modal-body">\
-                  <p>Just type a username, node wiki ain\'t no high security vault.</p>\
+                      <h3>Identify yourself</h3>\
+                      </div>\
+                      <div class="modal-body">\
+                      <p>Just type a username, node wiki ain\'t no high security vault.</p>\
                   <p class="control-group"><input placeholder="Username" name="username" required/><br/><br/></p>\
-                  </div>\
-                  <div class="modal-footer">\
-                  <button type="submit" class="btn btn-primary">Save changes</button>\
-                  </div>\
-                  </form>')
+                      </div>\
+                      <div class="modal-footer">\
+                      <button type="submit" class="btn btn-primary">Save changes</button>\
+                      </div>\
+                      </form>')
         .appendTo("body")
         .modal("show");
     $("#saveUsername")
@@ -62,7 +62,7 @@ function readCookie(name) {
 
 (function ($) {
     //Enable link clicking if editor is not active
-    clickingLink = false;
+    var clickingLink = false;
     $(".content.editable")
         .on("mousedown", function (e) {
         if (e.target.tagName == "A" && !$(this)
@@ -88,8 +88,8 @@ function readCookie(name) {
         delay = delay ||  5e3;
         var html = '<div class="alert alert-' + type + '"> \
         <button type="button" class="close" data-dismiss="alert">&times;</button> \
-        ' + message + '\
-        </div>';
+            ' + message + '\
+            </div>';
 
         $(html)
             .appendTo('#messages')
@@ -539,4 +539,46 @@ function readCookie(name) {
     $('pre, code').each(function (i, e) {
         hljs.highlightBlock(e)
     });
+}(jQuery));
+
+(function ($) {
+    $("#move-page").click(function (e) {
+        e.preventDefault();
+        $('<form id="move-page-dialog" class="modal hide fade">\
+          <div class="modal-header">\
+              <h3>Move Page</h3>\
+              </div>\
+              <div class="modal-body">\
+              <p>New Path</p>\
+              <p class="control-group">/ <input placeholder="/page/subpage" name="path" value="' + location.pathname.substring(1) + '"required/><br/><br/></p>\
+              </div>\
+              <div class="modal-footer">\
+              <button type="submit" class="btn btn-primary">Save changes</button>\
+              </div>\
+              </form>')
+            .appendTo("body")
+            .modal("show");
+        $("#move-page-dialog").on("submit", handleSubmit);
+    });
+
+    var handleSubmit = function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "PUT",
+            data: {
+                newPath: "/" + $("input[name=path]").val()
+            }
+        }).done(function (data) {
+            $("#move-page-dialog").modal("hide").remove();
+            if (data.status == "page-exists") {
+                $.message("error", "Target path exists already. Can not move the page");
+            } else {
+                $.message("success", "Page succesfully moved");
+                location.replace(data.target);
+            }
+        }).fail(function (data) {
+            $("#move-page-dialog").modal("hide").remove();
+            $.message("error", "Somthing bad happend");
+        });
+    };
 }(jQuery));
