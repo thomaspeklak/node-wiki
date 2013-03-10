@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    div.navbar
+      div.navbar-inner
+        a(href="#").brand All pages
+        ul.nav
+          li
+            a(href="/pages") List
+          li.active
+            a(href="/pages/covers") Cover
+    ul
+        each page in pages
+           a(href=page.path)
+            div.preview
+              - if (page.attachments.length == 1)
+                img(src="/attachments/" + page._id + "/" + page.attachments[0]).img-polaroid
+              - else 
+                img(src="/images/noimg.png").img-polaroid
+                
+              p= page.title
+            
+
+           

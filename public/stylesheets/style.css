@@ -81,3 +81,23 @@ a {
 .modified-by strong{
     color: #666;
 }
+
+.preview{
+    display:none;
+    text-align: center;
+    padding:10px;
+    float:left;
+    width:130px;
+    height:150px;
+    border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+}
+.preview:hover{
+    background-color:#EDEDED;
+}
+.preview img{
+    max-height:100px;
+    max-width:100px;
+}
+

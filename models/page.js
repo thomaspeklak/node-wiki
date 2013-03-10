@@ -34,12 +34,20 @@ Page.path('tags').set(function(tags) {
     return tags.split(',').map(function(tag) { return tag.trim(); });
 });
 
+
+
 // Pre-defined Queries
 Page.statics.all = function(cb) {
     return this
         .find({})
         .select('title path')
         .sort('title')
+		.exec(cb);
+};
+Page.statics.allWithImages = function(cb){
+    return this
+        .find({})
+        .select("title path attachments")
         .exec(cb);
 };
 
@@ -94,5 +102,4 @@ Page.statics.search = function(query, count, cb) {
 }
 
 Page.plugin(version, { documentProperty : 'title' });
-
 module.exports = mongoose.model('Page', Page);

@@ -23,11 +23,39 @@ module.exports = function (app) {
             // TODO: err
             return res.render("pages", {
                 title: "All Pages",
-                pages: pages
+                pages: pages,
+                content: "Own"
             });
         });
     });
 
+    app.get("/pages/covers", function(req, res){
+        Page.allWithImages(function(err, pages){
+            // Remove all non-images from attachments
+            for (var idx = 0; idx < pages.length; idx ++)
+            {
+                for(var idy = 0; idy < pages[idx].attachments.length; idy ++)
+                {
+                    // Remove all non-images
+                    if (!pages[idx].attachments[idy].match(/(.jpeg|.gif|.jpg|.png)$/i)) 
+                    {
+                        pages[idx].attachments.splice(idy,1);
+                    }
+                }
+                // choose random preview image
+                if (pages[idx].attachments.length > 1)
+                {
+                    var rnd = Math.floor(Math.random() * pages[idx].attachments.length); // Random between 0 and arraylength
+                    pages[idx].attachments = pages[idx].attachments[rnd];
+                }
+            }
+            return res.render("pages_cover", {
+                title: "All Pages",
+                pages: pages,
+                content: "Own"
+            });
+        });
+    });
     app.get("*", function (req, res) {
         if (!res.locals.page) {
             res.locals.page = new Page({
@@ -88,6 +116,5 @@ module.exports = function (app) {
                 });
             });
         });
-
     });
 };
