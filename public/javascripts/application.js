@@ -384,7 +384,7 @@ function readCookie(name) {
 }(jQuery));
 
 (function ($) {
-    if ($("#content.edit").length == 0) return;
+    if ($("#content.editable").length == 0) return;
 
     $(function () {
         if (!(window.File && window.FileReader && window.FileList && window.Blob)) {

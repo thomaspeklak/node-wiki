@@ -23,3 +23,5 @@ public/attachments/*
 public/images/*
 !public/attachments/.gitkeep
 !public/images/.gitkeep
+!uploads/.gitkeep
+uploads
