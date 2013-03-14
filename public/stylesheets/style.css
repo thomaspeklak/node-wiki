@@ -89,9 +89,9 @@ a {
     float:left;
     width:130px;
     height:150px;
-    border-radius: 5px; 
-    -moz-border-radius: 5px; 
-    -webkit-border-radius: 5px; 
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 .preview:hover{
     background-color:#EDEDED;
