@@ -17,6 +17,26 @@ var setPage = function (req, res) {
     return page;
 };
 
+var randomItem = function (items) {
+    if (!items.length) return null;
+
+    return items[Math.floor(Math.random() * items.length)];
+};
+
+var getImage = function (page) {
+    var randomImage = randomItem(page.images);
+    if (randomImage) return "/images/" + page._id + "/" + randomImage;
+
+    var attachments = page.attachments.filter(function (attachment) {
+        return attachment.match(/(.jpeg|.gif|.jpg|.png)$/i);
+    });
+
+    var randomAttachment = randomItem(attachments);
+    if (randomAttachment) return "/attachments/" + page._id + "/" + randomAttachment;
+
+    return "/images/noimg.png";
+};
+
 module.exports = function (app) {
     app.get("/pages", function (req, res) {
         Page.all(function (err, pages) {
@@ -29,30 +49,16 @@ module.exports = function (app) {
         });
     });
 
-    app.get("/pages/covers", function(req, res){
-        Page.allWithImages(function(err, pages){
-            // Remove all non-images from attachments
-            for (var idx = 0; idx < pages.length; idx ++)
-            {
-                for(var idy = 0; idy < pages[idx].attachments.length; idy ++)
-                {
-                    // Remove all non-images
-                    if (!pages[idx].attachments[idy].match(/(.jpeg|.gif|.jpg|.png)$/i)) 
-                    {
-                        pages[idx].attachments.splice(idy,1);
-                    }
-                }
-                // choose random preview image
-                if (pages[idx].attachments.length > 1)
-                {
-                    var rnd = Math.floor(Math.random() * pages[idx].attachments.length); // Random between 0 and arraylength
-                    pages[idx].attachments = pages[idx].attachments[rnd];
-                }
-            }
+    app.get("/pages/covers", function (req, res) {
+        Page.allWithImages(function (err, pages) {
             return res.render("pages_cover", {
                 title: "All Pages",
-                pages: pages,
-                content: "Own"
+                pages: pages.map(function (page) {
+                    return {
+                        title: page.title,
+                        image: getImage(page)
+                    };
+                })
             });
         });
     });

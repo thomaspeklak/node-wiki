@@ -83,6 +83,7 @@ a {
 }
 
 .preview{
+    list-style: none;
     display:none;
     text-align: center;
     padding:10px;

@@ -47,7 +47,7 @@ Page.statics.all = function(cb) {
 Page.statics.allWithImages = function(cb){
     return this
         .find({})
-        .select("title path attachments")
+        .select("title path images attachments")
         .exec(cb);
 };
 
