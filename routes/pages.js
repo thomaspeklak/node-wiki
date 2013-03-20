@@ -34,7 +34,7 @@ var getImage = function (page) {
     var randomAttachment = randomItem(attachments);
     if (randomAttachment) return "/attachments/" + page._id + "/" + randomAttachment;
 
-    return "/images/noimg.png";
+    return "/static-images/noimg.png";
 };
 
 module.exports = function (app) {
