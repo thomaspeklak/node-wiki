@@ -56,7 +56,8 @@ module.exports = function (app) {
                 pages: pages.map(function (page) {
                     return {
                         title: page.title,
-                        image: getImage(page)
+                        image: getImage(page),
+                        path: page.path
                     };
                 })
             });
