@@ -22,5 +22,6 @@
     },
     "devDependencies": {
         "livereload": "*"
-    }
+    },
+    "license" : "MIT"
 }
