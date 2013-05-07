@@ -14,6 +14,40 @@ var previous = function (versions, id) {
     }
 };
 
+
+var loadPage = function (req, res, next) {
+    Page.findOne({_id: req.params.pageId }, function (err, page) {
+        if (err) {
+            console.error(err);
+            res.send(500);
+        }
+        if (!page) {
+            return res.send(404);
+        }
+
+        req.page = page;
+
+        next();
+    });
+};
+
+var loadVersion = function (req, res, next) {
+    Page.VersionedModel.findOne({refId: req.params.pageId }, function (err, history) {
+        if (err) {
+            console.error(err);
+            res.send(500);
+        }
+
+        req.version = history.versions.id(req.params.version);
+
+        if (!history || !req.version) {
+            return res.send(404);
+        }
+
+        next();
+    });
+};
+
 module.exports = function (app) {
     app.get("/versions", function (req, res) {
         Page.VersionedModel.latest(100, function (err, pages) {
@@ -48,13 +82,13 @@ module.exports = function (app) {
         }).exec(function (err, history) {
             if (err) {
                 console.error(err);
-                res.send(500);
+                return res.send(500);
             }
 
             var version = history.versions.id(req.params.version);
 
             if (!version) {
-                res.send(404);
+                return res.send(404);
             }
 
             res.render("version", {
@@ -66,6 +100,24 @@ module.exports = function (app) {
                 next: next(history.versions, req.params.version),
                 previous: previous(history.versions, req.params.version),
             });
+        });
+    });
+
+    app.post("/versions/:pageId/:version/restore", [loadPage, loadVersion], function (req, res) {
+        var page = req.page;
+        var version = req.version;
+
+        page.title = version.title;
+        page.content = version.content;
+        page.modifiedBy = version.modifiedBy;
+        page.tags = version.tags;
+
+        page.save(function (err) {
+            if (err) {
+                return res.send(500);
+            }
+
+            res.redirect(page.path);
         });
     });
 };
