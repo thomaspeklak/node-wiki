@@ -7,13 +7,11 @@ block content
                 th Title
                 th Modified By
                 th Date Modified
-                th Date Created
             each version in document.versions
                 tr
                     td: a(href="/versions/#{page._id}/#{version._id}")= version.title
                     td= version.modifiedBy
                     td= version.lastModified
-                    td= version.created
     else
         h1 No versions yet
 
