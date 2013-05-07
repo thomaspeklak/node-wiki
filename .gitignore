@@ -25,3 +25,4 @@ public/images/*
 !public/images/.gitkeep
 !uploads/.gitkeep
 uploads
+.tern-port
