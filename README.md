@@ -13,7 +13,7 @@ Contrary to other wikis you simply type an URL and if the page does not exist, e
 
 Then simply open http://localhost:3000 and edit the page. Or go to another url (e.g. http://localhost:3000/new-entry) and edit this page.
 
-#Usage Guide
+##Usage Guide
 
 ###Create new page
 
@@ -34,6 +34,10 @@ __Drop a ...__
 - __audio__ link to create an audio element
 - __video__ link to create a video element
 - __slideshare__ link to embed a slideshare presentation
+
+###Versions
+
+Node Wiki uses [mongoose-version](https://github.com/saintedlama/mongoose-version) to create a new version on every save of a document. To restore a version go to _show versions_ in the side bar, select a version and restore it.
 
 ##What to expect next?
 
