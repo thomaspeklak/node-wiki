@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    h1 Version for #{page.title}
+    small from #{version.lastModified}
+
+    if previous
+        a(href="/versions/#{page._id}/#{previous._id}") Previous
+    if next
+        a(href="/versions/#{page._id}/#{next._id}") Next
+
+    dl
+        dt Title
+        dd= version.title
+
+        dt URI
+        dd= version.path
+
+        dt Modified by
+        dd= version.modifiedBy
+
+        dt Last modified
+        dd= version.lastModified
+
+        dt Content
+        dd!= version.content
+
+        dt Tags
+        dd= version.tags.join(", ")
+
+    form(method="POST", action="/versions/#{page._id}/#{version._id}/restore")
+        input(type="submit").btn.btn-warning(href="#{page.path}", value="Restore")
+    a.btn.btn-primary(href="#{page.path}") Back to page

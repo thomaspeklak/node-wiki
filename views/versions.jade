@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    if(document && document.versions) 
+    if(document && document.versions)
         table.table.tVable-bordered
             tr
                 th Title
@@ -10,11 +10,11 @@ block content
                 th Date Created
             each version in document.versions
                 tr
-                    td= version.title
+                    td: a(href="/versions/#{page._id}/#{version._id}")= version.title
                     td= version.modifiedBy
                     td= version.lastModified
                     td= version.created
     else
         h1 No versions yet
-                  
+
     a.btn.btn-primary(href="#{page.path}") Back to page
