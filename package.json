@@ -1,7 +1,7 @@
 {
     "name": "node-wiki",
     "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "scripts": {
         "start": "nodemon -w lib -w models -w routes app.js"
     },
