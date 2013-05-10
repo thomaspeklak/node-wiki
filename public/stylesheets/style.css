@@ -119,3 +119,7 @@ a {
 #staticNavigation li > a {
     text-decoration: none;
 }
+
+#attachments a.icon-remove-sign {
+    cursor: pointer !important;
+}
