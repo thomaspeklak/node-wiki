@@ -1,0 +1,35 @@
+
+mixin renderNavigation(navigationItems)
+    ul.nav.nav-list
+        li.nav-header Seiten
+          
+        each navigationItem in navigationItems
+            li
+                a(href=navigationItem.path)= navigationItem.title
+
+mixin fileDropper
+    #drop-zone.drop-here dateien hier ablegen
+
+mixin attachments(files)
+    h3 Anhänge
+    ul#attachments.attachments.plain-list
+        for file in files
+            li 
+                a(href="/attachments/#{page._id}/#{file}", title="#{file}")
+                    i.icon-file
+                    = file
+                a.icon-remove-sign
+    
+mixin images(files)
+    h3 Bilder
+    ul#images.images.plain-list
+        for file in files
+            li 
+                a(href="/images/#{page._id}/#{file}", title="#{file}")
+                    i.icon-picture
+                    = file
+                a.icon-remove-sign
+
+mixin versionLink(page)
+    h3 Versions-Historie
+    a(href="/versions/#{page._id}") Versionen anzeigen

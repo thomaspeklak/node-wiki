@@ -1,6 +1,8 @@
 "use strict";
 
 var Page = require("../models/page");
+var config = require("../config/app");
+var i18n = require("../public/locale/" + config.locale);
 
 module.exports = function (app) {
     app.get("/tags", function (req, res) {
@@ -12,8 +14,8 @@ module.exports = function (app) {
                 return res.send(500);
             }
             res.render("tags", {
-                title: "All Pages",
-                tags: result,
+                title: i18n["All Pages"],
+                tags: result
             });
         });
     });
@@ -27,7 +29,7 @@ module.exports = function (app) {
             }
 
             res.render("tag", {
-                title: "Tag: " + req.params.tag,
+                title: i18n["Tag"] + ": " + req.params.tag,
                 pages: result
             });
         });

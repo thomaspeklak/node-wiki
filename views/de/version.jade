@@ -1,0 +1,38 @@
+extends layout
+
+block content
+    .btn-group
+        if previous
+            a.btn(href="/versions/#{page._id}/#{previous._id}") Vorherige
+        else
+            span.btn.disabled Vorherige
+        if next
+            a.btn(href="/versions/#{page._id}/#{next._id}") Folgende
+        else
+            span.btn.disabled Folgende
+
+    h1 Version for #{page.title}
+    small from #{version.lastModified}
+
+    dl
+        dt Titel
+        dd= version.title
+
+        dt URI
+        dd= version.path
+
+        dt Verändert von
+        dd= version.modifiedBy
+
+        dt Zuletzt modifiziert
+        dd= version.lastModified
+
+        dt Inhalt
+        dd!= version.content
+
+        dt Tags
+        dd= version.tags.join(", ")
+
+    form(method="POST", action="/versions/#{page._id}/#{version._id}/restore")
+        input.pull-right(type="submit").btn.btn-danger(href="#{page.path}", value="Wiederherstellen")
+    a.btn.btn-primary(href="#{page.path}") Zurück zur Seite

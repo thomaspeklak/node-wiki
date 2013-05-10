@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    div.navbar
+      div.navbar-inner
+        a(href="#").brand All pages
+        ul.nav
+          li.active
+            a(href="/pages") List
+          li
+            a(href="/pages/covers") Cover    
+    ul
+        each page in pages
+            li
+                a(href=page.path)= page.title
+
