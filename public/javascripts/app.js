@@ -175,6 +175,7 @@ window.app = {
             .bind("save", save);
 
         CKEDITOR.inline("content", {
+            language: locale,
             on: {
                 blur: save
             }

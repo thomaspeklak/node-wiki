@@ -38,6 +38,7 @@ var i18n = {
 // DOM and node translation
 if (typeof window !== 'undefined') {
     window.i18n = i18n;
+    window.locale = "en";
 } else {
     module.exports = i18n;
 }
