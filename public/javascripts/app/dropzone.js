@@ -18,7 +18,8 @@ jQuery(document).ready(function() {
 
             // Only handle file uploads, no e.g. text/html copy&pastes
             if (evt.dataTransfer &&
-                evt.dataTransfer.files && evt.dataTransfer.files.length > 0) {
+                evt.dataTransfer.files &&
+                evt.dataTransfer.files.length && evt.dataTransfer.files.length > 0) {
                 me.handleFileSelect.apply(me, arguments);
             }
         }, false);
