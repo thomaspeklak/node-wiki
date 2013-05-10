@@ -20,9 +20,6 @@ Page.pre('save', function(next) {
     if (!this.created) {
         this.created = new Date();
     }
-
-    console.log('wtf?', this.tags);
-
     this.lastModified = new Date();
 
     next();

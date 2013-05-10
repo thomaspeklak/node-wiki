@@ -180,7 +180,12 @@ window.app = {
 
         CKEDITOR.inline("content", {
             language: locale,
-            format_tags: 'p;h1;h2;h3;pre',
+            //format_tags: 'p;h1;h2;h3;pre',
+            allowedContent: true,
+            protectedSource: [],
+            removeFormatAttributes : '',
+            removeFormatTags : '',
+            removeButtons: '',
             extraPlugins: 'nodewikilink,toolbar,sourcedialog',
             toolbar: [
                 { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
@@ -405,7 +410,6 @@ window.app = {
             if (uri) {
                 return handleUriDrop(uri, evt.target);
             }
-
             uploadFiles(document.location.href, evt.dataTransfer.files, evt.target);
         };
 
