@@ -2,12 +2,13 @@
 
 var express = require("express"),
     http = require("http"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+    config = require("./config/app");
 
-mongoose.connect(process.env.DB || "mongodb://localhost/nodewiki", function (err) {
+mongoose.connect(process.env.DB || "mongodb://localhost/nodewiki-" + config.locale, function (err) {
     if (err) {
         console.log("Could not connect to database \"" +
-            "mongodb://localhost/nodewiki" +
+            "mongodb://localhost/nodewiki-" + config.locale +
             "\". Ensure that a mongo db instance is up and running.");
         console.log(err);
         process.exit(1);
@@ -20,7 +21,7 @@ app.disable("x-powered-by");
 
 app.configure(function () {
     app.set("port", process.env.PORT || 3000);
-    app.set("views", __dirname + "/views");
+    app.set("views", __dirname + "/views/" + config.locale);
     app.set("view engine", "jade");
     app.use(express.favicon());
     app.use(express.logger("dev"));
@@ -39,6 +40,7 @@ app.configure("development", function () {
 });
 
 app.all("*", require("./middleware/load-navigation"));
+app.all("*", require("./middleware/load-static-navigation"));
 app.all("*", require("./middleware/build-breadcrumbs"));
 app.all("*", require("./middleware/load-page"));
 

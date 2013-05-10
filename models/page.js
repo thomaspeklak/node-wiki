@@ -20,7 +20,6 @@ Page.pre('save', function(next) {
     if (!this.created) {
         this.created = new Date();
     }
-
     this.lastModified = new Date();
 
     next();
@@ -29,6 +28,10 @@ Page.pre('save', function(next) {
 Page.path('tags').set(function(tags) {
     if (util.isArray(tags)) {
         return tags;
+    }
+
+    if (tags === '') {
+        return [];
     }
 
     return tags.split(',').map(function(tag) { return tag.trim(); });

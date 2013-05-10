@@ -6,8 +6,8 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
     link(rel="stylesheet", href="/vendor/highlight.js/styles/solarized_light.css")
+    script(type='text/javascript', src='/locale/en.js')
     script(type='text/javascript', src='/vendor/requirejs/require.min.js')
-    script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
     script
         window.jQuery || document.write('<script src="/vendor/jquery-1.7.1.min.js"><\/script>')
     script(type='text/javascript', src='/vendor/bootstrap/js/bootstrap.js')
@@ -15,14 +15,14 @@ html
   body
       .navbar.navbar-static-top.navbar-inverse
           .navbar-inner
-              a.brand(href="/") Node Wiki
+              a.brand(href="/") Main page
               ul.nav
                   li
-                      a(href="/pages") All Pages
+                      a(href="/pages") All pages
                   li
-                      a(href="/tags") All Tags
+                      a(href="/tags") All tags
                   li
-                      a(href="/versions") Version History
+                      a(href="/versions") Version history
                   li.dropdown
                       a.dropdown-toggle(href="#", data-toggle="dropdown") 
                           | Changes 
@@ -46,7 +46,10 @@ html
                             | Tasks
                             b.caret
                         ul.dropdown-menu
-                            li: a#move-page(href="#") Move Page
+                            li: a#new-page(href="#") New page
+                            li: a#move-page(href="#") Move this page
+                            li: a#delete-page(href="#") Delete this page
+                            li: a#edit-navigation(href="#") Edit navigation
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")
@@ -55,13 +58,16 @@ html
             #messages.messages
             .row
                 .span3
-                    block navigation                                                    
-                        mixin renderNavigation(navigation)
+                    block navigation
+                        mixin renderStaticNavigation(staticNavigation)
+
+                        if (dynamicNavigation)
+                            mixin renderNavigation(navigation)
                     block pagemeta
 
                 .span9
                     -if (breadcrumbs.length)
-                        ul.breadcrumb
+                        ul#site-breadcrumb.breadcrumb
                             each breadcrumb in breadcrumbs
                                 li
                                     a(href=breadcrumb.path)= breadcrumb.segment
@@ -72,5 +78,5 @@ html
         .scripts
             script(type="text/javascript", src='/vendor/ckeditor/ckeditor.js')
             script(src="/vendor/highlight.js/highlight.pack.js")
-            script(type="text/javascript", src="/javascripts/application.js")
+            script(type="text/javascript", src="/javascripts/app.js")
 

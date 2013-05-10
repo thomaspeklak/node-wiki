@@ -33,6 +33,7 @@ module.exports = function (app) {
         if(!req.files.attachments) { return res.send(400); }
         var files = req.files.attachments[0] ? req.files.attachments : [req.files.attachments];
 
+        /* Allow all types for being uploaded
         var unsupportedMedia = files.some(function (file) {
             return supportedMediaTypes.media.indexOf(file.type) === -1;
         });
@@ -40,6 +41,7 @@ module.exports = function (app) {
         if (unsupportedMedia) {
             return res.send(415);
         }
+        */
 
         var page = req.page;
 

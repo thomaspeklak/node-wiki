@@ -11,12 +11,13 @@ block content
 
     #content.content.editable(contenteditable)
         != page.content
-    if(page.modifiedBy)
-        .modified-by last modified by 
-            strong= page.modifiedBy
+
+    //-if(page.modifiedBy)
+    //-    .modified-by zuletzt bearbeitet von
+    //-        strong= page.modifiedBy
 
 block pagemeta
-    mixin fileDropper
     mixin attachments(page.attachments)
+    mixin fileDropper
     mixin images(page.images)
     mixin versionLink(page)

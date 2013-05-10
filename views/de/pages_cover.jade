@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    div.navbar
+        div.navbar-inner
+            a(href="#").brand Alle Seiten
+            ul.nav
+                li
+                    a(href="/pages") Liste
+                li.active
+                    a(href="/pages/covers") Cover
+    ul
+        each page in pages
+            li.preview
+                a(href=page.path)
+                    img(src="#{page.image}").img-polaroid
+                    p= page.title

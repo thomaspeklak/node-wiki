@@ -2,6 +2,8 @@
 
 var Page = require("../models/page");
 var setProps = require("../lib/set-props");
+var config = require("../config/app");
+var i18n = require("../public/locale/" + config.locale);
 
 var setPage = function (req, res) {
     var page = res.locals.page;
@@ -38,21 +40,61 @@ var getImage = function (page) {
 };
 
 module.exports = function (app) {
+
     app.get("/pages", function (req, res) {
         Page.all(function (err, pages) {
             // TODO: err
             return res.render("pages", {
-                title: "All Pages",
+                title: i18n["All Pages"],
                 pages: pages,
-                content: "Own"
+                content: "-"
             });
         });
     });
 
+    app.post("/page/deleteprompt", function(req, res) {
+
+        var password = req.body.password;
+
+        if (password === config.contentManagerPassword) {
+
+            res.json({
+                status: 'OK'
+            });
+
+        } else {
+            res.json({
+                status: 'ERROR'
+            });
+        }
+    });
+
+    app.delete("/page", function(req, res) {
+
+        var pageTitle = req.body.file;
+
+        Page.findOne({title: pageTitle}, function(err, page) {
+
+            if (page && page.remove) {
+                page.remove();
+
+                res.json({
+                    status: 'OK'
+                });
+            } else {
+
+                res.json({
+                    status: 'ERROR'
+                });
+            }
+        });
+    });
+
+
     app.get("/pages/covers", function (req, res) {
         Page.allWithImages(function (err, pages) {
             return res.render("pages_cover", {
-                title: "All Pages",
+                title: i18n["All Pages"],
                 pages: pages.map(function (page) {
                     return {
                         title: page.title,
@@ -66,9 +108,9 @@ module.exports = function (app) {
     app.get("*", function (req, res) {
         if (!res.locals.page) {
             res.locals.page = new Page({
-                title: "new page",
-                tags: "add tags as comma separated list",
-                content: "Content"
+                title: i18n["click here and enter page title"],
+                tags: i18n["add tags as comma separated list"],
+                content: i18n["click here and enter new content..."]
             });
         }
 
