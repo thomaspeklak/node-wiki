@@ -1,5 +1,9 @@
 a {
-    color: #00B7FF;
+    color: #bb0000;
+}
+
+.container a {
+    color: #bb0000 !important;
 }
 .tags {
     margin: 1em 0;
