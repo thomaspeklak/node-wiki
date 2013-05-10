@@ -19,7 +19,7 @@ var i18n = {
     "Page Versions": "Seiten-Versionen",
     "Versions": "Versionen",
     "Version for": "Version für ",
-    "Move page": "Seite verschieben",
+    "Move page": "Seite neu einordnen",
     "New path": "Neuer Pfad",
     "Target path exists already. Can not move the page": "Der Ziel-Pfad existiert bereits. Verschieben nicht möglich.",
     "Page succesfully moved": "Die Seite wurde erfolgreich verschoben.",

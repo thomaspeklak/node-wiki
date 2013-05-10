@@ -19,7 +19,7 @@ var i18n = {
     "Page Versions": "Page Versions",
     "Versions": "Versions",
     "Version for": "Version for",
-    "Move page": "Move page",
+    "Move page": "Re-order page",
     "New path": "New path",
     "Target path exists already. Can not move the page": "Target path exists already. Can not move the page",
     "Page succesfully moved": "Page succesfully moved",
