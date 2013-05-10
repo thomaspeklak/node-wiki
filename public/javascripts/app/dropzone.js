@@ -10,10 +10,18 @@ jQuery(document).ready(function() {
     };
 
     Dropzone.prototype.addEventListeners = function () {
+        var me = this;
         this.element.addEventListener('dragover', this.handleDragOver, false);
         this.element.addEventListener('dragenter', this.toggleState, false);
         this.element.addEventListener('dragleave', this.toggleState, false);
-        this.element.addEventListener('drop', this.handleFileSelect, false);
+        this.element.addEventListener('drop', function(evt) {
+
+            // Only handle file uploads, no e.g. text/html copy&pastes
+            if (evt.dataTransfer &&
+                evt.dataTransfer.files && evt.dataTransfer.files.length) {
+                me.handleFileSelect.apply(me, arguments);
+            }
+        }, false);
     };
 
     function handleDragOver(evt) {
