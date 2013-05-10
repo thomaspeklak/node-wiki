@@ -5,6 +5,10 @@ a {
 .container a {
     color: #bb0000 !important;
 }
+.container a.btn, .container a.btn-primary {
+    color: #ffffff !important;
+}
+
 .tags {
     margin: 1em 0;
     color: darkgreen;
@@ -126,4 +130,8 @@ a {
 
 #attachments a.icon-remove-sign {
     cursor: pointer !important;
+}
+
+.imagesDesc {
+    padding-bottom:10px;
 }
