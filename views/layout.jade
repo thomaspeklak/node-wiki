@@ -24,12 +24,12 @@ html
                   li
                       a(href="/versions") Version history
                   li.dropdown
-                      a.dropdown-toggle(href="#", data-toggle="dropdown") 
-                          | Changes 
+                      a.dropdown-toggle(href="#", data-toggle="dropdown")
+                          | Changes
                           b.caret
-            
+
                       ul.dropdown-menu
-                    
+
                           li.nav-header Latest Pages
                           each page in latest
                               li
@@ -42,7 +42,7 @@ html
 
                 ul.nav.pull-right
                     li.dropdown.pull-right
-                        a.dropdown-toggle(href="#", data-toggle="dropdown") 
+                        a.dropdown-toggle(href="#", data-toggle="dropdown")
                             | Tasks
                             b.caret
                         ul.dropdown-menu
@@ -53,15 +53,16 @@ html
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")
-                                            
+
         .container
             #messages.messages
             .row
                 .span3
                     block navigation
-                        mixin renderStaticNavigation(staticNavigation)
+                        if (typeof staticNavigation !== "undefined")
+                            mixin renderStaticNavigation(staticNavigation)
 
-                        if (dynamicNavigation)
+                        if (typeof dynamicNavigation !== "undefined")
                             mixin renderNavigation(navigation)
                     block pagemeta
 
