@@ -16,7 +16,7 @@
         "express-mongoose": "0.1.x",
         "async": "*",
         "mkdirp": "0.3.x",
-        "request" : "2.2.x",
+        "request" : "2.21.x",
         "validator" : "1.1.x",
         "mongoose-version": "0.2.x"
     },
