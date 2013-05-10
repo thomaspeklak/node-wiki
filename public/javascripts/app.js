@@ -350,7 +350,6 @@ window.app = {
                     finished = true;
                     handleResponse(xhr.responseText);
                     $.message("success", i18n["Successfully uploaded"]);
-                    progressBar.remove();
                 }
 
                 if (xhr.status >= 500) {
@@ -364,6 +363,7 @@ window.app = {
                 if (xhr.status == 400) {
                     $.message("error", i18n["I don't know"]);
                 }
+                progressBar.remove();
             };
 
             progressBar = new app.ProgressBar('#attachments', xhr.upload);
