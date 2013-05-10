@@ -1,9 +1,9 @@
 {
     "name": "node-wiki",
     "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
-    "version": "0.1",
+    "version": "0.0.4",
     "scripts": {
-        "start": "nodemon -w lib -w models -w routes app.js"
+        "start": "nodemon -w config -w lib -w models -w routes -w middleware app.js"
     },
     "repository": {
         "type": "git"
@@ -18,7 +18,8 @@
         "mkdirp": "0.3.x",
         "request" : "2.21.x",
         "validator" : "1.1.x",
-        "mongoose-version": "0.2.x"
+        "mongoose-version": "0.2.x",
+        "i18n-2": "0.4.x"
     },
     "devDependencies": {
         "livereload": "*"

@@ -1,8 +1,6 @@
 "use strict";
 
 var Page = require("../models/page");
-var config = require("../config/app");
-var i18n = require("../public/locale/" + config.locale);
 
 var next = function (versions, id) {
     for (var i = 0; i < versions.length; i++) {
@@ -55,7 +53,7 @@ module.exports = function (app) {
         Page.VersionedModel.latest(100, function (err, pages) {
             res.render("versionedpages", {
                 pages: pages,
-                title: i18n["Page Versions"]
+                title: req.i18n.__("Page Versions")
             });
         });
     });
@@ -74,7 +72,7 @@ module.exports = function (app) {
             page: Page.findOne({
                 _id: pageId
             }),
-            title: i18n["Versions"]
+            title: req.i18n.__("Versions")
         });
     });
 
@@ -98,9 +96,9 @@ module.exports = function (app) {
                 page: Page.findOne({
                     _id: req.params.pageId
                 }),
-                title: i18n["Version for"] + " " + version.title,
+                title: req.i18n.__("Version for") + " " + version.title,
                 next: next(history.versions, req.params.version),
-                previous: previous(history.versions, req.params.version),
+                previous: previous(history.versions, req.params.version)
             });
         });
     });

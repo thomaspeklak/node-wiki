@@ -2,8 +2,6 @@
 
 var Page = require("../models/page");
 var setProps = require("../lib/set-props");
-var config = require("../config/app");
-var i18n = require("../public/locale/" + config.locale);
 
 var setPage = function (req, res) {
     var page = res.locals.page;
@@ -45,7 +43,7 @@ module.exports = function (app) {
         Page.all(function (err, pages) {
             // TODO: err
             return res.render("pages", {
-                title: i18n["All Pages"],
+                title: req.i18n.__("All Pages"),
                 pages: pages,
                 content: "-"
             });
@@ -94,7 +92,7 @@ module.exports = function (app) {
     app.get("/pages/covers", function (req, res) {
         Page.allWithImages(function (err, pages) {
             return res.render("pages_cover", {
-                title: i18n["All Pages"],
+                title: req.i18n.__("All Pages"),
                 pages: pages.map(function (page) {
                     return {
                         title: page.title,
@@ -108,9 +106,9 @@ module.exports = function (app) {
     app.get("*", function (req, res) {
         if (!res.locals.page) {
             res.locals.page = new Page({
-                title: i18n["click here and enter page title"],
-                tags: i18n["add tags as comma separated list"],
-                content: i18n["click here and enter new content..."]
+                title: req.i18n.__("click here and enter page title"),
+                tags: req.i18n.__("add tags as comma separated list"),
+                content: req.i18n.__("click here and enter new content...")
             });
         }
 

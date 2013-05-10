@@ -2,8 +2,7 @@
 
 var Page = require('../models/page');
 var async = require("async");
-var config = require("../config/app");
-var i18n = require("../public/locale/" + config.locale);
+var config = require("../config");
 
 var subNodes = function (req, res, cb) {
     Page.subNodes(req.path, function (err, subPages) {

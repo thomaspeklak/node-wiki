@@ -3,9 +3,10 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
+    I18n = require("i18n-2"),
     config = require("./config");
 
-mongoose.connect(process.env.DB || config.db, function (err) {
+mongoose.connect(process.env.DB || config.db.url, function (err) {
     if (err) {
         console.log("Could not connect to database \"" +
             "mongodb://localhost/nodewiki-" + config.locale +
@@ -21,7 +22,7 @@ app.disable("x-powered-by");
 
 app.configure(function () {
     app.set("port", process.env.PORT || config.port);
-    app.set("views", __dirname + "/views/" + config.locale);
+    app.set("views", __dirname + "/views");
     app.set("view engine", "jade");
     app.use(express.favicon());
     app.use(express.logger("dev"));
@@ -31,6 +32,9 @@ app.configure(function () {
     app.use(express.cookieParser());
     app.use(express.methodOverride());
 
+    I18n.expressBind(app, {
+        locales: config.locales
+    });
     app.use(express.static(__dirname + "/public"));
     app.use(app.router);
 });
