@@ -9,18 +9,18 @@ window.app = {
     dependencies: [
 
         // Application sub-classes
-        'javascripts/app/cookie',
-        'javascripts/app/progressbar',
-        'javascripts/app/dropzone',
+        '/javascripts/app/cookie.js',
+        '/javascripts/app/progressbar.js',
+        '/javascripts/app/dropzone.js',
 
         // Controllers
-        'javascripts/controller/move-page',
-        'javascripts/controller/delete-page',
-        'javascripts/controller/delete-attachment',
-        'javascripts/controller/new-page',
+        '/javascripts/controller/move-page.js',
+        '/javascripts/controller/delete-page.js',
+        '/javascripts/controller/delete-attachment.js',
+        '/javascripts/controller/new-page.js',
 
         // External modules auto-loading
-        'javascripts/modules'
+        '/javascripts/modules.js'
     ],
 
     preloadImages: function ($) {
@@ -144,12 +144,18 @@ window.app = {
             // update HTML document title
             document.title = $("h1.title").html();
 
+            var tags = $(".tags div").html();
+
+            if (tags === i18n["add tags as comma separated list"]) {
+                tags = "";
+            }
+
             if (changed) {
                 data = newData;
                 $.post(document.location.href, {
                     content: $(".content.editable").html(),
                     title: $("h1.title").html(),
-                    tags: $(".tags div").html()
+                    tags: tags
                 })
                     .success(saved)
                     .error(savingError);

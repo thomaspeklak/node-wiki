@@ -7,9 +7,6 @@ mixin renderNavigation(navigationItems)
             li
                 a(href=navigationItem.path)= navigationItem.title
 
-mixin fileDropper
-    #drop-zone.drop-here dateien hier ablegen
-
 mixin attachments(files)
     h3 Anhänge
     ul#attachments.attachments.plain-list
@@ -19,7 +16,11 @@ mixin attachments(files)
                     i.icon-file
                     = file
                 a.icon-remove-sign
-    
+
+mixin fileDropper
+    #drop-zone.drop-here dateien hier ablegen
+
+
 mixin images(files)
     h3 Bilder
     ul#images.images.plain-list

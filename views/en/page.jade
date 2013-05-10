@@ -16,7 +16,7 @@ block content
             strong= page.modifiedBy
 
 block pagemeta
-    mixin fileDropper
     mixin attachments(page.attachments)
+    mixin fileDropper
     mixin images(page.images)
     mixin versionLink(page)

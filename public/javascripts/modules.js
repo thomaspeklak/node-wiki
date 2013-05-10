@@ -1,6 +1,6 @@
 // Module system
 require([
-    'javascripts/modules/dummy'
+    '/javascripts/modules/dummy.js'
 ], function() {
 
     if (console) {
