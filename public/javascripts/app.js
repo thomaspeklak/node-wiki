@@ -479,6 +479,12 @@ window.app = {
         });
     },
 
+    decodeBreadcrumbComponents: function($) {
+        $(".breadcrumb a").each(function(index, ele) {
+            ele.innerHTML = decodeURIComponent(ele.innerHTML);
+        });
+    },
+
     /**
      * Calls static methods to be executed on app launch
      * when the DOM is ready.
@@ -497,6 +503,7 @@ window.app = {
         this.initDropZoneDropping(jQuery);
         this.initContentDropping(jQuery);
         this.initSyntaxHighlighting(jQuery);
+        this.decodeBreadcrumbComponents(jQuery);
 
         console.log('Launched.');
     }
