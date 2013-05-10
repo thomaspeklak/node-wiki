@@ -31,7 +31,8 @@ var i18n = {
     "Please enter the new page's path": "Bitte geben Sie den Pfad der neuen Seite ein.",
     "Page couldn't be created.": "Seite konnte nicht erstellt werden. Möglicherweise existiert sie schon?",
     "No static navigation found. Create page 'navigation' first.": "Keine statische Navigation gefunden. Legen Sie zunächst eine Seite mit dem Namen 'navigation' an.",
-    "Slashes and hashes are not allowed in page names.": "Slashes und Rauten sind in Seiten-Namen nicht erlaubt."
+    "Slashes and hashes are not allowed in page names.": "Slashes und Rauten sind in Seiten-Namen nicht erlaubt.",
+    "Please name and save the page first.": "Bitte speichern Sie zuerst die Seite und geben sie ihr einen Namen."
 };
 
 // DOM and node translation

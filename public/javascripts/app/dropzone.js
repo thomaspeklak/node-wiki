@@ -16,12 +16,27 @@ jQuery(document).ready(function() {
         this.element.addEventListener('dragleave', this.toggleState, false);
         this.element.addEventListener('drop', function(evt) {
 
+            var doUpload = false;
+
             // Only handle file uploads, no e.g. text/html copy&pastes
             if (evt.dataTransfer &&
                 evt.dataTransfer.files &&
                 evt.dataTransfer.files.length && evt.dataTransfer.files.length > 0) {
+                doUpload = true;
+            }
+
+            // Check for page being saved first
+            if ($('.title.edit').html() !== i18n["click here and enter page title"]) {
+                doUpload = true;
+            } else {
+                doUpload = false;
+                $.message("error", i18n["Please name and save the page first."], 2e3);
+            }
+
+            if (doUpload) {
                 me.handleFileSelect.apply(me, arguments);
             }
+
         }, false);
     };
 
