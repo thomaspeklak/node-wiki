@@ -32,7 +32,9 @@ var i18n = {
     "Page couldn't be created.": "Page couldn't be created. Maybe it's already existing?",
     "No static navigation found. Create page 'navigation' first.": "No static navigation found. Create a page named 'navigation' first.",
     "Slashes and hashes are not allowed in page names.": "Slashes and hashes are not allowed in page names.",
-    "Please name and save the page first.": "Please name and save the page first."
+    "Please name and save the page first.": "Please name and save the page first.",
+    'Name your link target here': 'Name your link target here',
+    'Link to a wiki page': 'Link to a wiki page'
 };
 
 // DOM and node translation

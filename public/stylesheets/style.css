@@ -77,7 +77,8 @@ a {
     text-align:right;
 }
 
-.modified-by strong{
+.modified-by strong {
+    padding-left: 5px;
     color: #666;
 }
 
@@ -105,3 +106,16 @@ a {
     cursor: pointer !important;
 }
 
+#site-breadcrumb {
+    margin-top: 18px;
+    padding: 3px 8px;
+    margin-bottom: 16px;
+}
+
+#staticNavigation li {
+    line-height: 24px;
+}
+
+#staticNavigation li > a {
+    text-decoration: none;
+}

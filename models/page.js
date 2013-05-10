@@ -21,6 +21,8 @@ Page.pre('save', function(next) {
         this.created = new Date();
     }
 
+    console.log('wtf?', this.tags);
+
     this.lastModified = new Date();
 
     next();
@@ -29,6 +31,10 @@ Page.pre('save', function(next) {
 Page.path('tags').set(function(tags) {
     if (util.isArray(tags)) {
         return tags;
+    }
+
+    if (tags === '') {
+        return [];
     }
 
     return tags.split(',').map(function(tag) { return tag.trim(); });

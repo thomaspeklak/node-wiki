@@ -10,7 +10,7 @@
            CKEDITOR.dialog.add( 'NodeWikiLinkDialog', function (instance)
            {
               return {
-                 title : 'Link to wiki page',
+                 title : i18n['Link to a wiki page'],
                  minWidth : 550,
                  minHeight : 60,
                  onShow: function() {
@@ -27,7 +27,7 @@
                              elements :[{
                                 id : 'wikiLinkAnchor',
                                 type : 'text',
-                                label : 'Name your link target here',
+                                label : i18n['Name your link target here'],
                                 'autofocus':'autofocus',
                                 setup: function(element){
                                 },
@@ -49,13 +49,11 @@
 
             editor.ui.addButton( 'NodeWikiLink',
             {
-                label: 'Link to wiki page',
+                label: i18n['Link to a wiki page'],
                 command: 'NodeWikiLink',
                 icon: '/static-images/icons/nodewikilink.png',
                 toolbar: 'links,0'
             } );
-
-            console.log('nodewikilink');
         }
     } );
 } )();

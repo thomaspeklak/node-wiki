@@ -21,6 +21,7 @@ window.app = {
         '/javascripts/controller/delete-page.js',
         '/javascripts/controller/delete-attachment.js',
         '/javascripts/controller/new-page.js',
+        '/javascripts/controller/edit-navigation.js',
 
         // External modules auto-loading
         '/javascripts/modules.js'
@@ -151,15 +152,17 @@ window.app = {
             // update HTML document title
             document.title = $("h1.title").html();
 
-            var tags = $(".tags div")[0].innerHTML;
+            var tags = $(".tags div")[0].innerHTML.replace('<br>', '');
 
             // check that there is no dummy tag being
             // Firefox inserts a <br> when no text is there anymore when contenteditable
-            if (tags === i18n["add tags as comma separated list"] || tags.indexOf('br') > -1) {
+            if (tags === i18n["add tags as comma separated list"]) {
                 tags = "";
             }
 
             app.insertTagsPlaceholderWhenEmpty(jQuery);
+
+            console.log('change tags?!', changed);
 
             if (changed) {
                 data = newData;
@@ -179,7 +182,36 @@ window.app = {
 
         CKEDITOR.inline("content", {
             language: locale,
-            extraPlugins: 'nodewikilink',
+            format_tags: 'p;h1;h2;h3;pre',
+            extraPlugins: 'nodewikilink,toolbar,sourcedialog',
+            toolbar: [
+                { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Scayt' ] },
+                { name: 'links', items: [ 'NodeWikiLink', 'Link', 'Unlink', 'Anchor' ] },
+                { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+                { name: 'tools', items: [ 'Maximize' ] },
+                { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Sourcedialog' ] },
+                { name: 'others', items: [ '-' ] },
+                '/',
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', 'Underline', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+                { name: 'styles', items: [ 'Styles', 'Format' ] }
+            ],
+            toolbarGroups: [
+                { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+                { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
+                { name: 'links' },
+                { name: 'insert' },
+                { name: 'forms' },
+                { name: 'tools' },
+                { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+                { name: 'others' },
+                '/',
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+                { name: 'styles' },
+                { name: 'colors' }
+            ],
             on: {
                 blur: save
             }
@@ -504,7 +536,8 @@ window.app = {
         var tagsContent = $('.tags .edit')[0];
 
         if (tagsContent) {
-            if (tagsContent.innerHTML == '' || tagsContent.innerHTML.indexOf('br') > -1) {
+
+            if (tagsContent.innerHTML.replace('<br>', '') == '') {
                 tagsContent.innerHTML = i18n["add tags as comma separated list"];
             }
         }

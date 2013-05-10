@@ -47,8 +47,9 @@ html
                             b.caret
                         ul.dropdown-menu
                             li: a#new-page(href="#") Neue Seite
-                            li: a#move-page(href="#") Seite verschieben
-                            li: a#delete-page(href="#") Seite löschen
+                            li: a#move-page(href="#") Diese Seite verschieben
+                            li: a#delete-page(href="#") Diese Seite löschen
+                            li: a#edit-navigation(href="#") Navigation bearbeiten
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Suchen...", name="q", id="q")
@@ -66,7 +67,7 @@ html
 
                 .span9
                     -if (breadcrumbs.length)
-                        ul.breadcrumb
+                        ul#site-breadcrumb.breadcrumb
                             each breadcrumb in breadcrumbs
                                 li
                                     a(href=breadcrumb.path)= breadcrumb.segment
