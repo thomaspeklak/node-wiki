@@ -1,3 +1,3 @@
 if (console) {
-    console.log('Dummy module loaded.');
+    //console.log('Dummy module loaded.');
 }

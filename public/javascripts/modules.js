@@ -4,6 +4,6 @@ require([
 ], function() {
 
     if (console) {
-        console.log('All modules loaded.');
+        //console.log('All modules loaded.');
     }
 });

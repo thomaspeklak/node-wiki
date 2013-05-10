@@ -120,6 +120,8 @@ window.app = {
 
     initCKEditor: function (CKEDITOR) {
 
+        var me = this;
+
         //initize CK editor and page save events
         if ($(".content.editable")
             .length == 0) {
@@ -137,6 +139,8 @@ window.app = {
         var data = getData();
         var save = function () {
             var newData = getData();
+
+            // check for content to have been changed before saving
             var changed = ["content", "title", "tags"].some(function (key) {
                 return data[key] != newData[key];
             });
@@ -144,11 +148,15 @@ window.app = {
             // update HTML document title
             document.title = $("h1.title").html();
 
-            var tags = $(".tags div").html();
+            var tags = $(".tags div")[0].innerHTML;
 
-            if (tags === i18n["add tags as comma separated list"]) {
+            // check that there is no dummy tag being
+            // Firefox inserts a <br> when no text is there anymore when contenteditable
+            if (tags === i18n["add tags as comma separated list"] || tags.indexOf('br') > -1) {
                 tags = "";
             }
+
+            app.insertTagsPlaceholderWhenEmpty(jQuery);
 
             if (changed) {
                 data = newData;
@@ -219,7 +227,8 @@ window.app = {
 
                 for (var i = 0, textNode; textNode = textNodes[i++];) {
                     endCharCount = charCount + textNode.length;
-                    if (!foundStart && start >= charCount && (start < endCharCount || (start == endCharCount && i < textNodes.length))) {
+                    if (!foundStart && start >= charCount &&
+                        (start < endCharCount || (start == endCharCount && i < textNodes.length))) {
                         range.setStart(textNode, start - charCount);
                         foundStart = true;
                     }
@@ -485,14 +494,23 @@ window.app = {
         });
     },
 
+    insertTagsPlaceholderWhenEmpty: function($) {
+
+        var tagsContent = $('.tags .edit')[0];
+
+        if (tagsContent) {
+            if (tagsContent.innerHTML == '' || tagsContent.innerHTML.indexOf('br') > -1) {
+                tagsContent.innerHTML = i18n["add tags as comma separated list"];
+            }
+        }
+    },
+
     /**
      * Calls static methods to be executed on app launch
      * when the DOM is ready.
      * @return void
      */
     launch: function () {
-
-        console.log('Launching...');
 
         this.preloadImages(jQuery);
         this.checkUserAuth(jQuery);
@@ -504,8 +522,7 @@ window.app = {
         this.initContentDropping(jQuery);
         this.initSyntaxHighlighting(jQuery);
         this.decodeBreadcrumbComponents(jQuery);
-
-        console.log('Launched.');
+        this.insertTagsPlaceholderWhenEmpty(jQuery);
     }
 };
 
