@@ -10,7 +10,7 @@ var staticNavigation = function (req, res, cb) {
             if (page) {
                 res.locals.staticNavigation = page.content;
             } else {
-                res.locals.staticNavigation = req.i18n.__("No static navigation found. Create page 'navigation' first.");
+                res.locals.staticNavigation = req.i18n.__("no-static-navigation-found");
             }
         }
         cb(err);

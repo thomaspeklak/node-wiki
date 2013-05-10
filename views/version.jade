@@ -12,7 +12,8 @@ block content
             span.btn.disabled= __("next")
 
     h1= __("version-for", page.title)
-    small= __("modified-by", version.lastmodified)
+    small= __("modified-by")
+        strong= version.lastmodified
 
     dl
         dt= __("title")
@@ -21,10 +22,10 @@ block content
         dt= __("uri")
         dd= version.path
 
-        dt= __("modified by")
+        dt= __("modified-by")
         dd= version.modifiedBy
 
-        dt= __("last modified")
+        dt= __("last-modified-by")
         dd= version.lastModified
 
         dt= __("content")
