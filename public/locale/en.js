@@ -29,7 +29,8 @@ var i18n = {
     "Could not delete page.": "The page wasn't deleted. Maybe it's not existing or it is a system page.",
     "New page": "New page",
     "Please enter the new page's path": "Please enter the new page's path",
-    "Page couldn't be created.": "Page couldn't be created. Maybe it's already existing?"
+    "Page couldn't be created.": "Page couldn't be created. Maybe it's already existing?",
+    "No static navigation found. Create page 'navigation' first.": "No static navigation found. Create a page named 'navigation' first."
 };
 
 // DOM and node translation

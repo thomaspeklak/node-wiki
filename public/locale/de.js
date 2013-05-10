@@ -29,7 +29,8 @@ var i18n = {
     "Could not delete page.": "Die Seite konnte nicht gelöscht werden. Möglicherweise existiert sie nicht oder ist eine Systemseite.",
     "New page": "Neue Seite",
     "Please enter the new page's path": "Bitte geben Sie den Pfad der neuen Seite ein.",
-    "Page couldn't be created.": "Seite konnte nicht erstellt werden. Möglicherweise existiert sie schon?"
+    "Page couldn't be created.": "Seite konnte nicht erstellt werden. Möglicherweise existiert sie schon?",
+    "No static navigation found. Create page 'navigation' first.": "Keine statische Navigation gefunden. Legen Sie zunächst eine Seite mit dem Namen 'navigation' an."
 };
 
 // DOM and node translation

@@ -57,7 +57,8 @@ html
             #messages.messages
             .row
                 .span3
-                    block navigation                                                    
+                    block navigation
+                        mixin renderStaticNavigation(staticNavigation)
                         mixin renderNavigation(navigation)
                     block pagemeta
 

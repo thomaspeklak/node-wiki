@@ -40,6 +40,7 @@ app.configure("development", function () {
 });
 
 app.all("*", require("./middleware/load-navigation"));
+app.all("*", require("./middleware/load-static-navigation"));
 app.all("*", require("./middleware/build-breadcrumbs"));
 app.all("*", require("./middleware/load-page"));
 

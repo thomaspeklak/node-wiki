@@ -1,8 +1,11 @@
+mixin renderStaticNavigation(navigationContent)
+    h3 Navigation
+    div!=navigationContent
 
 mixin renderNavigation(navigationItems)
+    h3 Unterseiten
     ul.nav.nav-list
-        li.nav-header Seiten
-          
+
         each navigationItem in navigationItems
             li
                 a(href=navigationItem.path)= navigationItem.title
