@@ -8,6 +8,9 @@ window.app = {
 
     dependencies: [
 
+        // CKEditor plugin
+        '/javascripts/ckeditor/nodewikilink.js',
+
         // Application sub-classes
         '/javascripts/app/cookie.js',
         '/javascripts/app/progressbar.js',
@@ -176,6 +179,7 @@ window.app = {
 
         CKEDITOR.inline("content", {
             language: locale,
+            extraPlugins: 'nodewikilink',
             on: {
                 blur: save
             }

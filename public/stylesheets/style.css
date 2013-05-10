@@ -101,3 +101,7 @@ a {
     max-width:100px;
 }
 
+.content a {
+    cursor: pointer !important;
+}
+
