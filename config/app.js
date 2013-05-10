@@ -2,5 +2,6 @@
 
 module.exports = {
     locale: "de",
-    contentManagerPassword: "admin"
+    contentManagerPassword: "admin",
+    dynamicNavigation: false
 };

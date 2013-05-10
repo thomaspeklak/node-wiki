@@ -2,10 +2,18 @@
 
 var Page = require('../models/page');
 var async = require("async");
+var config = require("../config/app");
+var i18n = require("../public/locale/" + config.locale);
 
 var subNodes = function (req, res, cb) {
     Page.subNodes(req.path, function (err, subPages) {
         if (!err) {res.locals.navigation = subPages; }
+
+        if (config.dynamicNavigation) {
+            res.locals.dynamicNavigation = true;
+        } else {
+            res.locals.dynamicNavigation = false;
+        }
 
         cb(err);
     });

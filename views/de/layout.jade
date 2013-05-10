@@ -59,7 +59,9 @@ html
                 .span3
                     block navigation
                         mixin renderStaticNavigation(staticNavigation)
-                        mixin renderNavigation(navigation)
+
+                        if (dynamicNavigation)
+                            mixin renderNavigation(navigation)
                     block pagemeta
 
                 .span9
