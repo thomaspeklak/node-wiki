@@ -6,6 +6,7 @@
     {
         init: function( editor )
         {
+            var baseText = '';
            CKEDITOR.dialog.add( 'NodeWikiLinkDialog', function (instance)
            {
               return {
@@ -13,9 +14,9 @@
                  minWidth : 550,
                  minHeight : 60,
                  onShow: function() {
-
+                     baseText = editor.getSelection().getSelectedText();
                      this.getContentElement('iframe', 'wikiLinkAnchor').setValue(
-                         editor.getSelection().getSelectedText()
+                         baseText
                      );
                  },
                  contents :
@@ -38,7 +39,7 @@
                   onOk: function() {
                         var a = instance.document.createElement('a');
                         a.setAttribute('href', '/' + this.getContentElement('iframe', 'wikiLinkAnchor').getValue());
-                        a.setHtml(this.getContentElement('iframe', 'wikiLinkAnchor').getValue());
+                        a.setHtml(baseText);
                         instance.insertElement(a);
                   }
               };
