@@ -1,8 +1,0 @@
-extends layout
-
-block content
-    h1 Latest Page Versions
-    ul
-        each page in pages
-            li
-                a(href="/versions/#{page.refId}")= page.title

@@ -1,9 +1,0 @@
-
-extends layout
-
-block content
-    h1 All Tags
-    ul
-        each tag in tags
-            li
-                a(href="/tags/" + tag._id) #{tag._id} (#{tag.value})
