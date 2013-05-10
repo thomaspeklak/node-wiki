@@ -15,27 +15,27 @@ html
   body
       .navbar.navbar-static-top.navbar-inverse
           .navbar-inner
-              a.brand(href="/") Main page
+              a.brand(href="/")= __("home")
               ul.nav
                   li
-                      a(href="/pages") All pages
+                      a(href="/pages")= __("all-pages")
                   li
-                      a(href="/tags") All tags
+                      a(href="/tags")= __("all-tags")
                   li
-                      a(href="/versions") Version history
+                      a(href="/versions")= __("version-history")
                   li.dropdown
                       a.dropdown-toggle(href="#", data-toggle="dropdown")
-                          | Changes
+                          |= __("changes")
                           b.caret
 
                       ul.dropdown-menu
 
-                          li.nav-header Latest Pages
+                          li.nav-header= __("latest-pages")
                           each page in latest
                               li
                                   a(href=page.path)= page.title
 
-                          li.nav-header Recent Changes
+                          li.nav-header= __("recent-changes")
                           each page in recentChanges
                               li
                                   a(href=page.path)= page.title
@@ -43,17 +43,17 @@ html
                 ul.nav.pull-right
                     li.dropdown.pull-right
                         a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Tasks
+                            |= __("tasks")
                             b.caret
                         ul.dropdown-menu
-                            li: a#new-page(href="#") New page
-                            li: a#move-page(href="#") Move this page
-                            li: a#delete-page(href="#") Delete this page
+                            li: a#new-page(href="#")= __("new-page")
+                            li: a#move-page(href="#")= __("move-this-page")
+                            li: a#delete-page(href="#")= __("delete-this-page")
                             if (typeof staticNavigation !== "undefined")
-                                li: a#edit-navigation(href="#") Edit navigation
+                                li: a#edit-navigation(href="#")= __("edit-navigation")
 
                 form.navbar-search.pull-right(action="/search", method="GET")
-                    input.search-query(type="text", placeholder="Search", name="q", id="q")
+                    input.search-query(type="text", placeholder="#{__("search")}", name="q", id="q")
 
         .container
             #messages.messages
