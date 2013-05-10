@@ -49,7 +49,8 @@ html
                             li: a#new-page(href="#") New page
                             li: a#move-page(href="#") Move this page
                             li: a#delete-page(href="#") Delete this page
-                            li: a#edit-navigation(href="#") Edit navigation
+                            if (typeof staticNavigation !== "undefined")
+                                li: a#edit-navigation(href="#") Edit navigation
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")
