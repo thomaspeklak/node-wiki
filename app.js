@@ -3,9 +3,9 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
-    config = require("./config/app");
+    config = require("./config");
 
-mongoose.connect(process.env.DB || "mongodb://localhost/nodewiki-" + config.locale, function (err) {
+mongoose.connect(process.env.DB || config.db, function (err) {
     if (err) {
         console.log("Could not connect to database \"" +
             "mongodb://localhost/nodewiki-" + config.locale +
@@ -20,7 +20,7 @@ var app = express();
 app.disable("x-powered-by");
 
 app.configure(function () {
-    app.set("port", process.env.PORT || 3000);
+    app.set("port", process.env.PORT || config.port);
     app.set("views", __dirname + "/views/" + config.locale);
     app.set("view engine", "jade");
     app.use(express.favicon());
