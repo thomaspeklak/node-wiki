@@ -30,7 +30,7 @@ var i18n = {
     "New page": "New page",
     "Please enter the new page's path": "Please enter the new page's path",
     "Page couldn't be created.": "Page couldn't be created. Maybe it's already existing?",
-    "No static navigation found. Create page 'navigation' first.": "No static navigation found. Create a page named 'navigation' first."
+    "No static navigation found. Create page 'navigation' first.": "No static navigation found. Create a page named 'navigation' first.",
     "Slashes and hashes are not allowed in page names.": "Slashes and hashes are not allowed in page names."
 };
 
