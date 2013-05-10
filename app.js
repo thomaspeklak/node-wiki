@@ -3,7 +3,6 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
-    optimist = require("optimist"),
     config = require("./config/app");
 
 mongoose.connect(process.env.DB || "mongodb://localhost/nodewiki-" + config.locale, function (err) {
