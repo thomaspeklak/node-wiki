@@ -1,8 +1,0 @@
-extends layout
-
-block content
-    h1 #{title}
-    ul
-        each page in pages
-            li
-                a(href=page.path)= page.title
