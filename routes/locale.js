@@ -13,6 +13,7 @@ module.exports = function (app) {
             res.send(404);
         });
 
+        res.header("Content-type", "application/javascript");
         res.write("window.locale = \"" + locale + "\";");
         res.write("window.i18n = ");
         stream.pipe(res);
