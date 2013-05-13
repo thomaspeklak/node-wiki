@@ -80,6 +80,7 @@ a {
 
 .modified-by strong{
     color: #666;
+    padding-left: 5px;
 }
 
 .preview{
