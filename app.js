@@ -31,6 +31,10 @@ app.configure(function () {
     app.use(express.cookieParser());
     app.use(express.methodOverride());
 
+    I18n.expressBind(app, {
+        locales: config.locales
+    });
+
     app.use(express.static(__dirname + "/public"));
     app.use(app.router);
 });

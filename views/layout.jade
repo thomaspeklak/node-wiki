@@ -7,6 +7,7 @@ html
     link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
     link(rel="stylesheet", href="/vendor/highlight.js/styles/solarized_light.css")
     script(type='text/javascript', src='/vendor/requirejs/require.min.js')
+    script(type='text/javascript', src='/javascripts/locale.js')
     script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
     script
         window.jQuery || document.write('<script src="/vendor/jquery-1.7.1.min.js"><\/script>')
@@ -24,12 +25,12 @@ html
                   li
                       a(href="/versions") Version History
                   li.dropdown
-                      a.dropdown-toggle(href="#", data-toggle="dropdown") 
-                          | Changes 
+                      a.dropdown-toggle(href="#", data-toggle="dropdown")
+                          | Changes
                           b.caret
-            
+
                       ul.dropdown-menu
-                    
+
                           li.nav-header Latest Pages
                           each page in latest
                               li
@@ -42,7 +43,7 @@ html
 
                 ul.nav.pull-right
                     li.dropdown.pull-right
-                        a.dropdown-toggle(href="#", data-toggle="dropdown") 
+                        a.dropdown-toggle(href="#", data-toggle="dropdown")
                             | Tasks
                             b.caret
                         ul.dropdown-menu
@@ -50,12 +51,12 @@ html
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")
-                                            
+
         .container
             #messages.messages
             .row
                 .span3
-                    block navigation                                                    
+                    block navigation
                         mixin renderNavigation(navigation)
                     block pagemeta
 

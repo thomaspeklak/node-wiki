@@ -1,0 +1,23 @@
+{
+	"home": "home",
+	"all-pages": "all-pages",
+	"all-tags": "all-tags",
+	"version-history": "version-history",
+	"changes": "changes",
+	"latest-pages": "latest-pages",
+	"recent-changes": "recent-changes",
+	"tasks": "tasks",
+	"new-page": "new-page",
+	"move-this-page": "move-this-page",
+	"delete-this-page": "delete-this-page",
+	"search": "search",
+	"sub-pages": "sub-pages",
+	"attachments": "attachments",
+	"drop-files-here": "drop-files-here",
+	"images": "images",
+	"drop-images-and-other-media": "drop-images-and-other-media",
+	"versions": "versions",
+	"show-versions": "show-versions",
+	"tags": "tags",
+	"last-modified-by": "last-modified-by"
+}
