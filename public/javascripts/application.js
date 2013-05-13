@@ -75,28 +75,6 @@ function readCookie(name) {
 }(jQuery));
 
 (function ($) {
-    //Enable link clicking if editor is not active
-    var clickingLink = false;
-    $(".content.editable")
-        .on("mousedown", function (e) {
-        if (e.target.tagName == "A" && !$(this)
-            .hasClass("cke_focus")) {
-            clickingLink = true;
-            e.preventDefault();
-            e.stopImmediatePropagation();
-        }
-    })
-        .on("mouseup", function (e) {
-        if (clickingLink) {
-            location.href = e.target.href;
-            e.preventDefault();
-            e.stopImmediatePropagation();
-        }
-        clickingLink = false;
-    });
-}(jQuery));
-
-(function ($) {
     //provide an interface to display a message to the user
     $.message = function (type, message, delay) {
         delay = delay ||  5e3;
@@ -114,6 +92,44 @@ function readCookie(name) {
     function remove() {
         $(this).remove();
     }
+}(jQuery));
+
+(function ($) {
+    //Enable link clicking if editor is not active
+    var clickingLink = false;
+
+    var openLink = function (el, e) {
+        if(e.ctrlKey || e.metaKey || e.button === 1) {
+            window.open(el.href);
+        } else {
+            location.href = el.href;
+        }
+    };
+
+    document.querySelector(".content.editable").addEventListener("focus", function (e) {
+        if (clickingLink) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            this.contentEditable = true;
+            this.blur();
+        }
+    }, true);
+
+    $(".content.editable")
+        .on("mousedown", function (e) {
+        if (e.target.tagName == "A" && !$(this)
+            .hasClass("cke_focus")) {
+            clickingLink = true;
+            this.contentEditable = false;
+            e.stopImmediatePropagation();
+            openLink(e.target, e);
+        }
+    }).on("click", function (e) {
+        if (clickingLink) {
+            e.preventDefault();
+            clickingLink = false;
+        }
+    });
 }(jQuery));
 
 (function (CKEDITOR) {
