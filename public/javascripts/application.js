@@ -346,8 +346,23 @@ function readCookie(name) {
     app.Dropzone = Dropzone;
 }(app));
 
+(function (app) {
+    app.handleErrors = function (xhr) {
+        if (xhr.status >= 500) {
+            $.message('error', __("error-500"));
+        }
 
-(function ($) {
+        if (xhr.status == 415) {
+            $.message('error', __("error-415"));
+        }
+
+        if (xhr.status == 400) {
+            $.message("error", __("error-400"));
+        }
+    };
+}(app));
+
+(function ($, app) {
     if ($(".drop-here").length == 0) return;
 
     $(function () {
@@ -386,17 +401,7 @@ function readCookie(name) {
                 $.message("success", __("successfully-uploaded"));
             }
 
-            if (xhr.status >= 500) {
-                $.message('error', __("error-500"));
-            }
-
-            if (xhr.status == 415) {
-                $.message('error', __("error-415"));
-            }
-
-            if (xhr.status == 400) {
-                $.message("error", __("error-400"));
-            }
+            app.handleErrors(xhr);
         };
 
 
@@ -411,9 +416,9 @@ function readCookie(name) {
             $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "' title='" + attachment + "'><i class='icon-file'></i>" + attachment + "</a><a href='#' class='icon-remove-sign'</li>");
         });
     };
-}(jQuery));
+}(jQuery, app));
 
-(function ($) {
+(function ($, app) {
     if ($("#content.editable").length == 0) return;
 
     $(function () {
@@ -423,7 +428,7 @@ function readCookie(name) {
 
         // Setup the dnd listeners.
         new app.Dropzone({
-            element: document.getElementById("content"),
+            element: document.getElementById("content").parentNode,
             handleFileSelect: handleFileSelect
         });
     });
@@ -457,17 +462,7 @@ function readCookie(name) {
                 $.message("success", __("successfully-uploaded"));
             }
 
-            if (xhr.status >= 500) {
-                $.message('error', __("error-500"));
-            }
-
-            if (xhr.status == 415) {
-                $.message('error', __("error-415"));
-            }
-
-            if (xhr.status == 400) {
-                $.message("error", __("error-400"));
-            }
+            app.handleErrors(xhr);
         };
 
 
@@ -540,7 +535,7 @@ function readCookie(name) {
         $("body")
             .trigger("save");
     };
-}(jQuery));
+}(jQuery, app));
 
 (function ($) {
     $(".plain-list")
