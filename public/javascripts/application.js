@@ -25,7 +25,7 @@ function readCookie(name) {
 
 (function (exports) {
     var translate = function (key) {
-        var args = arguments.length > 1 ? [].prototype.slice.call(arguments, 1) : null;
+        var args = arguments.length > 1 ? [].prototype.slice.call(arguments, 1) : [];
         if (exports.i18n.hasOwnProperty(key)) {
             return window.vsprintf(exports.i18n[key], args);
         }
