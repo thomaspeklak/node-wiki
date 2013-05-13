@@ -106,7 +106,10 @@ function readCookie(name) {
         }
     };
 
-    document.querySelector(".content.editable").addEventListener("focus", function (e) {
+    var content = document.querySelector(".content.editable");
+    if (!content) return;
+
+    content.addEventListener("focus", function (e) {
         if (clickingLink) {
             e.stopImmediatePropagation();
             e.preventDefault();
