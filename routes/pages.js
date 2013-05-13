@@ -67,7 +67,7 @@ module.exports = function (app) {
         if (!res.locals.page) {
             res.locals.page = new Page({
                 title: "new page",
-                tags: "add tags as comma separated list",
+                tags: req.i18n.__("tags-description"),
                 content: "Content"
             });
         }

@@ -3,9 +3,10 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
+    I18n = require("i18n-2"),
     config = require("./config");
 
-mongoose.connect(process.env.DB || config.db, function (err) {
+mongoose.connect(process.env.DB || config.db.url, function (err) {
     if (err) {
         console.log("Could not connect to database \"" +
             "mongodb://localhost/nodewiki" +

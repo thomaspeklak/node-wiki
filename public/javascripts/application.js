@@ -23,10 +23,25 @@ function readCookie(name) {
     return null;
 }
 
+(function (exports) {
+    var translate = function (key) {
+        var args = arguments.length > 1 ? [].prototype.slice.call(arguments, 1) : null;
+        if (exports.i18n.hasOwnProperty(key)) {
+            return window.vsprintf(exports.i18n[key], args);
+        }
+
+        throw new Error("I18n: no translation for key: \"" + key + "\"");
+    };
+
+    exports.__ = translate;
+}(window));
+
+
 (function ($) {
     //prompt user for a username if he has not already provided one
 
     if (readCookie("username")) return;
+
     function handleSubmit(e) {
         e.preventDefault();
         var username = $("input[name=username]").val();
@@ -42,14 +57,14 @@ function readCookie(name) {
 
     var modal = $('<form id="saveUsername" class="modal hide fade">\
                   <div class="modal-header">\
-                      <h3>Identify yourself</h3>\
+                      <h3>' + __('identify-yourself') + '</h3>\
                       </div>\
                       <div class="modal-body">\
-                      <p>Just type a username, node wiki ain\'t no high security vault.</p>\
-                  <p class="control-group"><input placeholder="Username" name="username" required/><br/><br/></p>\
+                      <p>' + __('provide-username') + '</p>\
+                      <p class="control-group"><input placeholder="' + __('username') + '" name="username" required/><br/><br/></p>\
                       </div>\
                       <div class="modal-footer">\
-                      <button type="submit" class="btn btn-primary">Save changes</button>\
+                      <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
                       </div>\
                       </form>')
         .appendTo("body")
@@ -154,12 +169,12 @@ function readCookie(name) {
     });
 
     var saved = function () {
-        $.message("success", "Page saved", 2e3);
+        $.message("success", __("page-saved"), 2e3);
         $(".modified-by strong")
             .text(readCookie("username"));
     };
     var savingError = function () {
-        $.message("error", "Page could not be saved, please try again later", 2e3);
+        $.message("error", __("page-could-not-be-saved"), 2e3);
     };
 
 }(CKEDITOR));
@@ -216,7 +231,7 @@ function readCookie(name) {
 
     $(".tags .edit")
         .focus(function () {
-        if (this.innerText == "add tags as comma separated list") {
+        if (this.innerText == __("tags-description")) {
             var el = this;
             setTimeout(function () {
                 setSelectionRange(el, 0, el.innerText.length);
@@ -226,7 +241,7 @@ function readCookie(name) {
 
     $("h1.edit")
         .focus(function () {
-        if (this.innerText == "new page") {
+        if (this.innerText == __("new-page")) {
             var el = this;
             setTimeout(function () {
                 setSelectionRange(el, 0, el.innerText.length);
@@ -239,7 +254,7 @@ function readCookie(name) {
     app.ProgressBar = function (target, upload) {
         var self = this;
 
-        this.element = $('<progress min="0" max="100" value="0">0% complete</progress>')
+        this.element = $('<progress min="0" max="100" value="0">0%</progress>')
             .appendTo(target)[0];
 
         upload.onprogress = function (e) {
@@ -255,7 +270,7 @@ function readCookie(name) {
                 },
                 set: function (value) {
                     this.element.value = value;
-                    this.textContent = this.value; // Fallback for unsupported browsers.
+                    this.textContent = this.value + "%"; // Fallback for unsupported browsers.
 
                     if (this.value == 100) {
                         this.remove();
@@ -352,19 +367,19 @@ function readCookie(name) {
             if (!finished && xhr.status == 200) {
                 finished = true;
                 handleResponse(xhr.responseText);
-                $.message("success", "Successfully uploaded");
+                $.message("success", __("successfully-uploaded"));
             }
 
             if (xhr.status >= 500) {
-                $.message('error', 'Internal Server Error');
+                $.message('error', __("error-500"));
             }
 
             if (xhr.status == 415) {
-                $.message('error', 'Unsupported media type');
+                $.message('error', __("error-415"));
             }
 
             if (xhr.status == 400) {
-                $.message("error", "I don't know");
+                $.message("error", __("error-400"));
             }
         };
 
@@ -423,19 +438,19 @@ function readCookie(name) {
             if (!finished && xhr.status == 200) {
                 finished = true;
                 handleResponse.bind(targetElement)(xhr.responseText);
-                $.message("success", "Successfully uploaded");
+                $.message("success", __("successfully-uploaded"));
             }
 
             if (xhr.status >= 500) {
-                $.message('error', 'Internal Server Error');
+                $.message('error', __("error-500"));
             }
 
             if (xhr.status == 415) {
-                $.message('error', 'Unsupported media type');
+                $.message('error', __("error-415"));
             }
 
             if (xhr.status == 400) {
-                $.message("error", "I don't know");
+                $.message("error", __("error-400"));
             }
         };
 
@@ -456,7 +471,7 @@ function readCookie(name) {
             return "<audio controls src='" + uri + "'/>";
         },
         text: function (uri) {
-            return "<a href='" + uri + "'>Link Title</a>";
+            return "<a href='" + uri + "'>" + __("link-title") + "</a>";
         }
     };
 
@@ -488,11 +503,11 @@ function readCookie(name) {
                 if (appendAssetStrategy[type]) {
                     $(targetElement)
                         .append(
-                    appendAssetStrategy[type](uri));
+                        appendAssetStrategy[type](uri));
                     $("body")
                         .trigger("save");
                 } else {
-                    $.message('warn', "I dunno know this ditti");
+                    $.message('warn', __("unsupported-drop"));
                 }
             });
         }
@@ -545,14 +560,14 @@ function readCookie(name) {
         e.preventDefault();
         $('<form id="move-page-dialog" class="modal hide fade">\
           <div class="modal-header">\
-              <h3>Move Page</h3>\
+              <h3>' + __("move-page") + '</h3>\
               </div>\
               <div class="modal-body">\
-              <p>New Path</p>\
+              <p>" + __("new-page") + "</p>\
               <p class="control-group">/ <input placeholder="/page/subpage" name="path" value="' + location.pathname.substring(1) + '"required/><br/><br/></p>\
               </div>\
               <div class="modal-footer">\
-              <button type="submit" class="btn btn-primary">Save changes</button>\
+              <button type="submit" class="btn btn-primary">' + __("save-changes") + '</button>\
               </div>\
               </form>')
             .appendTo("body")
@@ -570,19 +585,19 @@ function readCookie(name) {
         }).done(function (data) {
             $("#move-page-dialog").modal("hide").remove();
             if (data.status == "page-exists") {
-                $.message("error", "Target path exists already. Can not move the page");
+                $.message("error", __("error-target-path-exists"));
             } else {
-                $.message("success", "Page succesfully moved");
+                $.message("success", __("page-moved"));
                 location.replace(data.target);
             }
         }).fail(function (data) {
             $("#move-page-dialog").modal("hide").remove();
-            $.message("error", "Somthing bad happend");
+            $.message("error", __("error-400"));
         });
     };
 }(jQuery));
 
-(function ($){
+(function ($) {
     // Load Images before show them - pages/covers
     // Fix cached images issues
     $(".img-polaroid").one("load", function () {
@@ -593,4 +608,3 @@ function readCookie(name) {
         if (this.complete) $(this).load();
     });
 }(jQuery));
-
