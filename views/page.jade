@@ -5,18 +5,20 @@ block content
 
     div.tags
         h2.label.label-success
-            i.icon-tags 
-            | &nbsp;Tags
+            i.icon-tags
+            | &nbsp;
+            = __("tags")
         div.edit(contenteditable)= page.tags.join(", ")
 
     #content.content.editable(contenteditable)
         != page.content
+
     if(page.modifiedBy)
-        .modified-by last modified by 
+        .modified-by= __("last-modified-by")
             strong= page.modifiedBy
 
 block pagemeta
-    mixin fileDropper
     mixin attachments(page.attachments)
+    mixin fileDropper
     mixin images(page.images)
     mixin versionLink(page)

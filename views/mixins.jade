@@ -1,35 +1,34 @@
-
 mixin renderNavigation(navigationItems)
+    h3= __("sub-pages")
     ul.nav.nav-list
-        li.nav-header Pages
-          
         each navigationItem in navigationItems
             li
                 a(href=navigationItem.path)= navigationItem.title
 
-mixin fileDropper
-    #drop-zone.drop-here drop files here    
-
 mixin attachments(files)
-    h3 Attachments
+    h3= __("attachments")
     ul#attachments.attachments.plain-list
         for file in files
-            li 
+            li
                 a(href="/attachments/#{page._id}/#{file}", title="#{file}")
                     i.icon-file
                     = file
                 a.icon-remove-sign
-    
+
+mixin fileDropper
+    #drop-zone.drop-here= __("drop-files-here")
+
 mixin images(files)
-    h3 Images
+    h3= __("images")
+    div.imagesDesc= __("drop-images-and-other-media")
     ul#images.images.plain-list
         for file in files
-            li 
+            li
                 a(href="/images/#{page._id}/#{file}", title="#{file}")
                     i.icon-picture
                     = file
                 a.icon-remove-sign
 
 mixin versionLink(page)
-    h3 Version History
-    a(href="/versions/#{page._id}") Show versions
+    h3= __("versions")
+    a(href="/versions/#{page._id}")= __("show-versions")

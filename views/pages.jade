@@ -3,12 +3,12 @@ extends layout
 block content
     div.navbar
       div.navbar-inner
-        a(href="#").brand All pages
+        a(href="#").brand= __("all-pages")
         ul.nav
           li.active
-            a(href="/pages") List
+            a(href="/pages")= __("list")
           li
-            a(href="/pages/covers") Cover    
+            a(href="/pages/covers")= __("cover")
     ul
         each page in pages
             li

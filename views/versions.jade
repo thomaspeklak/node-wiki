@@ -4,15 +4,15 @@ block content
     if(document && document.versions)
         table.table.tVable-bordered
             tr
-                th Title
-                th Modified By
-                th Date Modified
+                th= __("title")
+                th= __("modified-by")
+                th= __("date-modified")
             each version in document.versions
                 tr
                     td: a(href="/versions/#{page._id}/#{version._id}")= version.title
                     td= version.modifiedBy
                     td= version.lastModified
     else
-        h1 No versions yet
+        h1= __("no-versions-yet")
 
-    a.btn.btn-primary(href="#{page.path}") Back to page
+    a.btn.btn-primary(href="#{page.path}")= __("back-to-page")
