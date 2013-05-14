@@ -17,6 +17,10 @@ Contrary to other wikis you simply type an URL and if the page does not exist, e
 
 Then simply open http://localhost:3000 and edit the page. Or go to another url (e.g. http://localhost:3000/new-entry) and edit this page.
 
+###Text search
+
+As search engine Mongodb 2.4 experimental text search is used. This feature has to be explicitly enabled as startup parameter `textSearchEnabled=true` or in the _mongod.conf_ with `setParameter = textSearchEnabled=true`. If you do not have a MongoDB with text search or can not use it, please use the 0.1.x branch.
+
 ##Usage Guide
 
 ###Create new page
