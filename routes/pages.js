@@ -63,6 +63,7 @@ module.exports = function (app) {
             });
         });
     });
+
     app.get("*", function (req, res) {
         if (!res.locals.page) {
             res.locals.page = new Page({
@@ -79,6 +80,15 @@ module.exports = function (app) {
     });
 
     app.post("*", function (req, res) {
+        if (req.body.lastModified) {
+            var currentDate = new Date(res.locals.page.lastModified);
+            var oldDate = new Date(req.body.lastModified);
+
+            if (currentDate.getTime() > oldDate.getTime()) {
+                return res.send(409);
+            }
+        }
+
         var page = setPage(req, res);
 
         page.save(function (err) {
@@ -86,7 +96,9 @@ module.exports = function (app) {
                 return res.send(400);
             }
 
-            res.send(200);
+            res.send(200, {
+                lastModified: page.lastModified
+            });
         });
     });
 

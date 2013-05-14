@@ -36,6 +36,30 @@ function readCookie(name) {
     exports.__ = translate;
 }(window));
 
+(function (app) {
+    var template = '<form id="%ID%" class="modal hide fade">\
+        <div class="modal-header">\
+        <h3>%TITLE%</h3>\
+        </div>\
+        <div class="modal-body">\
+        <p>%DESCRIPTION%</p>\
+        </div>\
+        <div class="modal-footer">\
+        <button type="submit" class="btn btn-warning">' + __("button-confirm") + '</button>\
+        <button type="submit" class="btn btn-cancle">' + __("button-cancle") + '</button>\
+        </div>\
+        </form>';
+
+
+    app.modal = function (title, description) {
+        var modal = template.replace("%TITLE%", title)
+            .replace("%DESCRIPTION%", description);
+
+        return $(modal)
+            .appendTo("body")
+            .modal("show");
+    };
+}(app));
 
 (function ($) {
     //prompt user for a username if he has not already provided one
@@ -56,17 +80,17 @@ function readCookie(name) {
     }
 
     var modal = $('<form id="saveUsername" class="modal hide fade">\
-                  <div class="modal-header">\
-                      <h3>' + __('identify-yourself') + '</h3>\
-                      </div>\
-                      <div class="modal-body">\
-                      <p>' + __('provide-username') + '</p>\
-                      <p class="control-group"><input placeholder="' + __('username') + '" name="username" required/><br/><br/></p>\
-                      </div>\
-                      <div class="modal-footer">\
-                      <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
-                      </div>\
-                      </form>')
+        <div class="modal-header">\
+        <h3>' + __('identify-yourself') + '</h3>\
+        </div>\
+        <div class="modal-body">\
+        <p>' + __('provide-username') + '</p>\
+        <p class="control-group"><input placeholder="' + __('username') + '" name="username" required/><br/><br/></p>\
+        </div>\
+        <div class="modal-footer">\
+        <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
+        </div>\
+    </form>')
         .appendTo("body")
         .modal("show");
     $("#saveUsername")
@@ -79,7 +103,7 @@ function readCookie(name) {
     $.message = function (type, message, delay) {
         delay = delay ||  5e3;
         var html = '<div class="alert alert-' + type + '"> \
-        <button type="button" class="close" data-dismiss="alert">&times;</button> \
+            <button type="button" class="close" data-dismiss="alert">&times;</button> \
             ' + message + '\
             </div>';
 
@@ -99,7 +123,7 @@ function readCookie(name) {
     var clickingLink = false;
 
     var openLink = function (el, e) {
-        if(e.ctrlKey || e.metaKey || e.button === 1) {
+        if (e.ctrlKey ||  e.metaKey ||  e.button === 1) {
             window.open(el.href);
         } else {
             location.href = el.href;
@@ -160,7 +184,8 @@ function readCookie(name) {
             $.post(document.location.href, {
                 content: $(".content.editable").html(),
                 title: $("h1.title").html(),
-                tags: $(".tags div").html()
+                tags: $(".tags div").html(),
+                lastModified: $("h1.title").data().lastModified
             })
                 .success(saved)
                 .error(savingError);
@@ -192,10 +217,18 @@ function readCookie(name) {
         $(".modified-by strong")
             .text(readCookie("username"));
     };
-    var savingError = function () {
+    var savingError = function (xhr, error, type) {
+        if (type == "Conflict") {
+            return app.modal(__("page-conflict-title"), __("page-conflict-description"))
+                .on("click", "btn-confirm", function () {
+                    location.reload();
+                })
+                .on("click", "btn-cancle", function () {
+                    $(this).closest("modal").modal("hide").remove();
+                });
+        }
         $.message("error", __("page-could-not-be-saved"), 2e3);
     };
-
 }(CKEDITOR));
 
 (function ($) {
@@ -573,17 +606,17 @@ function readCookie(name) {
     $("#move-page").click(function (e) {
         e.preventDefault();
         $('<form id="move-page-dialog" class="modal hide fade">\
-          <div class="modal-header">\
-              <h3>' + __("move-page") + '</h3>\
-              </div>\
-              <div class="modal-body">\
-              <p>" + __("new-page") + "</p>\
-              <p class="control-group">/ <input placeholder="/page/subpage" name="path" value="' + location.pathname.substring(1) + '"required/><br/><br/></p>\
-              </div>\
-              <div class="modal-footer">\
-              <button type="submit" class="btn btn-primary">' + __("save-changes") + '</button>\
-              </div>\
-              </form>')
+            <div class="modal-header">\
+            <h3>' + __("move-page") + '</h3>\
+            </div>\
+            <div class="modal-body">\
+            <p>" + __("new-page") + "</p>\
+            <p class="control-group">/ <input placeholder="/page/subpage" name="path" value="' + location.pathname.substring(1) + '"required/><br/><br/></p>\
+            </div>\
+            <div class="modal-footer">\
+            <button type="submit" class="btn btn-primary">' + __("save-changes") + '</button>\
+            </div>\
+        </form>')
             .appendTo("body")
             .modal("show");
         $("#move-page-dialog").on("submit", handleSubmit);

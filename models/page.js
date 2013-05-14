@@ -18,10 +18,10 @@ var Page = new Schema({
 
 Page.pre('save', function(next) {
     if (!this.created) {
-        this.created = new Date();
+        this.created = (new Date()).toUTCString();
     }
 
-    this.lastModified = new Date();
+    this.lastModified = (new Date()).toUTCString();
 
     next();
 });
