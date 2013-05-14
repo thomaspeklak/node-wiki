@@ -1,4 +1,5 @@
 "use strict";
+var config = require("../config");
 
 var Page = require('../models/page');
 var async = require("async");
@@ -27,6 +28,11 @@ var latestPages = function (req, res, cb) {
     });
 };
 
+var setTitle  = function (req, res, cb) {
+    res.locals.siteName = config.siteName;
+    cb();
+};
+
 var wrap = function (req, res, fn) {
     return function (cb) {
         fn(req, res, cb);
@@ -37,7 +43,8 @@ module.exports = function (req, res, next) {
     async.parallel([
         wrap(req, res, subNodes),
         wrap(req, res, recentChanges),
-        wrap(req, res, latestPages)
+        wrap(req, res, latestPages),
+        wrap(req, res, setTitle)
     ],
         next
     );
