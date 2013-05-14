@@ -1,28 +1,28 @@
 {
-    "name": "node-wiki",
-    "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
-    "version": "0.0.3",
-    "scripts": {
-        "start": "nodemon -w lib -w models -w routes app.js"
-    },
-    "repository": {
-        "type": "git"
-        , "url": "https://github.com/thomaspeklak/node-wiki"
-    },
-    "dependencies": {
-        "express": "3.2.x",
-        "jade": "*",
-        "mongoose": "3.6.x",
-        "express-mongoose": "0.1.x",
-        "async": "*",
-        "mkdirp": "0.3.x",
-        "request" : "2.2.x",
-        "validator" : "1.1.x",
-        "mongoose-version": "0.2.x",
-        "i18n-2": "0.4.x"
-    },
-    "devDependencies": {
-        "livereload": "*"
-    },
-    "license" : "MIT"
+  "name": "node-wiki",
+  "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "nodemon -w lib -w models -w routes app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomaspeklak/node-wiki"
+  },
+  "dependencies": {
+    "express": "3.2.x",
+    "jade": "*",
+    "mongoose": "3.6.x",
+    "express-mongoose": "0.1.x",
+    "async": "*",
+    "mkdirp": "0.3.x",
+    "request": "2.2.x",
+    "validator": "1.1.x",
+    "mongoose-version": "0.2.x",
+    "i18n-2": "0.4.x"
+  },
+  "devDependencies": {
+    "livereload": "*"
+  },
+  "license": "MIT"
 }
