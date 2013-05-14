@@ -19,7 +19,8 @@
     "request": "2.2.x",
     "validator": "1.1.x",
     "mongoose-version": "0.2.x",
-    "i18n-2": "0.4.x"
+    "i18n-2": "0.4.x",
+    "mongoose-text-search": "0.0.2"
   },
   "devDependencies": {
     "livereload": "*"

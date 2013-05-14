@@ -3,6 +3,6 @@ extends layout
 block content
     h1= __("search-results")
     ul
-        each page in results
+        each result in results
             li
-                a(href=page.path)= page.title
+                a(href=result.obj.path)= result.obj.title
