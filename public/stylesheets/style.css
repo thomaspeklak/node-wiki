@@ -61,10 +61,14 @@ a {
     opacity: 1;
 }
 
+.content {
+    min-height: 200px;
+}
+
 .content:before{
     position: absolute;
     right: 0;
-    top: 0;
+    top: -18px;
     color: #ccc;
     font-size:9px;
     text-transform: uppercase;
