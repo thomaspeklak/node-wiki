@@ -82,9 +82,9 @@ module.exports = function (app) {
     app.post("*", function (req, res) {
         if (req.body.lastModified) {
             var currentDate = new Date(res.locals.page.lastModified);
-            var oldDate = new Date(req.body.lastModified);
+            var oldTimestamp = req.body.lastModified;
 
-            if (currentDate.getTime() > oldDate.getTime()) {
+            if (currentDate.getTime() > oldTimestamp) {
                 return res.send(409);
             }
         }
