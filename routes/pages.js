@@ -97,7 +97,7 @@ module.exports = function (app) {
             }
 
             res.send(200, {
-                lastModified: page.lastModified
+                lastModified: page.lastModified.getTime()
             });
         });
     });

@@ -219,10 +219,11 @@ function readCookie(name) {
         }
     });
 
-    var saved = function () {
+    var saved = function (data) {
         $.message("success", __("page-saved"), 2e3);
         $(".modified-by strong")
             .text(readCookie("username"));
+        $("h1:first").data().lastModified = data.lastModified;
     };
     var savingError = function (xhr, error, type) {
         if (type == "Conflict") {
