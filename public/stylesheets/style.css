@@ -12,6 +12,7 @@ a {
 }
 .tags div {
     display: inline-block;
+    min-width:10px;
 }
 .drop-here {
     border: 5px dashed #ccc;
