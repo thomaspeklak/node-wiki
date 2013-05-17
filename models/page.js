@@ -25,6 +25,8 @@ Page.pre("save", function(next) {
         this.created = (new Date()).toUTCString();
     }
 
+    this.title = this.title.replace("\n", "").replace("\r", "").replace(/(<([^>]+)>)/ig,"");
+
     this.lastModified = (new Date()).toUTCString();
 
     next();
@@ -34,6 +36,8 @@ Page.path("tags").set(function(tags) {
     if (util.isArray(tags)) {
         return tags;
     }
+
+    tags = tags.replace("\n", "").replace("\r", "").replace(/(<([^>]+)>)/ig,"");
 
     return tags.split(",").map(function(tag) { return tag.trim(); });
 });

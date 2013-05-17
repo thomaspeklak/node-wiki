@@ -93,6 +93,7 @@ module.exports = function (app) {
 
         page.save(function (err) {
             if (err)  {
+                console.error(err);
                 return res.send(400);
             }
 
