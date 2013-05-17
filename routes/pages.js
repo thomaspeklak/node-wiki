@@ -68,7 +68,7 @@ module.exports = function (app) {
         if (!res.locals.page) {
             res.locals.page = new Page({
                 title: "new page",
-                tags: req.i18n.__("tags-description"),
+                tags: "",
                 content: "Content"
             });
         }

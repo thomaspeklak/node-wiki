@@ -61,20 +61,29 @@ a {
     opacity: 1;
 }
 
-.content {
-    min-height: 200px;
+.content {
+    min-height: 250px;
 }
 
 .content:before{
     position: absolute;
-    right: 0;
-    top: -18px;
+    left: 100%;
+    top: 0;
     color: #ccc;
     font-size:9px;
     text-transform: uppercase;
     content: "drop links, images, youtube and vimeo videos";
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    width: 250px;
+    margin-left: 25px;
+    padding-left: 5px;
 }
 
 .modified-by{
