@@ -36,6 +36,13 @@ function readCookie(name) {
     exports.__ = translate;
 }(window));
 
+(function ($) {
+    $(".tags").click( function () {
+        $(".tags div").focus();
+    });
+}(jQuery));
+
+
 (function (app) {
     var template = '<form id="%ID%" class="modal hide fade">\
         <div class="modal-header">\
