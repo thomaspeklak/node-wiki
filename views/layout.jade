@@ -6,6 +6,10 @@ html
     link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
     link(rel="stylesheet", href="/vendor/highlight.js/styles/solarized_light.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    style
+        .content:before{
+            content: "#{__("drop-images-and-other-media")}"
+        }
     script(type='text/javascript', src='/vendor/requirejs/require.min.js')
     script(type='text/javascript', src='/vendor/sprintf.min.js')
     script(type='text/javascript', src='/javascripts/locale.js')
