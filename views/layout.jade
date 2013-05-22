@@ -8,7 +8,10 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     style
         .content:before{
-            content: "#{__("drop-images-and-other-media")}"
+            content: "#{__("drop-images-and-other-media")}";
+        }
+        .tags:after {
+            content: "#{__("tags-description")}";
         }
     script(type='text/javascript', src='/vendor/requirejs/require.min.js')
     script(type='text/javascript', src='/vendor/sprintf.min.js')

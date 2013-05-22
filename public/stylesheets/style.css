@@ -4,6 +4,7 @@ a {
 .tags {
     margin: 1em 0;
     color: darkgreen;
+    position:relative;
 }
 .tags h2 {
     font-size: 14px;
@@ -14,6 +15,16 @@ a {
     display: inline-block;
     min-width:10px;
 }
+
+.tags:after{
+    position:absolute;
+    top: 3em;
+    left: 0;
+    color: #ccc;
+    font-size:9px;
+    content: "add tags as comma separated list";
+}
+
 .drop-here {
     border: 5px dashed #ccc;
     margin-top: 2em;
