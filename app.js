@@ -37,17 +37,18 @@ app.configure(function () {
     });
 
     app.use(express.static(__dirname + "/public"));
-    app.use(app.router);
 });
 
 app.configure("development", function () {
     app.use(express.errorHandler());
 });
 
-app.all("*", require("./middleware/load-navigation"));
-app.all("*", require("./middleware/build-breadcrumbs"));
-app.all("*", require("./middleware/load-page"));
+app.use(require("./middleware/set-locale"));
+app.use(require("./middleware/load-navigation"));
+app.use(require("./middleware/build-breadcrumbs"));
+app.use(require("./middleware/load-page"));
 
+app.use(app.router);
 require("./routes")(app);
 
 http.createServer(app).listen(app.get("port"), function () {

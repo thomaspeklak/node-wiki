@@ -49,6 +49,7 @@ html
                             b.caret
                         ul.dropdown-menu
                             li: a#move-page(href="#") Move Page
+                    mixin languageSwitcher
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")

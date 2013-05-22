@@ -32,3 +32,14 @@ mixin images(files)
 mixin versionLink(page)
     h3= __("versions")
     a(href="/versions/#{page._id}")= __("show-versions")
+
+mixin languageSwitcher
+    if locales.length > 1
+        li.dropdown.pull-right
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+                | Language
+                b.caret
+            ul.dropdown-menu.language-switcher
+                for locale in locales
+                    li(class=locale == currentLocale? 'active': ''): a(href="##{locale}")= locale
+

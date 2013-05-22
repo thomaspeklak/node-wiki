@@ -37,7 +37,7 @@ function readCookie(name) {
 }(window));
 
 (function ($) {
-    $(".tags").click( function () {
+    $(".tags").click(function () {
         $(".tags div").focus();
     });
 }(jQuery));
@@ -229,11 +229,11 @@ function readCookie(name) {
         if (type == "Conflict") {
             return app.modal(__("page-conflict-title"), __("page-conflict-description"))
                 .on("click", "btn-confirm", function () {
-                    location.reload();
-                })
+                location.reload();
+            })
                 .on("click", "btn-cancle", function () {
-                    $(this).closest("modal").modal("hide").remove();
-                });
+                $(this).closest("modal").modal("hide").remove();
+            });
         }
         $.message("error", __("page-could-not-be-saved"), 2e3);
     };
@@ -661,5 +661,14 @@ function readCookie(name) {
         });
     }).each(function () {
         if (this.complete) $(this).load();
+    });
+}(jQuery));
+
+(function ($) {
+    //Switch language and store it in a cookie
+    $(".language-switcher").find("a").click(function (e) {
+        e.preventDefault();
+        createCookie("locale", this.href.replace(/.*#/, ""), 720);
+        location.reload();
     });
 }(jQuery));
