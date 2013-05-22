@@ -37,7 +37,7 @@ mixin languageSwitcher
     if locales.length > 1
         li.dropdown.pull-right
             a.dropdown-toggle(href="#", data-toggle="dropdown")
-                | Language
+                = __("language")
                 b.caret
             ul.dropdown-menu.language-switcher
                 for locale in locales

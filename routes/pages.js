@@ -67,9 +67,9 @@ module.exports = function (app) {
     app.get("*", function (req, res) {
         if (!res.locals.page) {
             res.locals.page = new Page({
-                title: "new page",
+                title: req.i18n.__("new-page"),
                 tags: "",
-                content: "Content"
+                content: req.i18n.__("content")
             });
         }
 

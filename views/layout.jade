@@ -20,24 +20,24 @@ html
               a.brand(href="/")= siteName
               ul.nav
                   li
-                      a(href="/pages") All Pages
+                      a(href="/pages")= __("all-pages")
                   li
-                      a(href="/tags") All Tags
+                      a(href="/tags")= __("all-tags")
                   li
-                      a(href="/versions") Version History
+                      a(href="/versions")= __("version-history")
                   li.dropdown
                       a.dropdown-toggle(href="#", data-toggle="dropdown")
-                          | Changes
+                          = __("changes")
                           b.caret
 
                       ul.dropdown-menu
 
-                          li.nav-header Latest Pages
+                          li.nav-header= __("latest-pages")
                           each page in latest
                               li
                                   a(href=page.path)= page.title
 
-                          li.nav-header Recent Changes
+                          li.nav-header= __("recent-changes")
                           each page in recentChanges
                               li
                                   a(href=page.path)= page.title
@@ -45,10 +45,10 @@ html
                 ul.nav.pull-right
                     li.dropdown.pull-right
                         a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Tasks
+                            = __("tasks")
                             b.caret
                         ul.dropdown-menu
-                            li: a#move-page(href="#") Move Page
+                            li: a#move-page(href="#")= __("move-page")
                     mixin languageSwitcher
 
                 form.navbar-search.pull-right(action="/search", method="GET")
