@@ -424,6 +424,7 @@ function readCookie(name) {
     function handleFileSelect(evt) {
         evt.stopPropagation();
         evt.preventDefault();
+        $("body").trigger("save");
 
         uploadFiles(document.location.href, evt.dataTransfer.files);
     }
@@ -480,6 +481,8 @@ function readCookie(name) {
     function handleFileSelect(evt) {
         evt.stopPropagation();
         evt.preventDefault();
+
+        $("body").trigger("save");
 
         var uri = evt.dataTransfer.getData("text/uri-list");
         if (uri) {
