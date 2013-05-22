@@ -40,12 +40,31 @@ var getImage = function (page) {
 module.exports = function (app) {
     app.get("/pages", function (req, res) {
         Page.all(function (err, pages) {
-            // TODO: err
+            if (err) {
+                console.error(err);
+                res.send(500);
+            }
+
             return res.render("pages", {
                 title: "All Pages",
                 pages: pages,
                 content: "Own"
             });
+        });
+    });
+
+    app.get("/pages.json", function (req, res) {
+        var sort = req.query.sort_by || "title";
+        Page.find({})
+            .select("title path")
+            .sort(sort)
+            .exec(function (err, pages) {
+            if (err) {
+                console.error(err);
+                res.send(500);
+            }
+
+            res.json(pages);
         });
     });
 

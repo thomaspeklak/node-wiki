@@ -42,5 +42,6 @@ CKEDITOR.editorConfig = function( config ) {
 
         { name: 'Blockquote',		element: 'blockquote' },
         { name: 'Inline Quotation',	element: 'q' },
-    ]
+    ],
+    config.extraPlugins = "wiki_link"
 };

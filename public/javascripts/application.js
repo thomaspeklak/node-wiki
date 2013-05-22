@@ -60,11 +60,11 @@ function readCookie(name) {
 
     app.modal = function (title, description) {
         var modal = template.replace("%TITLE%", title)
-            .replace("%DESCRIPTION%", description);
+        .replace("%DESCRIPTION%", description);
 
         return $(modal)
-            .appendTo("body")
-            .modal("show");
+        .appendTo("body")
+        .modal("show");
     };
 }(app));
 
@@ -78,8 +78,8 @@ function readCookie(name) {
         var username = $("input[name=username]").val();
         if (!username.length) {
             return $("input[name=username]")
-                .parent()
-                .addClass("error");
+            .parent()
+            .addClass("error");
         }
         createCookie("username", username, 720);
         modal.modal("hide");
@@ -98,10 +98,10 @@ function readCookie(name) {
         <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
         </div>\
     </form>')
-        .appendTo("body")
-        .modal("show");
-    $("#saveUsername")
-        .on("submit", handleSubmit);
+.appendTo("body")
+.modal("show");
+$("#saveUsername")
+.on("submit", handleSubmit);
 
 }(jQuery));
 
@@ -115,9 +115,9 @@ function readCookie(name) {
             </div>';
 
         $(html)
-            .appendTo('#messages')
-            .delay(delay)
-            .fadeOut(remove);
+        .appendTo('#messages')
+        .delay(delay)
+        .fadeOut(remove);
     };
 
     function remove() {
@@ -150,14 +150,14 @@ function readCookie(name) {
     }, true);
 
     $(".content.editable")
-        .on("mousedown", function (e) {
+    .on("mousedown", function (e) {
         if (e.target.tagName == "A" && !$(this)
             .hasClass("cke_focus")) {
-            clickingLink = true;
-            this.contentEditable = false;
-            e.stopImmediatePropagation();
-            openLink(e.target, e);
-        }
+                clickingLink = true;
+                this.contentEditable = false;
+                e.stopImmediatePropagation();
+                openLink(e.target, e);
+            }
     }).on("click", function (e) {
         if (clickingLink) {
             e.preventDefault();
@@ -166,77 +166,182 @@ function readCookie(name) {
     });
 }(jQuery));
 
+
+(function (CKEDITOR) {
+    var getById = function (array, id, recurse) {
+        for (var i = 0, item;
+            (item = array[i]); i++) {
+                if (item.id == id) return item;
+                if (recurse && item[recurse]) {
+                    var retval = getById(item[recurse], id, recurse);
+                    if (retval) return retval;
+                }
+            }
+            return null;
+    };
+
+    var extractTitleAndPath = function (page) {
+        return [page.title, page.path];
+    };
+
+    CKEDITOR.plugins.add('wiki_link', {
+        init: function (editor, pluginPath) {
+            CKEDITOR.on('dialogDefinition', function (e) {
+                if ((e.editor != editor) || (e.data.name != 'link')) return;
+
+                // Overrides definition.
+                var definition = e.data.definition;
+                definition.onFocus = CKEDITOR.tools.override(definition.onFocus, function (original) {
+                    return function () {
+                        original.call(this);
+                        if (this.getValueOf('info', 'linkType') == 'wiki') {
+                            this.getContentElement('info', 'wiki_link').selectParentTab();
+                        }
+                    };
+                });
+
+                var infoTab = definition.getContents('info');
+                var content = getById(infoTab.elements, 'linkType');
+                content.items.unshift(["Wiki link", 'wiki']);
+                infoTab.elements.push({
+                    type: 'vbox',
+                    id: 'wikiOptions',
+                    children: [{
+                        type: 'select',
+                        items: [],
+                        id: 'wiki_link',
+                        label: editor.lang.link.title,
+                        required: true,
+                        onLoad: function () {
+                            //getAllPages
+                        },
+                        setup: function (data) {
+                            var element_id = '#' + this.getInputElement().$.id;
+                            var self = this;
+                            $.getJSON("/pages.json?sort_by=path", function (pages) {
+                                pages.forEach(function(page) {
+                                    $(element_id).get(0).options[$(element_id).get(0).options.length] = new Option(page.title + " | " + page.path, page.path);
+                                });
+                                self.setValue(data.wiki_link || '');
+                                self.getDialog().getContentElement('info', 'wiki_link').selectParentTab();
+                            });
+                        },
+                    }
+                    ]
+                });
+                content.onChange = CKEDITOR.tools.override(content.onChange, function (original) {
+                    return function () {
+                        original.call(this);
+                        var dialog = this.getDialog();
+                        var element = dialog.getContentElement('info', 'wikiOptions').getElement().getParent().getParent();
+                        if (this.getValue() == 'wiki') {
+                            element.show();
+                            if (editor.config.linkShowTargetTab) {
+                                dialog.showPage('target');
+                            }
+                            var uploadTab = dialog.definition.getContents('upload');
+                            if (uploadTab && !uploadTab.hidden) {
+                                dialog.hidePage('upload');
+                            }
+                        } else {
+                            element.hide();
+                        }
+                    };
+                });
+                content.setup = function (data) {
+                    if (data.type == "url" && data.url && data.url.protocol == undefined) {
+                        data.type = 'wiki';
+                        data.wiki_link = data.url.url;
+                        delete data.url;
+                    }
+                    this.setValue(data.type);
+                };
+                content.commit = function (data) {
+                    data.type = this.getValue();
+                    if (data.type == 'wiki') {
+                        data.type = 'url';
+                        var dialog = this.getDialog();
+                        dialog.setValueOf('info', 'protocol', '');
+                        dialog.setValueOf('info', 'url', dialog.getValueOf('info', 'wiki_link'));
+                    }
+                };
+            });
+        }
+    });
+}(CKEDITOR));
+
+
 (function (CKEDITOR) {
     //initize CK editor and page save events
     if ($(".content.editable")
-        .length == 0) return;
-    var getData = function () {
-        return {
-            content: $('.content.editable')
-                .html()
-                .replace(" class=\"aloha-link-text\"", ""),
-            title: $('h1.title').html(),
-            tags: $(".tags div").html()
-        };
+    .length == 0) return;
+var getData = function () {
+    return {
+        content: $('.content.editable')
+        .html()
+        .replace(" class=\"aloha-link-text\"", ""),
+        title: $('h1.title').html(),
+        tags: $(".tags div").html()
     };
-    var data = getData();
-    var save = function () {
-        var newData = getData();
-        var changed = ["content", "title", "tags"].some(function (key) {
-            return data[key] != newData[key];
+};
+var data = getData();
+var save = function () {
+    var newData = getData();
+    var changed = ["content", "title", "tags"].some(function (key) {
+        return data[key] != newData[key];
+    });
+
+    if (changed) {
+        data = newData;
+        $.post(document.location.href, {
+            content: $(".content.editable").html(),
+            title: $("h1.title").html(),
+            tags: $(".tags div").html(),
+            lastModified: $("h1.title").data().lastModified
+        })
+        .success(saved)
+        .error(savingError);
+    }
+};
+
+setInterval(save, 6e4);
+$("body")
+.bind("save", save);
+
+CKEDITOR.inline("content", {
+    on: {
+        blur: save
+    }
+});
+
+$(".edit")
+.blur(save)
+.keydown(function (e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        $(this)
+        .blur();
+    }
+});
+
+var saved = function (data) {
+    $.message("success", __("page-saved"), 2e3);
+    $(".modified-by strong")
+    .text(readCookie("username"));
+    $("h1:first").data().lastModified = data.lastModified;
+};
+var savingError = function (xhr, error, type) {
+    if (type == "Conflict") {
+        return app.modal(__("page-conflict-title"), __("page-conflict-description"))
+        .on("click", "btn-confirm", function () {
+            location.reload();
+        })
+        .on("click", "btn-cancle", function () {
+            $(this).closest("modal").modal("hide").remove();
         });
-
-        if (changed) {
-            data = newData;
-            $.post(document.location.href, {
-                content: $(".content.editable").html(),
-                title: $("h1.title").html(),
-                tags: $(".tags div").html(),
-                lastModified: $("h1.title").data().lastModified
-            })
-                .success(saved)
-                .error(savingError);
-        }
-    };
-
-    setInterval(save, 6e4);
-    $("body")
-        .bind("save", save);
-
-    CKEDITOR.inline("content", {
-        on: {
-            blur: save
-        }
-    });
-
-    $(".edit")
-        .blur(save)
-        .keydown(function (e) {
-        if (e.keyCode == 13) {
-            e.preventDefault();
-            $(this)
-                .blur();
-        }
-    });
-
-    var saved = function (data) {
-        $.message("success", __("page-saved"), 2e3);
-        $(".modified-by strong")
-            .text(readCookie("username"));
-        $("h1:first").data().lastModified = data.lastModified;
-    };
-    var savingError = function (xhr, error, type) {
-        if (type == "Conflict") {
-            return app.modal(__("page-conflict-title"), __("page-conflict-description"))
-                .on("click", "btn-confirm", function () {
-                location.reload();
-            })
-                .on("click", "btn-cancle", function () {
-                $(this).closest("modal").modal("hide").remove();
-            });
-        }
-        $.message("error", __("page-could-not-be-saved"), 2e3);
-    };
+    }
+    $.message("error", __("page-could-not-be-saved"), 2e3);
+};
 }(CKEDITOR));
 
 (function ($) {
@@ -261,7 +366,7 @@ function readCookie(name) {
             var textNodes = getTextNodesIn(el);
             var foundStart = false;
             var charCount = 0,
-                endCharCount;
+            endCharCount;
 
             for (var i = 0, textNode; textNode = textNodes[i++];) {
                 endCharCount = charCount + textNode.length;
@@ -290,7 +395,7 @@ function readCookie(name) {
     }
 
     $(".tags .edit")
-        .focus(function () {
+    .focus(function () {
         if (this.innerText == __("tags-description")) {
             var el = this;
             setTimeout(function () {
@@ -300,7 +405,7 @@ function readCookie(name) {
     });
 
     $("h1.edit")
-        .focus(function () {
+    .focus(function () {
         if (this.innerText == __("new-page")) {
             var el = this;
             setTimeout(function () {
@@ -315,7 +420,7 @@ function readCookie(name) {
         var self = this;
 
         this.element = $('<progress min="0" max="100" value="0">0%</progress>')
-            .appendTo(target)[0];
+        .appendTo(target)[0];
 
         upload.onprogress = function (e) {
             if (e.lengthComputable) {
@@ -538,15 +643,15 @@ function readCookie(name) {
             var youtube = uri.match(/v=(.*?)(?:$|&)/);
             if (!youtube[1]) return;
             $(targetElement)
-                .append('<iframe width="640" height="480" src="http://www.youtube.com/embed/' + youtube[1] + '" frameborder="0" allowfullscreen></iframe>');
-            $("body")
+            .append('<iframe width="640" height="480" src="http://www.youtube.com/embed/' + youtube[1] + '" frameborder="0" allowfullscreen></iframe>');
+                $("body")
                 .trigger("save");
         } else if (uri.indexOf("vimeo.com/") !== -1) {
             var vimeo = uri.match(/vimeo.com\/(.*?)(?:$|\?)/);
             if (!vimeo[1]) return;
             $(targetElement)
-                .append('<iframe src="http://player.vimeo.com/video/' + vimeo[1] + '" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-            $("body")
+            .append('<iframe src="http://player.vimeo.com/video/' + vimeo[1] + '" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+                $("body")
                 .trigger("save");
         } else if (uri.indexOf("www.slideshare.net/" !== -1)) {
             $.getJSON("http://www.slideshare.net/api/oembed/2?url=" + uri + "&format=jsonp&callback=?", function (data) {
@@ -560,9 +665,9 @@ function readCookie(name) {
                 var type = data.replace(/\/.*/, "");
                 if (appendAssetStrategy[type]) {
                     $(targetElement)
-                        .append(
+                    .append(
                         appendAssetStrategy[type](uri));
-                    $("body")
+                        $("body")
                         .trigger("save");
                 } else {
                     $.message('warn', __("unsupported-drop"));
@@ -577,31 +682,31 @@ function readCookie(name) {
         response.images.forEach(function (image) {
             targetElement.append("<img class='polaroid' src='/images/" + response.pageId + "/" + image + "'/>");
             $('#images')
-                .append("<li><a href='/images/" + response.pageId + "/" + image + "' title='" + image + "'><i class='icon-file'></i>" + image + "</a><a href='#' class='icon-remove-sign'</li>");
+            .append("<li><a href='/images/" + response.pageId + "/" + image + "' title='" + image + "'><i class='icon-file'></i>" + image + "</a><a href='#' class='icon-remove-sign'</li>");
         });
         $("body")
-            .trigger("save");
+        .trigger("save");
     };
 }(jQuery, app));
 
 (function ($) {
     $(".plain-list")
-        .on("click", ".icon-remove-sign", function (e) {
+    .on("click", ".icon-remove-sign", function (e) {
         e.preventDefault();
         e.stopPropagation();
         var li = $(this)
-            .closest('li');
+        .closest('li');
         var type = $(this)
-            .closest(".plain-list")[0].id;
+        .closest(".plain-list")[0].id;
         $.ajax({
             url: "/" + type,
             type: "DELETE",
             data: {
                 file: $(this)
-                    .prev("a")[0].title
+                .prev("a")[0].title
             }
         })
-            .done(function () {
+        .done(function () {
             li.remove();
         });
     });
@@ -628,9 +733,9 @@ function readCookie(name) {
             <button type="submit" class="btn btn-primary">' + __("save-changes") + '</button>\
             </div>\
         </form>')
-            .appendTo("body")
-            .modal("show");
-        $("#move-page-dialog").on("submit", handleSubmit);
+    .appendTo("body")
+    .modal("show");
+    $("#move-page-dialog").on("submit", handleSubmit);
     });
 
     var handleSubmit = function (e) {
