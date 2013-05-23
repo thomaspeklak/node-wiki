@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    version: Number,
+    version: String,
     installDate: {
         type: Date,
         default: Date.now
@@ -17,7 +17,7 @@ var schema = new Schema({
 var App = mongoose.model("App", schema);
 module.exports = App;
 
-module.exports.initialize = function () {
+module.exports.initialize = function (cb) {
     App.findOne(function (err, app) {
         if (err) throw err;
 
@@ -31,6 +31,8 @@ module.exports.initialize = function () {
 
         app.save(function (err) {
             if (err) console.error(err);
+
+            if (cb) cb(err, app);
         });
     });
 };
