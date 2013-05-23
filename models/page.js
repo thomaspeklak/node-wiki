@@ -62,14 +62,18 @@ Page.path("tags").set(function (tags) {
 // Pre-defined Queries
 Page.statics.all = function (cb) {
     return this
-        .find({})
+        .find({
+        deleted: false
+    })
         .select("title path")
         .sort("title")
         .exec(cb);
 };
 Page.statics.allWithImages = function (cb) {
     return this
-        .find({})
+        .find({
+        deleted: false
+    })
         .select("title path images attachments")
         .exec(cb);
 };
@@ -87,7 +91,8 @@ Page.statics.subNodes = function (path, cb) {
         .find({
         path: {
             $regex: pathRegex
-        }
+        },
+        deleted: false
     })
         .select("title path")
         .sort("title")
@@ -96,7 +101,9 @@ Page.statics.subNodes = function (path, cb) {
 
 Page.statics.latest = function (count, cb) {
     return this
-        .find({})
+        .find({
+        deleted: false
+    })
         .limit(count)
         .sort("-created")
         .select("title path")
@@ -105,7 +112,9 @@ Page.statics.latest = function (count, cb) {
 
 Page.statics.recentChanges = function (count, cb) {
     return this
-        .find({})
+        .find({
+        deleted: false
+    })
         .limit(count)
         .sort("-lastModified")
         .select("title path")
@@ -122,6 +131,9 @@ Page.statics.search = function (query, count, cb) {
         .textSearch(query, {
         language: config.wikiLanguage,
         limit: count,
+        filter: {
+            deleted: false
+        },
         project: {
             title: 1,
             path: 1
@@ -142,7 +154,8 @@ Page.plugin(textSearch);
 Page.index({
     title: "text",
     content: "text",
-    tags: "text"
+    tags: "text",
+    deleted: 1
 }, {
     title: "page_contents",
     weights: {

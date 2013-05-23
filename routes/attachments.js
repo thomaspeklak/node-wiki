@@ -16,7 +16,7 @@ var loadPage = function (req, res, next) {
 
     var referer = parse(req.headers.referer);
 
-    Page.findOne({path: referer.path}, function (err, page) {
+    Page.findOne({path: referer.path, deleted: false}, function (err, page) {
         if (err) {
             console.error(err);
             return res.send(400);

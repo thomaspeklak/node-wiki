@@ -55,7 +55,7 @@ module.exports = function (app) {
 
     app.get("/pages.json", function (req, res) {
         var sort = req.query.sort_by || "title";
-        Page.find({})
+        Page.find({deleted: false})
             .select("title path")
             .sort(sort)
             .exec(function (err, pages) {
@@ -129,7 +129,8 @@ module.exports = function (app) {
 
         var page = res.locals.page;
         Page.findOne({
-            path: req.body.newPath
+            path: req.body.newPath,
+            deleted: false
         }, function (err, existingPage) {
             if (err) {
                 console.error(err);
