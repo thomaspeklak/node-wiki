@@ -793,4 +793,20 @@ var savingError = function (xhr, error, type) {
             $.message('error', __("error-500"));
         });
     });
+
+    $("#restore-page").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "PUT",
+            url: location.href,
+            data: {
+                restore: true
+            }
+        }).done(function () {
+            location.reload();
+        }).fail(function (xhr) {
+            $.message('error', __("error-" + xhr.status));
+        });
+    });
+
 }(jQuery));

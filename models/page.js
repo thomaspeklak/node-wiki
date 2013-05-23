@@ -146,6 +146,11 @@ Page.methods.delete = function (cb) {
     this.save(cb);
 };
 
+Page.methods.restore = function (cb) {
+    this.deleted = false;
+    this.save(cb);
+};
+
 Page.plugin(version, {
     documentProperty: "title"
 });

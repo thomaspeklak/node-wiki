@@ -54,8 +54,10 @@ module.exports = function (app) {
     });
 
     app.get("/pages.json", function (req, res) {
-        var sort = req.query.sort_by || "title";
-        Page.find({deleted: false})
+        var sort = req.query.sort_by ||  "title";
+        Page.find({
+            deleted: false
+        })
             .select("title path")
             .sort(sort)
             .exec(function (err, pages) {
@@ -122,7 +124,7 @@ module.exports = function (app) {
         });
     });
 
-    app.put("*", function (req, res) {
+    var updatePath = function (req, res) {
         if (!res.locals.page) {
             return res.send(404);
         }
@@ -156,6 +158,38 @@ module.exports = function (app) {
                 });
             });
         });
+    };
+
+    var restorePage = function (req, res) {
+        Page.findOne({
+            path: req.path,
+            deleted: true
+        }, function (err, page) {
+            if(err) {
+                console.error(err);
+                return res.send(500);
+            }
+            if (!page) {
+                return res.send(404);
+            }
+
+            page.restore(function (err) {
+                if (err) {
+                    console.error(err);
+                    return res.send(500);
+                }
+
+                res.send(205);
+            });
+        });
+    };
+
+    app.put("*", function (req, res) {
+        if (req.body.restore) {
+            return restorePage(req, res);
+        }
+
+        updatePath(req, res);
     });
 
     app.delete("*", function (req, res) {
