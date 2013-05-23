@@ -49,6 +49,10 @@ __Drop a ...__
 - __video__ link to create a video element
 - __slideshare__ link to embed a slideshare presentation
 
+###Internal Linking
+
+To link to another wiki page you can simply use the normal link functionality of the editor, select _Wiki link_ and choose a page from the select box. The links are shown with title an path divided by a pipe ("|") and sorted by path.
+
 ###Versions
 
 Node Wiki uses [mongoose-version](https://github.com/saintedlama/mongoose-version) to create a new version on every save of a document. To restore a version go to _show versions_ in the side bar, select a version and restore it.
