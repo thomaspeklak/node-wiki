@@ -157,4 +157,21 @@ module.exports = function (app) {
             });
         });
     });
+
+    app.delete("*", function (req, res) {
+        if (!res.locals.page) {
+            res.send(404);
+        }
+
+        var page = res.locals.page;
+
+        page.delete(function (err) {
+            if (err) {
+                console.error(err);
+                return res.send(500);
+            }
+
+            res.send(205);
+        });
+    });
 };

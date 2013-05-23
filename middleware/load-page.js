@@ -6,7 +6,8 @@ module.exports = function (req, res, next) {
     var finder = {
         path: req.path
     };
-    if (req.method != "get") {
+
+    if (req.method != "GET") {
         finder.deleted = false;
     }
 

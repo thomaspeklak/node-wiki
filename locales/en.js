@@ -63,5 +63,7 @@
 	"new-path": "New path",
 	"error-target-path-exists": "Target path exists already. Can not move the page",
 	"page-moved": "Page succesfully moved",
-	"language": "Language"
+	"language": "Language",
+	"delete-page": "Delete page",
+	"restore-page": "Restore page"
 }

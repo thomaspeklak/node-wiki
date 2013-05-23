@@ -780,3 +780,17 @@ var savingError = function (xhr, error, type) {
         location.reload();
     });
 }(jQuery));
+
+(function ($) {
+    $("#delete-page").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "DELETE",
+            url: location.href
+        }).done(function () {
+            location.reload();
+        }).fail(function () {
+            $.message('error', __("error-500"));
+        });
+    });
+}(jQuery));

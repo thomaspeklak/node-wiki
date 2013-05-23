@@ -60,5 +60,7 @@
 	"new-path": "Neuer Pfad",
 	"error-target-path-exists": "Unter diesem Pfad existiert schon eine Seite. Ich kann die Seite nicht verschieben.",
 	"page-moved": "Ich habe die Seite für dich verschoben.",
-	"language": "Sprache"
+	"language": "Sprache",
+	"delete-page": "Seite löschen",
+	"restore-page": "Seite wiederherstellen"
 }
