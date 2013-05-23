@@ -89,10 +89,10 @@ Page.statics.subNodes = function (path, cb) {
 
     return this
         .find({
+        deleted: false,
         path: {
             $regex: pathRegex
-        },
-        deleted: false
+        }
     })
         .select("title path")
         .sort("title")
@@ -152,10 +152,13 @@ Page.plugin(version, {
 
 Page.plugin(textSearch);
 Page.index({
+    deleted: 1
+});
+
+Page.index({
     title: "text",
     content: "text",
-    tags: "text",
-    deleted: 1
+    tags: "text"
 }, {
     title: "page_contents",
     weights: {
