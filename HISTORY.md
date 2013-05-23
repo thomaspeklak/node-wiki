@@ -1,3 +1,4 @@
+- better localization support
 - MongoDBs text search
 
 0.1.0 / 2013-05-14 
