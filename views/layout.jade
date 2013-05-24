@@ -58,7 +58,8 @@ html
                                 = __("tasks")
                                 b.caret
                             ul.dropdown-menu
-                                li: a#move-page(href="#")= __("move-page")
+                                if (!page.deleted)
+                                    li: a#move-page(href="#")= __("move-page")
                                 if (page.deleted)
                                     li: a#restore-page(href="#")= __("restore-page")
                                 else
@@ -69,8 +70,10 @@ html
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")
 
-        .container
+        .container(class=page && page.deleted ? "deleted" : "")
             #messages.messages
+            if page.deleted
+                .alert.alert-warning= __("page-status-deleted")
             .row
                 .span3
                     block navigation

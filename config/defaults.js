@@ -4,6 +4,5 @@ module.exports = {
     locales: ["en", "de"],
     wikiLanguage: "en",
     siteName: "NodeWiki",
-    //keepDeleteItemsPeriod: 30 * 24 * 60 * 60 * 1000
-    keepDeleteItemsPeriod: 1000
+    keepDeleteItemsPeriod: 30 * 24 * 60 * 60 * 1000
 };

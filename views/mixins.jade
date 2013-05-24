@@ -17,7 +17,8 @@ mixin attachments(files)
                 a.icon-remove-sign
 
 mixin fileDropper
-    #drop-zone.drop-here= __("drop-files-here")
+    if page && !page.deleted
+        #drop-zone.drop-here= __("drop-files-here")
 
 mixin images(files)
     h3= __("images")

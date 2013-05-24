@@ -65,5 +65,6 @@
 	"restore-page": "Seite wiederherstellen",
     "deleted-pages": "Archiv",
     "archive-description": "Um eine Seite wiederherzustellen, wähle 'Wiederherstellen' vom Aktionen-Menü",
-    "no-deleted-pages": "Es gibt zur Zeit keine archivierten Seiten."
+    "no-deleted-pages": "Es gibt zur Zeit keine archivierten Seiten.",
+    "page-status-deleted": "Diese Seite ist gelöscht. Um die Seite wiederherzustellen, wähle 'Wiederherstellen' vom Aktionen-Menü."
 }
