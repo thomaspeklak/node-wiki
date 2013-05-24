@@ -22,6 +22,8 @@ var loadPage = function (req, res, next) {
             return res.send(400);
         }
 
+        if (!page) return res.send(404);
+
         req.page = page;
         next();
     });
