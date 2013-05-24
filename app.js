@@ -60,3 +60,4 @@ if (process.env.NODE_ENV == "development" ||  !process.env.NODE_ENV) {
 }
 
 require("./models/app").initialize();
+require("./lib/wipe-timer").start();
