@@ -565,6 +565,7 @@ var savingError = function (xhr, error, type) {
         response.attachments.forEach(function (attachment) {
             $('#attachments').append("<li><a href='/attachments/" + response.pageId + "/" + attachment + "' title='" + attachment + "'><i class='icon-file'></i>" + attachment + "</a><a href='#' class='icon-remove-sign'</li>");
         });
+        $("h1:first").data().lastModified = response.lastModified;
     };
 }(jQuery, app));
 
@@ -653,7 +654,7 @@ var savingError = function (xhr, error, type) {
             .append('<iframe src="http://player.vimeo.com/video/' + vimeo[1] + '" width="640" height="480" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
                 $("body")
                 .trigger("save");
-        } else if (uri.indexOf("www.slideshare.net/" !== -1)) {
+        } else if (uri.indexOf("www.slideshare.net/") !== -1) {
             $.getJSON("http://www.slideshare.net/api/oembed/2?url=" + uri + "&format=jsonp&callback=?", function (data) {
                 $(targetElement).append(data.html);
                 $("body").trigger("save");
@@ -684,8 +685,8 @@ var savingError = function (xhr, error, type) {
             $('#images')
             .append("<li><a href='/images/" + response.pageId + "/" + image + "' title='" + image + "'><i class='icon-file'></i>" + image + "</a><a href='#' class='icon-remove-sign'</li>");
         });
-        $("body")
-        .trigger("save");
+        $("h1:first").data().lastModified = response.lastModified;
+        $("body").trigger("save");
     };
 }(jQuery, app));
 
