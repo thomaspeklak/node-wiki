@@ -1,3 +1,4 @@
+- delete page
 - better localization support
 - MongoDBs text search
 

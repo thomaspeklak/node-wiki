@@ -53,6 +53,10 @@ Type an url that has not been used yet
 - make your changes
 - either wait 2 seconds or click anywhere outside the editable area and the page is saved
 
+###Delete a page
+
+Deleting a page does not really delete a page but marks it as deleted. To restore a deleted page select _restore_ from the tasks menu. After 30 days deleted pages are wiped from the system and can not be restored again. This period is configurable, see the [configuration section](#configuration)
+
 ###Upload Attachments
 
 drag files from your computer to the drop zone marked with _drop files here_
