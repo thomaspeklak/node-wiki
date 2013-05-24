@@ -48,6 +48,8 @@ html
                           each page in recentChanges
                               li
                                   a(href=page.path)= page.title
+                    li: a(href="/deleted-pages")= __("deleted-pages")
+
 
                 ul.nav.pull-right
                     if (page)

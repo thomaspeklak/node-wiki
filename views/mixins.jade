@@ -1,9 +1,10 @@
 mixin renderNavigation(navigationItems)
-    h3= __("sub-pages")
-    ul.nav.nav-list
-        each navigationItem in navigationItems
-            li
-                a(href=navigationItem.path)= navigationItem.title
+    if navigationItems.length
+        h3= __("sub-pages")
+        ul.nav.nav-list
+            each navigationItem in navigationItems
+                li
+                    a(href=navigationItem.path)= navigationItem.title
 
 mixin attachments(files)
     h3= __("attachments")

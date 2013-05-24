@@ -121,6 +121,16 @@ Page.statics.recentChanges = function (count, cb) {
         .exec(cb);
 };
 
+Page.statics.deleted = function (cb) {
+    return this
+        .find({
+        deleted: true
+    })
+        .sort("title")
+        .select("title path")
+        .exec(cb);
+};
+
 Page.statics.search = function (query, count, cb) {
     if (typeof (count) == "function") {
         cb = count;

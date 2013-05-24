@@ -62,5 +62,8 @@
 	"page-moved": "Ich habe die Seite für dich verschoben.",
 	"language": "Sprache",
 	"delete-page": "Seite löschen",
-	"restore-page": "Seite wiederherstellen"
+	"restore-page": "Seite wiederherstellen",
+    "deleted-pages": "Archiv",
+    "archive-description": "Um eine Seite wiederherzustellen, wähle 'Wiederherstellen' vom Aktionen-Menü",
+    "no-deleted-pages": "Es gibt zur Zeit keine archivierten Seiten."
 }
