@@ -1,16 +1,16 @@
 extends layout
 
 block content
-    h1.title.edit(contenteditable, data-last-modified=page.lastModified && page.lastModified.getTime())= page.title
+    h1.title.edit(contenteditable=!page.deleted, data-last-modified=page.lastModified && page.lastModified.getTime())= page.title
 
     div.tags
         h2.label.label-success
             i.icon-tags
             | &nbsp;
             = __("tags")
-        div.edit(contenteditable)= page.tags.join(", ")
+        div.edit(contenteditable=!page.deleted)= page.tags.join(", ")
 
-    #content.content.editable(contenteditable)
+    #content.content.editable(contenteditable=!page.deleted)
         != page.content
 
     if(page.modifiedBy)

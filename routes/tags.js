@@ -20,7 +20,8 @@ module.exports = function (app) {
 
     app.get("/tags/:tag", function (req, res) {
         Page.find({
-            tags: req.params.tag
+            tags: req.params.tag,
+            deleted: false
         }, function (err, result) {
             if (err) {
                 res.send(500);
@@ -35,7 +36,7 @@ module.exports = function (app) {
 };
 
 var map = function () {
-    if (!this.tags) {
+    if (!this.tags || this.deleted) {
         return;
     }
 

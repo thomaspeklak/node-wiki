@@ -1,6 +1,15 @@
 a {
     color: #00B7FF;
 }
+
+.container.deleted {
+    background: #fbfbfb;
+}
+
+.container.deleted .row {
+    opacity: .7;
+}
+
 .tags {
     margin: 1em 0;
     color: darkgreen;

@@ -16,11 +16,13 @@ var loadPage = function (req, res, next) {
 
     var referer = parse(req.headers.referer);
 
-    Page.findOne({path: referer.path}, function (err, page) {
+    Page.findOne({path: referer.pathname, deleted: false}, function (err, page) {
         if (err) {
             console.error(err);
             return res.send(400);
         }
+
+        if (!page) return res.send(404);
 
         req.page = page;
         next();
@@ -55,7 +57,8 @@ module.exports = function (app) {
 
                 res.send({
                     attachments: attachments,
-                    pageId: page._id
+                    pageId: page._id,
+                    lastModified: page.lastModified.getTime()
                 });
             });
         });
@@ -89,7 +92,8 @@ module.exports = function (app) {
 
                 res.send({
                     images: images,
-                    pageId: page._id
+                    pageId: page._id,
+                    lastModified: page.lastModified.getTime()
                 });
             });
         });
@@ -109,8 +113,10 @@ module.exports = function (app) {
         if (removedFile) {
             return page.save(function(err) {
                 if(err) {console.error(err); return 500; }
-                fs.unlink(path.join(__dirname, "..", "public", "attachment", page.id, removedFile), function(err) {
-                   res.send(200);
+                fs.unlink(path.join(__dirname, "..", "public", "attachments", page.id, removedFile), function(err) {
+                    res.send(200, {
+                        lastModified: page.lastModified.getTime()
+                    });
                 });
             });
         }
@@ -133,7 +139,9 @@ module.exports = function (app) {
             return page.save(function(err) {
                 if(err) {console.error(err); return 500; }
                 fs.unlink(path.join(__dirname, "..", "public", "images", page.id, removedFile), function(err) {
-                   res.send(200);
+                    res.send(200, {
+                        lastModified: page.lastModified.getTime()
+                    });
                 });
             });
         }

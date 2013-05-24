@@ -1,11 +1,17 @@
 "use strict";
 
-var Page = require('../models/page');
+var Page = require("../models/page");
 
 module.exports = function (req, res, next) {
-    Page.findOne({
+    var finder = {
         path: req.path
-    }, function (err, page) {
+    };
+
+    if (req.method != "GET") {
+        finder.deleted = false;
+    }
+
+    Page.findOne(finder, function (err, page) {
         if (err) {
             return next(err);
         }

@@ -48,21 +48,32 @@ html
                           each page in recentChanges
                               li
                                   a(href=page.path)= page.title
+                    li: a(href="/deleted-pages")= __("deleted-pages")
+
 
                 ul.nav.pull-right
-                    li.dropdown.pull-right
-                        a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            = __("tasks")
-                            b.caret
-                        ul.dropdown-menu
-                            li: a#move-page(href="#")= __("move-page")
+                    if (page)
+                        li.dropdown.pull-right
+                            a.dropdown-toggle(href="#", data-toggle="dropdown")
+                                = __("tasks")
+                                b.caret
+                            ul.dropdown-menu
+                                if (!page.deleted)
+                                    li: a#move-page(href="#")= __("move-page")
+                                if (page.deleted)
+                                    li: a#restore-page(href="#")= __("restore-page")
+                                else
+                                    li: a#delete-page(href="#")= __("delete-page")
+
                     mixin languageSwitcher
 
                 form.navbar-search.pull-right(action="/search", method="GET")
                     input.search-query(type="text", placeholder="Search", name="q", id="q")
 
-        .container
+        .container(class=page && page.deleted ? "deleted" : "")
             #messages.messages
+            if page.deleted
+                .alert.alert-warning= __("page-status-deleted")
             .row
                 .span3
                     block navigation

@@ -29,6 +29,7 @@ To configure NodeWiki to your needs you can create a `production.js` in the conf
 - __siteName:__: The name of the wiki.
 - __secret__: The encryption key for cookies.
 - __db.url__: The URL to MongoDB `mongodb://localhost/nodewiki`
+- __keepDeletedItemsPeriod__: This is the time in milliseconds that deleted pages are kept, before they are completly wiped.
 
 NodeWiki has sensible defaults and if you do not wish to override an option you do not have to mention it in your configuration. Just provide what you want to be different.
 

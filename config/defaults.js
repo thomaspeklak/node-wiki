@@ -3,5 +3,6 @@ module.exports = {
     port : 3000,
     locales: ["en", "de"],
     wikiLanguage: "en",
-    siteName: "NodeWiki"
+    siteName: "NodeWiki",
+    keepDeleteItemsPeriod: 30 * 24 * 60 * 60 * 1000
 };

@@ -63,5 +63,11 @@
 	"new-path": "New path",
 	"error-target-path-exists": "Target path exists already. Can not move the page",
 	"page-moved": "Page succesfully moved",
-	"language": "Language"
+	"language": "Language",
+	"delete-page": "Delete page",
+	"restore-page": "Restore page",
+	"deleted-pages": "Archive",
+	"archive-description": "To restore a page open it and choose restore from the tasks menu",
+	"no-deleted-pages": "There are currently no archived pages.",
+	"page-status-deleted": "This page is deleted. To restore it click restore from the tasks menu."
 }

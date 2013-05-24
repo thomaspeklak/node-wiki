@@ -1,9 +1,10 @@
 mixin renderNavigation(navigationItems)
-    h3= __("sub-pages")
-    ul.nav.nav-list
-        each navigationItem in navigationItems
-            li
-                a(href=navigationItem.path)= navigationItem.title
+    if navigationItems.length
+        h3= __("sub-pages")
+        ul.nav.nav-list
+            each navigationItem in navigationItems
+                li
+                    a(href=navigationItem.path)= navigationItem.title
 
 mixin attachments(files)
     h3= __("attachments")
@@ -16,7 +17,8 @@ mixin attachments(files)
                 a.icon-remove-sign
 
 mixin fileDropper
-    #drop-zone.drop-here= __("drop-files-here")
+    if page && !page.deleted
+        #drop-zone.drop-here= __("drop-files-here")
 
 mixin images(files)
     h3= __("images")
