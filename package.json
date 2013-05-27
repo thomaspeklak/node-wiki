@@ -1,7 +1,7 @@
 {
   "name": "node-wiki",
   "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "scripts": {
     "start": "nodemon -w lib -w models -w routes app.js"
   },
@@ -24,7 +24,9 @@
     "semver": "~1.1.4"
   },
   "devDependencies": {
-    "livereload": "*"
+    "livereload": "*",
+    "mocha": "~1.10.0",
+    "supertest": "~0.6.0"
   },
   "license": "MIT"
 }
