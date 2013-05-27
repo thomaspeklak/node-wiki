@@ -81,6 +81,13 @@ To link to another wiki page you can simply use the normal link functionality of
 
 Node Wiki uses [mongoose-version](https://github.com/saintedlama/mongoose-version) to create a new version on every save of a document. To restore a version go to _show versions_ in the side bar, select a version and restore it.
 
+##NodeWiki Versioning
+
+As of version 0.2 Node Wiki follows the same versioning concept as NodeJs. Odd
+numbers represent unstable versions, even numbers represent stable versions.
+The master branch represents the latest unstable version. As of this writing
+0.2 is stable and 0.3 is unstable.
+
 ##What to expect next?
 
 Take a look at the [issue list](https://github.com/thomaspeklak/node-wiki/issues?labels=enhancement&state=open)

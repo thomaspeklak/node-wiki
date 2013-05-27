@@ -1,3 +1,6 @@
+0.2.0 / 2013-05-27
+==================
+- add gist support
 - delete page
 - better localization support
 - MongoDBs text search
