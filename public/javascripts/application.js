@@ -667,6 +667,9 @@ $("#saveUsername")
                 $(targetElement).append(data.html);
                 $("body").trigger("save");
             });
+        } else if (uri.indexOf("gist.github") !== -1) {
+            $(targetElement).append("<iframe class=\"gist\" seamless src=\"/gist-proxy/" + uri.replace("https://gist.github.com/", "") + "\"/>");
+            $("body").trigger("save");
         } else {
             $.get("/detect-content-type", {
                 uri: uri
@@ -821,3 +824,16 @@ $("#saveUsername")
     });
 
 }(jQuery));
+
+(function () {
+    window.addEventListener("message", function(e) {
+        if(e.data.message == "resize") {
+            $("iframe").each(function () {
+                if(this.contentWindow !== e.source) return;
+
+                this.width = e.data.size.width;
+                this.height = e.data.size.height;
+            });
+        }
+    });
+}());

@@ -17,7 +17,7 @@
     "async": "*",
     "mkdirp": "0.3.x",
     "request": "2.2.x",
-    "validator": "1.1.x",
+    "validator": "git://github.com/thomaspeklak/node-validator.git",
     "mongoose-version": "0.2.x",
     "i18n-2": "0.4.x",
     "mongoose-text-search": "0.0.2",

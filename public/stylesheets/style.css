@@ -2,6 +2,12 @@ a {
     color: #00B7FF;
 }
 
+iframe {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
 .container.deleted {
     background: #fbfbfb;
 }
@@ -137,3 +143,6 @@ a {
     max-width:100px;
 }
 
+.gist{
+    max-width: 100%;
+}
