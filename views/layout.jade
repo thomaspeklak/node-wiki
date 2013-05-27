@@ -72,7 +72,7 @@ html
 
         .container(class=page && page.deleted ? "deleted" : "")
             #messages.messages
-            if page.deleted
+            if page && page.deleted
                 .alert.alert-warning= __("page-status-deleted")
             .row
                 .span3
