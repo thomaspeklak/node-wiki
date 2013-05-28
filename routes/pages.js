@@ -7,7 +7,11 @@ var setPage = function (req, res) {
     var page = res.locals.page;
 
     if (page) {
-        setProps(req.body, ["title", "content", "tags"], page);
+        try {
+            setProps(req.body, ["title", "content", "tags"], page);
+            } catch (err) {
+                return res.send(400, err.message);
+            }
     } else {
         page = new Page(req.body);
         page.path = req.path;

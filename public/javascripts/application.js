@@ -346,6 +346,9 @@ $("#saveUsername")
                 $(this).closest("modal").modal("hide").remove();
             });
         }
+        if (xhr.responseText) {
+            return $.message("error", __(xhr.responseText), 2e3);
+        }
         $.message("error", __("page-could-not-be-saved"), 2e3);
     };
 }(CKEDITOR));

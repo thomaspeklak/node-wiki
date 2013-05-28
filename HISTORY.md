@@ -1,3 +1,9 @@
+0.2.2 / 2013-03-28
+==================
+- fix click linking behaviour
+- fix false xss detection and provide user feedback
+
+
 0.2.1 / 2013-03-27
 ==================
 - fix tags page
