@@ -3,7 +3,8 @@
   "description": "HTML5 editor powered wiki with drag and drop file upload and easy page creation",
   "version": "0.3.0",
   "scripts": {
-    "start": "nodemon -w lib -w models -w routes app.js"
+    "start": "node .",
+    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,8 @@
   "devDependencies": {
     "livereload": "*",
     "mocha": "~1.10.0",
-    "supertest": "~0.6.0"
+    "supertest": "~0.6.0",
+    "should": "~1.2.2"
   },
   "license": "MIT"
 }

@@ -1,23 +1,14 @@
 "use strict";
 
-var express = require("express"),
-    http = require("http"),
-    mongoose = require("mongoose"),
-    I18n = require("i18n-2"),
-    config = require("./config");
+var express = require("express");
+var http    = require("http");
+var I18n    = require("i18n-2");
+var config  = require("./config");
 
-mongoose.connect(process.env.DB || config.db.url, function (err) {
-    if (err) {
-        console.log("Could not connect to database \"" +
-            "mongodb://localhost/nodewiki" +
-            "\". Ensure that a mongo db instance is up and running.");
-        console.log(err);
-        process.exit(1);
-    }
-});
 require("express-mongoose");
 
 var app = express();
+
 app.disable("x-powered-by");
 
 app.configure(function () {
@@ -51,13 +42,4 @@ app.use(require("./middleware/load-page"));
 app.use(app.router);
 require("./routes")(app);
 
-http.createServer(app).listen(app.get("port"), function () {
-    console.log("Express server listening on port " + app.get("port"));
-});
-
-if (process.env.NODE_ENV == "development" ||  !process.env.NODE_ENV) {
-    require("./lib/live-reload")();
-}
-
-require("./models/app").initialize();
-require("./lib/wipe-timer").start();
+module.exports = app;
