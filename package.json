@@ -17,9 +17,9 @@
     "express-mongoose": "0.1.x",
     "async": "*",
     "mkdirp": "0.3.x",
-    "request": "2.2.x",
+    "request": "2.21.x",
     "validator": "git://github.com/thomaspeklak/node-validator.git",
-    "mongoose-version": "0.2.x",
+    "mongoose-version": "0.2.2",
     "i18n-2": "0.4.x",
     "mongoose-text-search": "0.0.2",
     "semver": "~1.1.4"
