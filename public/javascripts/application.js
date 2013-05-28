@@ -155,12 +155,13 @@ $("#saveUsername")
 
     $(".content.editable")
     .on("mousedown", function (e) {
-        if (e.target.tagName == "A" && !$(this)
+        var link = $(e.target).closest("a");
+        if (link.length && !$(this)
             .hasClass("cke_focus")) {
                 clickingLink = true;
                 this.contentEditable = false;
                 e.stopImmediatePropagation();
-                openLink(e.target, e);
+                openLink(link[0], e);
             }
     }).on("click", function (e) {
         if (clickingLink) {
@@ -344,6 +345,9 @@ $("#saveUsername")
             .on("click", "btn-cancle", function () {
                 $(this).closest("modal").modal("hide").remove();
             });
+        }
+        if (xhr.responseText) {
+            return $.message("error", __(xhr.responseText), 2e3);
         }
         $.message("error", __("page-could-not-be-saved"), 2e3);
     };
