@@ -1,5 +1,7 @@
 #Node Wiki
 
+[![Build Status](https://travis-ci.org/thomaspeklak/node-wiki.png)](https://travis-ci.org/thomaspeklak/node-wiki) [![Dependency Status](https://gemnasium.com/thomaspeklak/node-wiki.png)](https://gemnasium.com/thomaspeklak/node-wiki)
+
 This was formally a proof of concept of easily combing Aloha editor with a node backend to achieve a simple wiki. This project has now started to evolve into a decent wiki platform with tags, recent pages, autosaving and drag and drop file uploads.
 
 ##Simplicity
