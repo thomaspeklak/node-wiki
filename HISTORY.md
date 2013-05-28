@@ -1,11 +1,12 @@
-0.3.0
+0.4.0
 =====
+- tests for page creation
+- ATTENTION: start script changed from `app.js` to `index.js`
 
 0.2.2 / 2013-03-28
 ==================
 - fix click linking behaviour
 - fix false xss detection and provide user feedback
-
 
 0.2.1 / 2013-03-27
 ==================

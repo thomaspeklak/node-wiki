@@ -90,12 +90,17 @@ numbers represent unstable versions, even numbers represent stable versions.
 The master branch represents the latest unstable version. As of this writing
 0.2 is stable and 0.3 is unstable.
 
+##Contributing
+
+Fork the project and send me a pull request. As long as it is aligned with node-wikis philosophy it will be merged in.
+
+###Tests
+
+The main goal for the next stable release (v0.4.0) is a solid test base. To run the tests fire up `npm test`.
+
 ##What to expect next?
 
 Take a look at the [issue list](https://github.com/thomaspeklak/node-wiki/issues?labels=enhancement&state=open)
 
 Anything you are missing? File an [issue](https://github.com/thomaspeklak/node-wiki/issues) or send a pull request.
 
-##Contributing
-
-Fork the project and send me a pull request. As long as it is aligned with node-wikis philosophy it will be merged in.
