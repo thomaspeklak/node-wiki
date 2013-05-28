@@ -155,12 +155,13 @@ $("#saveUsername")
 
     $(".content.editable")
     .on("mousedown", function (e) {
-        if (e.target.tagName == "A" && !$(this)
+        var link = $(e.target).closest("a");
+        if (link.length && !$(this)
             .hasClass("cke_focus")) {
                 clickingLink = true;
                 this.contentEditable = false;
                 e.stopImmediatePropagation();
-                openLink(e.target, e);
+                openLink(link[0], e);
             }
     }).on("click", function (e) {
         if (clickingLink) {
