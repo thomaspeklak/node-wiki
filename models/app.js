@@ -23,7 +23,7 @@ module.exports.initialize = function (cb) {
 
         if (!app) {
             app = new App({
-                version: 0
+                version: "0.0.0"
             });
         }
 
