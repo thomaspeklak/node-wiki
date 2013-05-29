@@ -1,5 +1,5 @@
 "use strict";
-/*global describe:false, it:false, beforeEach: false, afterEach: false */
+/*global describe:false, it:false, before: false, after: false, beforeEach: false, afterEach: false, expect:false */
 process.env.NODE_ENV = "test";
 
 var request = require("supertest");
@@ -11,16 +11,9 @@ var Page = require("../models/page");
 var async = require("async");
 
 describe("Page", function () {
-    beforeEach(function () {
-        db.connect();
-    });
-
-    afterEach(function (done) {
-        db.wipe(function (err) {
-            if (err) throw err;
-            db.close(done);
-        });
-    });
+    before(db.connect);
+    afterEach(db.wipe);
+    after(db.close);
 
     it("shuold allow path updates", function (done) {
         var newPage = pageFactory();
