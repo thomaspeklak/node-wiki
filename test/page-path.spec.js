@@ -42,19 +42,45 @@ describe("Page", function () {
                         Page.count({path: "/foobar"}, function (err, count) {
                             should.not.exist(err);
                             count.should.eql(0);
-                            cb();
+                            cb(err);
                         });
                     },
                     function (cb) {
                         Page.count({path: "/foobaz"}, function (err, count) {
                             should.not.exist(err);
                             count.should.eql(1);
-                            cb();
+                            cb(err);
                         });
                     }
                 ], done);
-
             });
         });
+    });
+
+    it("shuold not allow path update on existing path", function (done) {
+        async.parallel([function (cb) {
+            var newPage = pageFactory();
+            var page = new Page(newPage);
+            page.path = "/foobar";
+            page.save(cb);
+        },
+        function (cb) {
+            var newPage = pageFactory();
+            var page = new Page(newPage);
+            page.path = "/foobaz";
+            page.save(cb);
+        }], function (err) {
+            request(app)
+                .put("/foobar")
+                .send({newPath: "/foobaz"})
+                .expect(200)
+                .end( function (err, res) {
+                    var response = JSON.parse(res.text);
+                    response.status.should.eql("page-exists");
+
+                    done(err);
+                });
+        });
+
     });
 });
