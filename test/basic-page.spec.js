@@ -36,11 +36,11 @@ describe("Page", function () {
             .get("/")
             .expect(200)
             .end(function (err, res) {
-                should.not.exist(err);
-                res.text.should.include("New Page");
-                res.text.should.include("Content");
-                done();
-            });
+            should.not.exist(err);
+            res.text.should.include("New Page");
+            res.text.should.include("Content");
+            done();
+        });
     });
 
     it("should create a new page", function (done) {
@@ -50,12 +50,15 @@ describe("Page", function () {
             .expect(200)
             .send(newPage)
             .end(function (err, res) {
-                should.not.exist(err);
-                var response = JSON.parse(res.text);
-                response.lastModified.should.exist;
+            should.not.exist(err);
+            var response = JSON.parse(res.text);
+            response.lastModified.should.exist;
 
-                async.parallel([function (cb) {
-                    Page.findOne({path: "/foobar"}, function (err, page) {
+            async.parallel([
+                function (cb) {
+                    Page.findOne({
+                        path: "/foobar"
+                    }, function (err, page) {
                         page.title.should.eql(newPage.title);
                         page.path.should.eql("/foobar");
                         page.tags.join(", ").should.eql(newPage.tags);
@@ -63,19 +66,21 @@ describe("Page", function () {
 
                         cb(err);
                     });
-                }, function (cb) {
+                },
+                function (cb) {
                     request(app)
                         .get("/foobar")
                         .expect(200)
                         .end(function (err, res) {
-                            should.not.exist(err);
-                            res.text.should.include(newPage.title);
-                            res.text.should.include(newPage.content);
+                        should.not.exist(err);
+                        res.text.should.include(newPage.title);
+                        res.text.should.include(newPage.content);
 
-                            cb(err);
-                        });
-                }], done);
-            });
+                        cb(err);
+                    });
+                }
+            ], done);
+        });
     });
 
     it("should update an existing page", function (done) {
@@ -85,32 +90,34 @@ describe("Page", function () {
             .expect(200)
             .send(newPage)
             .end(function (err, res) {
-                should.not.exist(err);
+            should.not.exist(err);
 
+            var response = JSON.parse(res.text);
+            response.lastModified.should.exist;
+
+            newPage.lastModified = response.lastModified;
+            newPage.title = "Updated Title";
+
+            request(app)
+                .post("/foobar")
+                .send(newPage)
+                .end(function (err, res) {
+                should.not.exist(err);
                 var response = JSON.parse(res.text);
                 response.lastModified.should.exist;
 
-                newPage.lastModified = response.lastModified;
-                newPage.title = "Updated Title";
+                Page.findOne({
+                    path: "/foobar"
+                }, function (err, page) {
+                    should.not.exist(err);
+                    should.exist(page);
+                    page.title.should.eql("Updated Title");
 
-                request(app)
-                    .post("/foobar")
-                    .send(newPage)
-                    .end(function (err, res) {
-                        should.not.exist(err);
-                        var response = JSON.parse(res.text);
-                        response.lastModified.should.exist;
-
-                        Page.findOne({path: "/foobar"}, function (err, page) {
-                            should.not.exist(err);
-                            should.exist(page);
-                            page.title.should.eql("Updated Title");
-
-                            done();
-                        });
-                    });
-
+                    done();
+                });
             });
+
+        });
     });
 
     it("should respond with 409 Conflict when sending data from a previous version", function (done) {
@@ -120,20 +127,56 @@ describe("Page", function () {
             .expect(200)
             .send(newPage)
             .end(function (err, res) {
-                should.not.exist(err);
+            should.not.exist(err);
 
-                var response = JSON.parse(res.text);
-                response.lastModified.should.exist;
+            var response = JSON.parse(res.text);
+            response.lastModified.should.exist;
 
-                newPage.lastModified = response.lastModified - 10;
-                newPage.title = "Updated Title";
+            newPage.lastModified = response.lastModified - 10;
+            newPage.title = "Updated Title";
 
-                request(app)
-                    .post("/foobar")
-                    .send(newPage)
-                    .expect(409)
-                    .end(done);
+            request(app)
+                .post("/foobar")
+                .send(newPage)
+                .expect(409)
+                .end(done);
+        });
+    });
+
+    it("should be able to delete a page", function (done) {
+        var newPage = pageFactory();
+        var page = new Page(newPage);
+        page.path = "/foobar";
+        page.save(function (err) {
+            request(app)
+                .del("/foobar")
+                .expect(200)
+                .end(function (err, res) {
+                async.parallel([
+                    function (cb) {
+                        Page.findOne({
+                            path: "/foobar"
+                        }, function (err, page) {
+                            should.not.exist(err);
+                            page.deleted.should.be.true;
+
+                            cb(err);
+                        });
+                    },
+                    function(cb) {
+                        request(app)
+                            .get("/deleted-pages")
+                            .expect(200)
+                            .end(function (err, res) {
+                                should.not.exist(err);
+                                res.text.should.include(page.title);
+
+                                cb(err);
+                            });
+                    }
+                ], done);
             });
+        });
+
     });
 });
-
