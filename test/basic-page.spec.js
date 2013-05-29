@@ -77,5 +77,40 @@ describe("Page", function () {
                 }], done);
             });
     });
+
+    it("should update an existing page", function (done) {
+        var newPage = pageFactory();
+        request(app)
+            .post("/foobar")
+            .expect(200)
+            .send(newPage)
+            .end(function (err, res) {
+                should.not.exist(err);
+
+                var response = JSON.parse(res.text);
+                response.lastModified.should.exist;
+
+                newPage.lastModified = response.lastModified;
+                newPage.title = "Updated Title";
+
+                request(app)
+                    .post("/foobar")
+                    .send(newPage)
+                    .end(function (err, res) {
+                        should.not.exist(err);
+                        var response = JSON.parse(res.text);
+                        response.lastModified.should.exist;
+
+                        Page.findOne({path: "/foobar"}, function (err, page) {
+                            should.not.exist(err);
+                            should.exist(page);
+                            page.title.should.eql("Updated Title");
+
+                            done();
+                        });
+                    });
+
+            });
+    });
 });
 
