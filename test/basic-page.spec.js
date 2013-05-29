@@ -112,5 +112,28 @@ describe("Page", function () {
 
             });
     });
+
+    it("should respond with 409 Conflict when sending data from a previous version", function (done) {
+        var newPage = pageFactory();
+        request(app)
+            .post("/foobar")
+            .expect(200)
+            .send(newPage)
+            .end(function (err, res) {
+                should.not.exist(err);
+
+                var response = JSON.parse(res.text);
+                response.lastModified.should.exist;
+
+                newPage.lastModified = response.lastModified - 10;
+                newPage.title = "Updated Title";
+
+                request(app)
+                    .post("/foobar")
+                    .send(newPage)
+                    .expect(409)
+                    .end(done);
+            });
+    });
 });
 
