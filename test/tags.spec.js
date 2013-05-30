@@ -1,6 +1,5 @@
 "use strict";
 /*global describe:false, it:false, before: false, after: false, beforeEach: false, afterEach: false, expect:false */
-process.env.NODE_ENV = "test";
 
 var request = require("supertest");
 var expect = require("chai").expect;
