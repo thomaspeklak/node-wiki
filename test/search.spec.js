@@ -9,7 +9,7 @@ var pageFactory = require("./factories/page");
 var Page = require("../models/page");
 var async = require("async");
 
-describe.only("Search", function () {
+describe("Search", function () {
     before(db.connect);
     beforeEach(function (cb) {
         async.parallel([
@@ -59,4 +59,17 @@ describe.only("Search", function () {
                 done();
             });
     });
+
+    it("should order the results correctly", function (done) {
+        request(app)
+            .get("/search?q=baz")
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.text).to.match(/Search Results.*Baz/);
+                expect(res.text).to.not.match(/Search Results.*Foo Title/);
+
+                done();
+            });
+    });
+
 });
