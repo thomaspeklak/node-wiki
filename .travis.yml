@@ -5,5 +5,5 @@ node_js:
   - "0.8"
 services: mongodb
 before_install:
-  - mongo --eval 'db.runCommand({setParameter: 1, textSearchEnabled: true})' admin
+  - "mongo --eval 'db.runCommand({setParameter: 1, textSearchEnabled: true})' admin"
 
