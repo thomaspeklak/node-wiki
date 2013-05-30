@@ -3,7 +3,7 @@
 process.env.NODE_ENV = "test";
 
 var request = require("supertest");
-var should = require("should");
+var expect = require("chai").expect;
 var app = require("../app");
 var db = require("../db-connector");
 var pageFactory = require("./factories/page");
@@ -24,10 +24,10 @@ describe("Tags", function () {
                 .get("/tags")
                 .expect(200)
                 .end(function (err, res) {
-                should.not.exist(err);
+                expect(err).to.be.null;
                 page.tags.forEach(function (tag) {
-                    res.text.should.include(tag + " (1)");
-                    res.text.should.include("/tags/" + tag);
+                    expect(res.text).to.include(tag + " (1)");
+                    expect(res.text).to.include("/tags/" + tag);
                 });
 
                 done(err);
@@ -52,18 +52,18 @@ describe("Tags", function () {
                 page2.save(cb);
             }
         ], function (err) {
-            should.not.exist(err);
+            expect(err).to.be.null;
             request(app)
                 .get("/tags/foo")
                 .expect(200)
                 .end(function (err, res) {
-                should.not.exist(err);
+                expect(err).to.be.null;
 
-                res.text.should.include(page1.title);
-                res.text.should.include(page1.path);
+                expect(res.text).to.include(page1.title);
+                expect(res.text).to.include(page1.path);
 
-                res.text.should.include(page2.title);
-                res.text.should.include(page2.path);
+                expect(res.text).to.include(page2.title);
+                expect(res.text).to.include(page2.path);
 
                 done();
             });

@@ -3,7 +3,7 @@
 process.env.NODE_ENV = "test";
 
 var request = require("supertest");
-var should = require("should");
+var expect = require("chai").expect;
 var app = require("../app");
 var db = require("../db-connector");
 var pageFactory = require("./factories/page");
@@ -15,7 +15,7 @@ var deletedPagesShouldBeEmpty = function (cb) {
         .get("/deleted-pages")
         .expect(200)
         .end(function (err, res) {
-            res.text.should.include("no archived pages");
+            expect(res.text).to.include("no archived pages");
 
             cb(err);
         });
@@ -36,8 +36,8 @@ var deletedPagesShouldContainPage = function (page) {
             .get("/deleted-pages")
             .expect(200)
             .end(function (err, res) {
-                res.text.should.include(page.title);
-                res.text.should.include(page.path);
+                expect(res.text).to.include(page.title);
+                expect(res.text).to.include(page.path);
 
                 cb(err);
             });
@@ -65,7 +65,7 @@ describe("Archive", function () {
         var page = new Page(newPage);
         page.path = "/foo";
         page.save(function (err) {
-            should.not.exist(err);
+            expect(err).to.be.null;
 
             async.series([
                 deletedPagesShouldBeEmpty,

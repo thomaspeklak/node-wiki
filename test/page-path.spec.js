@@ -3,7 +3,7 @@
 process.env.NODE_ENV = "test";
 
 var request = require("supertest");
-var should = require("should");
+var expect = require("chai").expect;
 var app = require("../app");
 var db = require("../db-connector");
 var pageFactory = require("./factories/page");
@@ -28,20 +28,20 @@ describe("Page", function () {
                 newPath: "/foobaz"
             })
                 .end(function (err, res) {
-                should.not.exist(err);
+                expect(err).to.be.null;
 
                 async.parallel([
                     function (cb) {
                         Page.count({path: "/foobar"}, function (err, count) {
-                            should.not.exist(err);
-                            count.should.eql(0);
+                            expect(err).to.be.null;
+                            expect(count).to.eql(0);
                             cb(err);
                         });
                     },
                     function (cb) {
                         Page.count({path: "/foobaz"}, function (err, count) {
-                            should.not.exist(err);
-                            count.should.eql(1);
+                            expect(err).to.be.null;
+                            expect(count).to.eql(1);
                             cb(err);
                         });
                     }
@@ -69,7 +69,7 @@ describe("Page", function () {
                 .expect(200)
                 .end( function (err, res) {
                     var response = JSON.parse(res.text);
-                    response.status.should.eql("page-exists");
+                    expect(response.status).to.eql("page-exists");
 
                     done(err);
                 });

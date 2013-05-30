@@ -3,7 +3,7 @@
 process.env.NODE_ENV = "test";
 
 var request = require("supertest");
-var should = require("should");
+var expect = require("chai").expect;
 var app = require("../app");
 var db = require("../db-connector");
 var pageFactory = require("./factories/page");
@@ -17,9 +17,9 @@ describe("Page", function () {
 
     it("should have no pages when none was created", function (done) {
         Page.find({}, function (err, page) {
-            should.not.exist(err);
-            should.exist(page);
-            page.length.should.eql(0);
+            expect(err).to.be.null;
+            expect(page).to.exist;
+            expect(page.length).to.eql(0);
             done();
         });
     });
@@ -29,9 +29,9 @@ describe("Page", function () {
             .get("/")
             .expect(200)
             .end(function (err, res) {
-            should.not.exist(err);
-            res.text.should.include("New Page");
-            res.text.should.include("Content");
+            expect(err).to.be.null;
+            expect(res.text).to.include("New Page");
+            expect(res.text).to.include("Content");
             done();
         });
     });
@@ -43,19 +43,19 @@ describe("Page", function () {
             .expect(200)
             .send(newPage)
             .end(function (err, res) {
-            should.not.exist(err);
+            expect(err).to.be.null;
             var response = JSON.parse(res.text);
-            response.lastModified.should.exist;
+            expect(response.lastModified).to.exist;
 
             async.parallel([
                 function (cb) {
                     Page.findOne({
                         path: "/foobar"
                     }, function (err, page) {
-                        page.title.should.eql(newPage.title);
-                        page.path.should.eql("/foobar");
-                        page.tags.join(", ").should.eql(newPage.tags);
-                        page.content.should.eql(newPage.content);
+                        expect(page.title).to.eql(newPage.title);
+                        expect(page.path).to.eql("/foobar");
+                        expect(page.tags.join(", ")).to.eql(newPage.tags);
+                        expect(page.content).to.eql(newPage.content);
 
                         cb(err);
                     });
@@ -65,9 +65,9 @@ describe("Page", function () {
                         .get("/foobar")
                         .expect(200)
                         .end(function (err, res) {
-                        should.not.exist(err);
-                        res.text.should.include(newPage.title);
-                        res.text.should.include(newPage.content);
+                        expect(err).to.be.null;
+                        expect(res.text).to.include(newPage.title);
+                        expect(res.text).to.include(newPage.content);
 
                         cb(err);
                     });
@@ -83,10 +83,10 @@ describe("Page", function () {
             .expect(200)
             .send(newPage)
             .end(function (err, res) {
-            should.not.exist(err);
+            expect(err).to.be.null;
 
             var response = JSON.parse(res.text);
-            response.lastModified.should.exist;
+            expect(response.lastModified).to.exist;
 
             newPage.lastModified = response.lastModified;
             newPage.title = "Updated Title";
@@ -95,16 +95,16 @@ describe("Page", function () {
                 .post("/foobar")
                 .send(newPage)
                 .end(function (err, res) {
-                should.not.exist(err);
+                expect(err).to.be.null;
                 var response = JSON.parse(res.text);
-                response.lastModified.should.exist;
+                expect(response.lastModified).to.exist;
 
                 Page.findOne({
                     path: "/foobar"
                 }, function (err, page) {
-                    should.not.exist(err);
-                    should.exist(page);
-                    page.title.should.eql("Updated Title");
+                    expect(err).to.be.null;
+                    expect(page).to.exist;
+                    expect(page.title).to.eql("Updated Title");
 
                     done();
                 });
@@ -120,10 +120,10 @@ describe("Page", function () {
             .expect(200)
             .send(newPage)
             .end(function (err, res) {
-            should.not.exist(err);
+            expect(err).to.be.null;
 
             var response = JSON.parse(res.text);
-            response.lastModified.should.exist;
+            expect(response.lastModified).to.exist;
 
             newPage.lastModified = response.lastModified - 10;
             newPage.title = "Updated Title";
@@ -150,8 +150,8 @@ describe("Page", function () {
                         Page.findOne({
                             path: "/foobar"
                         }, function (err, page) {
-                            should.not.exist(err);
-                            page.deleted.should.be.true;
+                            expect(err).to.be.null;
+                            expect(page.deleted).to.be.true;
 
                             cb(err);
                         });
@@ -161,8 +161,8 @@ describe("Page", function () {
                             .get("/deleted-pages")
                             .expect(200)
                             .end(function (err, res) {
-                                should.not.exist(err);
-                                res.text.should.include(page.title);
+                                expect(err).to.be.null;
+                                expect(res.text).to.include(page.title);
 
                                 cb(err);
                             });
