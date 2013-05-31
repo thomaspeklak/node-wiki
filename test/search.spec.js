@@ -23,7 +23,7 @@ describe("Search", function () {
                 var newPage = pageFactory();
                 var page = new Page(newPage);
                 page.path = "/foobaz";
-                page.title = "Baz";
+                page.title = "Bazuum";
                 page.content = "content baz";
                 page.tags = "foo, baz";
                 page.save(cb);
@@ -60,9 +60,9 @@ describe("Search", function () {
             });
     });
 
-    it("should order the results correctly", function (done) {
+    it("should match only certain pages", function (done) {
         request(app)
-            .get("/search?q=baz")
+            .get("/search?q=bazuum")
             .expect(200)
             .end(function (err, res) {
                 expect(res.text).to.match(/Search Results.*Baz/);
