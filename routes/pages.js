@@ -129,10 +129,6 @@ module.exports = function (app) {
     });
 
     var updatePath = function (req, res) {
-        if (!res.locals.page) {
-            return res.send(404);
-        }
-
         var page = res.locals.page;
         Page.findOne({
             path: req.body.newPath,
@@ -197,10 +193,6 @@ module.exports = function (app) {
     });
 
     app.delete("*", function (req, res) {
-        if (!res.locals.page) {
-            res.send(404);
-        }
-
         var page = res.locals.page;
 
         page.delete(function (err) {

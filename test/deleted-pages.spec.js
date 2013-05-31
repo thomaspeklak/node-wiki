@@ -54,6 +54,41 @@ var restorePage = function (page) {
     };
 };
 
+var deletedPageShouldNotHaveEditableContent = function (page) {
+    return function (cb) {
+        request(app)
+            .get(page.path)
+            .end(function (err, res) {
+                var text = res.text;
+                expect(text).to.include("This page is deleted.");
+                expect(text).to.include("container deleted");
+                expect(text).to.not.include("contenteditable");
+                cb(err);
+            });
+    };
+};
+
+var updateDeletedPageShouldReturnError = function (page) {
+    return function (cb) {
+        request(app)
+            .post(page.path)
+            .send({title: "BAZ", lastModified: Date.now()})
+            .expect(405)
+            .end(cb);
+    };
+};
+
+
+var movePageShouldNotBeAllowed = function (page) {
+    return function (cb) {
+        request(app)
+            .put(page.path)
+            .send({newPath: "/baz"})
+            .expect(405)
+            .end(cb);
+    };
+};
+
 
 describe("Archive", function () {
     before(db.connect);
@@ -73,6 +108,20 @@ describe("Archive", function () {
                 deletedPagesShouldContainPage(page),
                 restorePage(page),
                 deletedPagesShouldBeEmpty
+            ], done);
+        });
+    });
+
+    it.only("should not be editable when deleted", function (done) {
+        var newPage = pageFactory();
+        var page = new Page(newPage);
+        page.path = "/foo";
+        page.deleted = true;
+        page.save(function () {
+            async.parallel([
+                deletedPageShouldNotHaveEditableContent(page),
+                updateDeletedPageShouldReturnError(page),
+                movePageShouldNotBeAllowed(page)
             ], done);
         });
     });
