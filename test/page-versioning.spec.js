@@ -1,5 +1,5 @@
 "use strict";
-/*global describe:false, it:false, before: false, after: false, beforeEach: false, afterEach: false, expect:false */
+/*global describe:false, it:false, before: false, after: false, beforeEach: false, afterEach: false */
 
 var request = require("supertest");
 var expect = require("chai").expect;
@@ -58,7 +58,6 @@ describe("Page Versioning", function () {
             var versionsLink = "/versions/" + page._id + ".*";
             var any = ".*";
             expect(res.text).to.match(new RegExp("table" + any + versionsLink + any + versionsLink + any + versionsLink + any + "table"));
-            expect(res.text).to.not.match(new RegExp("table" + any + versionsLink + any + versionsLink + any + versionsLink + any + versionsLink + any + "table"));
 
             done(err);
         });
@@ -75,9 +74,54 @@ describe("Page Versioning", function () {
         });
     });
 
-    it("should navigate between versions");
+    describe("#navgate versions", function () {
+        var getFirstVersion = function (cb) {
+            request(app)
+                .get("/versions/" + page._id)
+                .end(function (err, res) {
+                    var link = res.text.match(new RegExp("/versions/" + page._id + "/[0-9a-f]+"))[0];
+                    request(app)
+                        .get(link)
+                        .end(cb);
+                });
+        };
 
-    describe("#restore", function () {
+        var verifyAndFollowNext = function (res, cb) {
+            expect(res.text).to.include("Foo Title");
+
+            var link = res.text.match(/href="([^"]+)"[^>]+>Next<\/a>/)[1];
+            request(app)
+                .get(link)
+                .expect(200)
+                .end(cb);
+        };
+
+        var goToPrevious = function (res, cb) {
+            expect(res.text).to.include("Bazbaz Title");
+
+            var link = res.text.match(/href="([^"]+)"[^>]+>Previous<\/a>/)[1];
+            request(app)
+                .get(link)
+                .expect(200)
+                .end(cb);
+        };
+
+        var verifyPrevious = function (res, cb) {
+            expect(res.text).to.include("Foo Title");
+            cb();
+        };
+
+        it("should navigate between versions", function (done) {
+            async.waterfall([
+                getFirstVersion,
+                verifyAndFollowNext,
+                goToPrevious,
+                verifyPrevious
+            ], done);
+        });
+    });
+
+    describe.skip("#restore", function () {
         it("should restore to a previous version");
     });
 });

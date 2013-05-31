@@ -2,6 +2,7 @@
 var mongoose = require("mongoose");
 var config   = require("./config");
 var Page     = require("./models/page");
+var async    = require("async");
 
 module.exports = {
     connect: function (cb) {
