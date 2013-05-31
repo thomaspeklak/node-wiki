@@ -16,10 +16,6 @@ module.exports = function (req, res, next) {
             return next(err);
         }
 
-        if (req.method != "GET" && !page) {
-            return res.send(405);
-        }
-
         res.locals.page = page;
         next();
     });

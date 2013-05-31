@@ -106,6 +106,7 @@ module.exports = function (app) {
 
     app.post("*", function (req, res) {
         if (req.body.lastModified) {
+            if (!res.locals.page) return res.send(405);
             var currentDate = new Date(res.locals.page.lastModified);
             var oldTimestamp = req.body.lastModified;
 
@@ -185,14 +186,15 @@ module.exports = function (app) {
     };
 
     app.put("*", function (req, res) {
-        if (req.body.restore) {
-            return restorePage(req, res);
-        }
+        if (req.body.restore) return restorePage(req, res);
+        if (!res.locals.page) return res.send(405);
 
         updatePath(req, res);
     });
 
     app.delete("*", function (req, res) {
+        if (!res.locals.page) return res.send(405);
+
         var page = res.locals.page;
 
         page.delete(function (err) {

@@ -69,5 +69,6 @@
 	"deleted-pages": "Archive",
 	"archive-description": "To restore a page open it and choose restore from the tasks menu",
 	"no-deleted-pages": "There are currently no archived pages.",
-	"page-status-deleted": "This page is deleted. To restore it click restore from the tasks menu."
+	"page-status-deleted": "This page is deleted. To restore it click restore from the tasks menu.",
+	"no-versions-yet": "No versions yet"
 }

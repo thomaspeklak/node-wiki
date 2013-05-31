@@ -112,7 +112,7 @@ describe("Archive", function () {
         });
     });
 
-    it.only("should not be editable when deleted", function (done) {
+    it("should not be editable when deleted", function (done) {
         var newPage = pageFactory();
         var page = new Page(newPage);
         page.path = "/foo";
