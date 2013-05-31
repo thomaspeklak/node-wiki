@@ -79,11 +79,11 @@ describe("Page Versioning", function () {
             request(app)
                 .get("/versions/" + page._id)
                 .end(function (err, res) {
-                    var link = res.text.match(new RegExp("/versions/" + page._id + "/[0-9a-f]+"))[0];
-                    request(app)
-                        .get(link)
-                        .end(cb);
-                });
+                var link = res.text.match(new RegExp("/versions/" + page._id + "/[0-9a-f]+"))[0];
+                request(app)
+                    .get(link)
+                    .end(cb);
+            });
         };
 
         var verifyAndFollowNext = function (res, cb) {
@@ -121,7 +121,71 @@ describe("Page Versioning", function () {
         });
     });
 
-    describe.skip("#restore", function () {
-        it("should restore to a previous version");
+});
+
+describe("#restore", function () {
+    var page;
+
+    before(db.connect);
+    beforeEach(function (cb) {
+        var newPage = pageFactory();
+        page = new Page(newPage);
+        page.path = "/foobar";
+        async.series([
+            function (cb) {
+                page.save(cb);
+            },
+            function (cb) {
+                page.title = "Bazbaz Title";
+                page.content = "baz content";
+                page.tags = "baz";
+
+                page.save(cb);
+            },
+            function (cb) {
+                page.title = "Bar Title";
+                page.content = "bar content";
+                page.tags = "bar";
+
+                page.save(cb);
+            }
+        ], cb);
+    });
+    afterEach(db.wipe);
+    after(db.close);
+
+    var getFirstVersion = function (cb) {
+        request(app)
+            .get("/versions/" + page._id)
+            .end(function (err, res) {
+            var link = res.text.match(new RegExp("/versions/" + page._id + "/[0-9a-f]+"))[0];
+            request(app)
+                .get(link)
+                .end(cb);
+        });
+    };
+
+    var restorePage = function (link, cb) {
+        request(app)
+            .post(link)
+            .expect(302)
+            .end(cb);
+    };
+
+    it("should restore to a previous version", function (done) {
+        getFirstVersion(function (err, res) {
+            var restoreLink = res.text.match(new RegExp("/versions/" + page._id + "/[\/0-9a-f]+\/restore"))[0];
+            restorePage(restoreLink, function (err, res) {
+                request(app)
+                    .get(page.path)
+                    .expect(200)
+                    .end(function (err, res) {
+                    expect(res.text).to.include("Foo Title</h1>");
+                    expect(res.text).to.include("foo content");
+
+                    done(err);
+                });
+            });
+        });
     });
 });
