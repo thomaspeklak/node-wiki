@@ -1,6 +1,7 @@
 module.exports = {
-    secret : "Your secret here",
-    db : {
-        url : "mongodb://localhost/nodewiki-test"
-    }
+    secret: "Your secret here",
+    db: {
+        url: "mongodb://localhost/nodewiki-test"
+    },
+    keepDeleteItemsPeriod: 0
 };
