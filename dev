@@ -1,1 +1,1 @@
-nodemon -w lib -w models -w routes app.js
+nodemon -w lib -w models -w routes .

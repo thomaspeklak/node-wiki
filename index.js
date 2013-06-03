@@ -12,6 +12,7 @@ http.createServer(app).listen(app.get("port"), function () {
 
 if (process.env.NODE_ENV == "development" ||  !process.env.NODE_ENV) {
     require("./lib/live-reload")();
+    require("./lib/frontend-watch-task")();
 }
 
 require("./lib/wipe-timer").start();

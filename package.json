@@ -28,7 +28,8 @@
     "livereload": "*",
     "mocha": "~1.10.0",
     "supertest": "~0.6.0",
-    "chai": "~1.6.0"
+    "chai": "~1.6.0",
+    "watchify": "0.0.1"
   },
   "license": "MIT"
 }
