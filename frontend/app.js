@@ -1,10 +1,8 @@
 "use strict";
 console.log("starting");
-var app = {};
+window.app = {};
 
-(function (app) {
-    app.pageDeleted = $("div.container.deleted").length > 0;
-}(app));
+app.pageDeleted = $("div.container.deleted").length > 0;
 
 
 require("./cookies");
