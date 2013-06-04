@@ -15,6 +15,9 @@ if (process.env.NODE_ENV == "development" ||  !process.env.NODE_ENV) {
     require("./lib/frontend-watch-task")();
 }
 
+if (process.env.NODE_ENV == "production") {
+    require("./lib/bundle-frontend")();
+}
+
 require("./lib/wipe-timer").start();
 require("./models/app").initialize();
-

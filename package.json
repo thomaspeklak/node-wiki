@@ -22,7 +22,7 @@
     "mongoose-version": "0.2.2",
     "i18n-2": "0.4.x",
     "mongoose-text-search": "0.0.2",
-    "semver": "~1.1.4"
+    "semver": "~1.1.4", "browserify": "~2.17.3"
   },
   "devDependencies": {
     "livereload": "*",
