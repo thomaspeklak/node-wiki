@@ -26,3 +26,5 @@ public/images/*
 !uploads/.gitkeep
 uploads
 .tern-port
+
+public/javascripts/app.js
