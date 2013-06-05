@@ -1,5 +1,9 @@
 "use strict";
 
+//@todos
+// - use templateing system
+//   all dialogs should use this module
+
 var __ = require("./translate");
 
 var template = '<form id="%ID%" class="modal hide fade">\
