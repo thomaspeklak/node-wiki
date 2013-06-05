@@ -4,7 +4,6 @@ window.app = {};
 
 app.pageDeleted = $("div.container.deleted").length > 0;
 
-require("./modal");
 require("./identify-user");
 require("./message");
 require("./focus-contenteditable");

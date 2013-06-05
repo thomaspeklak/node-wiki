@@ -18,9 +18,9 @@ var __ = require("./translate");
             <button type="submit" class="btn btn-primary">' + __("save-changes") + '</button>\
             </div>\
         </form>')
-    .appendTo("body")
-    .modal("show");
-    $("#move-page-dialog").on("submit", handleSubmit);
+            .appendTo("body")
+            .modal("show");
+        $("#move-page-dialog").on("submit", handleSubmit);
     });
 
     var handleSubmit = function (e) {
@@ -44,4 +44,3 @@ var __ = require("./translate");
         });
     };
 }(jQuery));
-

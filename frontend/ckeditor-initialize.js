@@ -2,6 +2,7 @@
 
 var cookies = require("./cookies");
 var __ = require("./translate");
+var modal = require("./modal");
 
 (function (CKEDITOR) {
     //initize CK editor and page save events
@@ -64,7 +65,7 @@ var __ = require("./translate");
     };
     var savingError = function (xhr, error, type) {
         if (type == "Conflict") {
-            return app.modal(__("page-conflict-title"), __("page-conflict-description"))
+            return modal(__("page-conflict-title"), __("page-conflict-description"))
                 .on("click", "btn-confirm", function () {
                 location.reload();
             })

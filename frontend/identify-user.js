@@ -14,8 +14,8 @@ var __ = require("./translate");
         var username = $("input[name=username]").val();
         if (!username.length) {
             return $("input[name=username]")
-            .parent()
-            .addClass("error");
+                .parent()
+                .addClass("error");
         }
         cookies.set("username", username, 720);
         modal.modal("hide");
@@ -34,10 +34,9 @@ var __ = require("./translate");
         <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
         </div>\
     </form>')
-.appendTo("body")
-.modal("show");
-$("#saveUsername")
-.on("submit", handleSubmit);
+        .appendTo("body")
+        .modal("show");
+    $("#saveUsername")
+        .on("submit", handleSubmit);
 
 }(jQuery));
-
