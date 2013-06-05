@@ -1,5 +1,7 @@
 "use strict";
 
+var ProgressBar = require("./progress-bar");
+
 (function ($, app) {
     if (app.pageDeleted) return;
     if ($("#content.editable").length == 0) return;
@@ -51,7 +53,7 @@
         };
 
 
-        var progressBar = new app.ProgressBar("#content", xhr.upload);
+        var progressBar = new ProgressBar("#content", xhr.upload);
 
         xhr.send(formData); // multipart/form-data
     }

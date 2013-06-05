@@ -2,6 +2,7 @@
 
 var __ = require("./translate");
 var message = require("./message");
+var ProgressBar = require("./progress-bar");
 
 (function ($, app) {
     if (app.pageDeleted) return;
@@ -48,7 +49,7 @@ var message = require("./message");
         };
 
 
-        var progressBar = new app.ProgressBar('#attachments', xhr.upload);
+        var progressBar = new ProgressBar('#attachments', xhr.upload);
 
         xhr.send(formData); // multipart/form-data
     }
