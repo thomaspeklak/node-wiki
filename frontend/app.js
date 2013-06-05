@@ -13,7 +13,6 @@ require("./upload-attachments");
 require("./upload-images");
 require("./delete-image");
 require("./highlight-code");
-require("./move-page");
 require("./cover-image-loader");
 require("./language-switcher");
 require("./page-actions");
