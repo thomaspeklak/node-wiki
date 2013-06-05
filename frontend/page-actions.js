@@ -13,7 +13,7 @@ var isDeleted = require("./is-deleted");
             <h3>' + __("move-page") + '</h3>\
             </div>\
             <div class="modal-body">\
-            <p>" + __("new-page") + "</p>\
+            <p>' + __("new-page") + '</p>\
             <p class="control-group">/ <input placeholder="/page/subpage" name="path" value="' + location.pathname.substring(1) + '"required/><br/><br/></p>\
             </div>\
             <div class="modal-footer">\
