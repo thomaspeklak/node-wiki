@@ -1,6 +1,7 @@
 "use strict";
 
 var __ = require("./translate");
+var message = require("./message");
 
 (function ($) {
     $("#delete-page").click(function (e) {
@@ -11,7 +12,7 @@ var __ = require("./translate");
         }).done(function () {
             location.reload();
         }).fail(function () {
-            $.message('error', __("error-500"));
+            message('error', __("error-500"));
         });
     });
 
@@ -26,7 +27,7 @@ var __ = require("./translate");
         }).done(function () {
             location.reload();
         }).fail(function (xhr) {
-            $.message('error', __("error-" + xhr.status));
+            message('error', __("error-" + xhr.status));
         });
     });
 

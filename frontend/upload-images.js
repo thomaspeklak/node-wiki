@@ -44,7 +44,7 @@
             if (!finished && xhr.status == 200) {
                 finished = true;
                 handleResponse.bind(targetElement)(xhr.responseText);
-                $.message("success", __("successfully-uploaded"));
+                message("success", __("successfully-uploaded"));
             }
 
             app.handleErrors(xhr);
@@ -106,7 +106,7 @@
                         $("body")
                         .trigger("save");
                 } else {
-                    $.message('warn', __("unsupported-drop"));
+                    message('warn', __("unsupported-drop"));
                 }
             });
         }

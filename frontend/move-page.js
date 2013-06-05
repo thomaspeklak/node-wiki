@@ -1,6 +1,7 @@
 "use strict";
 
 var __ = require("./translate");
+var message = require("./message");
 
 (function ($) {
     if (app.pageDeleted) return;
@@ -33,14 +34,14 @@ var __ = require("./translate");
         }).done(function (data) {
             $("#move-page-dialog").modal("hide").remove();
             if (data.status == "page-exists") {
-                $.message("error", __("error-target-path-exists"));
+                message("error", __("error-target-path-exists"));
             } else {
-                $.message("success", __("page-moved"));
+                message("success", __("page-moved"));
                 location.replace(data.target);
             }
         }).fail(function (data) {
             $("#move-page-dialog").modal("hide").remove();
-            $.message("error", __("error-400"));
+            message("error", __("error-400"));
         });
     };
 }(jQuery));

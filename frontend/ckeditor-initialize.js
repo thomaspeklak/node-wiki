@@ -3,6 +3,7 @@
 var cookies = require("./cookies");
 var __ = require("./translate");
 var modal = require("./modal");
+var message = require("./message");
 
 (function (CKEDITOR) {
     //initize CK editor and page save events
@@ -58,7 +59,7 @@ var modal = require("./modal");
     });
 
     var saved = function (data) {
-        $.message("success", __("page-saved"), 2e3);
+        message("success", __("page-saved"), 2e3);
         $(".modified-by strong")
             .text(cookies.read("username"));
         $("h1:first").data().lastModified = data.lastModified;
@@ -74,8 +75,8 @@ var modal = require("./modal");
             });
         }
         if (xhr.responseText) {
-            return $.message("error", __(xhr.responseText), 2e3);
+            return message("error", __(xhr.responseText), 2e3);
         }
-        $.message("error", __("page-could-not-be-saved"), 2e3);
+        message("error", __("page-could-not-be-saved"), 2e3);
     };
 }(CKEDITOR));

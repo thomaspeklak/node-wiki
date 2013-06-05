@@ -5,7 +5,6 @@ window.app = {};
 app.pageDeleted = $("div.container.deleted").length > 0;
 
 require("./identify-user");
-require("./message");
 require("./focus-contenteditable");
 require("./enable-link-clicking");
 require("./ckeditor-wiki-links");

@@ -1,6 +1,7 @@
 "use strict";
 
 var __ = require("./translate");
+var message = require("./message");
 
 (function ($, app) {
     if (app.pageDeleted) return;
@@ -40,7 +41,7 @@ var __ = require("./translate");
             if (!finished && xhr.status == 200) {
                 finished = true;
                 handleResponse(xhr.responseText);
-                $.message("success", __("successfully-uploaded"));
+                message("success", __("successfully-uploaded"));
             }
 
             app.handleErrors(xhr);
