@@ -4,6 +4,7 @@ var __ = require("./translate");
 var message = require("./message");
 var ProgressBar = require("./progress-bar");
 var Dropzone = require("./dropzone");
+var handleErrors = require("./handle-xhr-errors");
 
 (function ($, app) {
     if (app.pageDeleted) return;
@@ -46,7 +47,7 @@ var Dropzone = require("./dropzone");
                 message("success", __("successfully-uploaded"));
             }
 
-            app.handleErrors(xhr);
+            handleErrors(xhr);
         };
 
 
