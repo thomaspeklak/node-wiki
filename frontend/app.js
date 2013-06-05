@@ -5,7 +5,6 @@ window.app = {};
 app.pageDeleted = $("div.container.deleted").length > 0;
 
 
-require("./cookies");
 require("./translate");
 require("./modal");
 require("./identify-user");

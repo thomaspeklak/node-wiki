@@ -1,5 +1,7 @@
 "use strict";
 
+var cookies = require("./cookies");
+
 (function (CKEDITOR) {
     //initize CK editor and page save events
     if (app.pageDeleted) return;
@@ -7,8 +9,8 @@
     var getData = function () {
         return {
             content: $('.content.editable')
-            .html()
-            .replace(" class=\"aloha-link-text\"", ""),
+                .html()
+                .replace(" class=\"aloha-link-text\"", ""),
             title: $('h1.title').html(),
             tags: $(".tags div").html()
         };
@@ -28,14 +30,14 @@
                 tags: $(".tags div").html(),
                 lastModified: $("h1.title").data().lastModified
             })
-            .success(saved)
-            .error(savingError);
+                .success(saved)
+                .error(savingError);
         }
     };
 
     setInterval(save, 6e4);
     $("body")
-    .bind("save", save);
+        .bind("save", save);
 
     CKEDITOR.inline("content", {
         on: {
@@ -44,28 +46,28 @@
     });
 
     $(".edit")
-    .blur(save)
-    .keydown(function (e) {
+        .blur(save)
+        .keydown(function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
             $(this)
-            .blur();
+                .blur();
         }
     });
 
     var saved = function (data) {
         $.message("success", __("page-saved"), 2e3);
         $(".modified-by strong")
-        .text(readCookie("username"));
+            .text(cookies.read("username"));
         $("h1:first").data().lastModified = data.lastModified;
     };
     var savingError = function (xhr, error, type) {
         if (type == "Conflict") {
             return app.modal(__("page-conflict-title"), __("page-conflict-description"))
-            .on("click", "btn-confirm", function () {
+                .on("click", "btn-confirm", function () {
                 location.reload();
             })
-            .on("click", "btn-cancle", function () {
+                .on("click", "btn-cancle", function () {
                 $(this).closest("modal").modal("hide").remove();
             });
         }
@@ -75,5 +77,3 @@
         $.message("error", __("page-could-not-be-saved"), 2e3);
     };
 }(CKEDITOR));
-
-

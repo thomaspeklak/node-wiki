@@ -1,8 +1,11 @@
 "use strict";
+
+var cookies = require("./cookies");
+
 (function ($) {
     //prompt user for a username if he has not already provided one
 
-    if (readCookie("username")) return;
+    if (cookies.read("username")) return;
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -12,7 +15,7 @@
             .parent()
             .addClass("error");
         }
-        createCookie("username", username, 720);
+        cookies.set("username", username, 720);
         modal.modal("hide");
 
     }
