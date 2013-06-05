@@ -6,8 +6,7 @@ require("./identify-user");
 require("./enable-link-clicking");
 if (!isDeleted) {
     require("./focus-contenteditable");
-    require("./ckeditor-wiki-links");
-    require("./ckeditor-initialize");
+    require("./ckeditor-initialize")(CKEDITOR);
     require("./upload-attachments");
     require("./upload-images");
     require("./delete-image");

@@ -1,6 +1,6 @@
 "use strict";
 
-(function (CKEDITOR) {
+module.exports = function (CKEDITOR) {
     var getById = function (array, id, recurse) {
         for (var i = 0, item;
             (item = array[i]); i++) {
@@ -101,5 +101,5 @@
             });
         }
     });
-}(CKEDITOR));
+};
 

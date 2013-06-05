@@ -5,7 +5,8 @@ var __ = require("./translate");
 var modal = require("./modal");
 var message = require("./message");
 
-(function (CKEDITOR) {
+module.exports = function (CKEDITOR) {
+    require("./ckeditor-wiki-links")(CKEDITOR);
     //initize CK editor and page save events
     if ($(".content.editable").length == 0) return;
     var getData = function () {
@@ -78,4 +79,4 @@ var message = require("./message");
         }
         message("error", __("page-could-not-be-saved"), 2e3);
     };
-}(CKEDITOR));
+};
