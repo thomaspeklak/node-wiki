@@ -4,8 +4,7 @@ var ProgressBar = require("./progress-bar");
 var Dropzone = require("./dropzone");
 var handleErrors = require("./handle-xhr-errors");
 
-(function ($, app) {
-    if (app.pageDeleted) return;
+(function ($) {
     if ($("#content.editable").length == 0) return;
 
     $(function () {
@@ -127,5 +126,5 @@ var handleErrors = require("./handle-xhr-errors");
         $("h1:first").data().lastModified = response.lastModified;
         $("body").trigger("save");
     };
-}(jQuery, app));
+}(jQuery));
 

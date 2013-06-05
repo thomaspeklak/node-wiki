@@ -7,7 +7,6 @@ var message = require("./message");
 
 (function (CKEDITOR) {
     //initize CK editor and page save events
-    if (app.pageDeleted) return;
     if ($(".content.editable").length == 0) return;
     var getData = function () {
         return {

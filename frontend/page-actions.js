@@ -2,9 +2,10 @@
 
 var __ = require("./translate");
 var message = require("./message");
+var isDeleted = require("./is-deleted");
 
 (function ($) {
-    if (app.pageDeleted) return;
+    if (isDeleted) return;
     $("#move-page").click(function (e) {
         e.preventDefault();
         $('<form id="move-page-dialog" class="modal hide fade">\

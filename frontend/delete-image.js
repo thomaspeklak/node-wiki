@@ -1,7 +1,6 @@
 "use strict";
 
 (function ($) {
-    if (app.pageDeleted) return;
     $(".plain-list")
     .on("click", ".icon-remove-sign", function (e) {
         e.preventDefault();
