@@ -3,6 +3,7 @@
 var __ = require("./translate");
 var message = require("./message");
 var isDeleted = require("./is-deleted");
+var modalTemplate = require("./templates/modal.hbs");
 
 (function ($) {
     if (isDeleted) return;
