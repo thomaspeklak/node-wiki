@@ -3,26 +3,24 @@
 var cookies = require("./cookies");
 var __ = require("./translate");
 
+//prompt user for a username if he has not already provided one
 
-(function ($) {
-    //prompt user for a username if he has not already provided one
+if (cookies.read("username")) return;
 
-    if (cookies.read("username")) return;
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        var username = $("input[name=username]").val();
-        if (!username.length) {
-            return $("input[name=username]")
-                .parent()
-                .addClass("error");
-        }
-        cookies.set("username", username, 720);
-        modal.modal("hide");
-
+function handleSubmit(e) {
+    e.preventDefault();
+    var username = $("input[name=username]").val();
+    if (!username.length) {
+        return $("input[name=username]")
+            .parent()
+            .addClass("error");
     }
+    cookies.set("username", username, 720);
+    modal.modal("hide");
 
-    var modal = $('<form id="saveUsername" class="modal hide fade">\
+}
+
+var modal = $('<form id="saveUsername" class="modal hide fade">\
         <div class="modal-header">\
         <h3>' + __('identify-yourself') + '</h3>\
         </div>\
@@ -34,9 +32,7 @@ var __ = require("./translate");
         <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
         </div>\
     </form>')
-        .appendTo("body")
-        .modal("show");
-    $("#saveUsername")
-        .on("submit", handleSubmit);
-
-}(jQuery));
+    .appendTo("body")
+    .modal("show");
+$("#saveUsername")
+    .on("submit", handleSubmit);
