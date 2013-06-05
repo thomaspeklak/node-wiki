@@ -3,6 +3,7 @@
 var __ = require("./translate");
 var message = require("./message");
 var ProgressBar = require("./progress-bar");
+var Dropzone = require("./dropzone");
 
 (function ($, app) {
     if (app.pageDeleted) return;
@@ -14,7 +15,7 @@ var ProgressBar = require("./progress-bar");
         }
 
         // Setup the dnd listeners.
-        new app.Dropzone({
+        new Dropzone({
             element: document.getElementById('drop-zone'),
             handleFileSelect: handleFileSelect
         });

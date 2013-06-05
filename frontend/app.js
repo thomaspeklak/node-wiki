@@ -9,7 +9,6 @@ require("./focus-contenteditable");
 require("./enable-link-clicking");
 require("./ckeditor-wiki-links");
 require("./ckeditor-initialize");
-require("./dropzone");
 require("./handle-xhr-errors");
 require("./upload-attachments");
 require("./upload-images");
