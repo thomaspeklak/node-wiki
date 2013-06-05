@@ -1,5 +1,7 @@
 "use strict";
 
+var __ = require("./translate");
+
 (function ($, app) {
     if (app.pageDeleted) return;
     if ($(".drop-here").length == 0) return;

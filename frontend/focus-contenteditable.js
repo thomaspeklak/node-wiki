@@ -1,4 +1,7 @@
 "use strict";
+
+var __ = require("./translate");
+
 (function ($) {
     $(".tags").click(function () {
         $(".tags div").focus();

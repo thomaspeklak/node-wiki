@@ -1,5 +1,7 @@
 "use strict";
 
+var __ = require("./translate");
+
 (function ($) {
     if (app.pageDeleted) return;
     $("#move-page").click(function (e) {

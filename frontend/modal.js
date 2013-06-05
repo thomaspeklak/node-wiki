@@ -1,5 +1,7 @@
 "use strict";
 
+var __ = require("./translate");
+
 (function (app) {
     var template = '<form id="%ID%" class="modal hide fade">\
         <div class="modal-header">\

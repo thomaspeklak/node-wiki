@@ -1,15 +1,13 @@
 "use strict";
 
-(function (exports) {
-    var translate = function (key) {
-        var args = arguments.length > 1 ? [].prototype.slice.call(arguments, 1) : [];
-        if (exports.i18n.hasOwnProperty(key)) {
-            return window.vsprintf(exports.i18n[key], args);
-        }
+//@TODO figure out how to inject external dependency i18n
+var translate = function (key) {
+    var args = arguments.length > 1 ? [].prototype.slice.call(arguments, 1) : [];
+    if (i18n.hasOwnProperty(key)) {
+        return window.vsprintf(i18n[key], args);
+    }
 
-        throw new Error("I18n: no translation for key: \"" + key + "\"");
-    };
+    throw new Error("I18n: no translation for key: \"" + key + "\"");
+};
 
-    exports.__ = translate;
-}(window));
-
+module.exports = translate;

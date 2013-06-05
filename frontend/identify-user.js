@@ -1,6 +1,8 @@
 "use strict";
 
 var cookies = require("./cookies");
+var __ = require("./translate");
+
 
 (function ($) {
     //prompt user for a username if he has not already provided one

@@ -1,5 +1,7 @@
 "use strict";
 
+var __ = require("./translate");
+
 (function ($) {
     $("#delete-page").click(function (e) {
         e.preventDefault();

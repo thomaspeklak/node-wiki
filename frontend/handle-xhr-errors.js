@@ -1,5 +1,7 @@
 "use strict";
 
+var __ = require("./translate");
+
 (function (app) {
     app.handleErrors = function (xhr) {
         if (xhr.status >= 500) {

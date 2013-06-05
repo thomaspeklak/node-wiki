@@ -1,6 +1,7 @@
 "use strict";
 
 var cookies = require("./cookies");
+var __ = require("./translate");
 
 (function (CKEDITOR) {
     //initize CK editor and page save events
