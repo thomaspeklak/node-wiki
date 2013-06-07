@@ -51,7 +51,7 @@
 	"error-404": "Nicht gefunden",
 	"error-400": "Ungültige Anfrage",
 	"page-conflict-title": "Seite konnte nicht gespeichert werden.",
-	"page-conflict-description": "Ein anderer Benutzer hat in der Zwischenzeit die Seite aktualisiert. Möchtest du die Seite neuladen?",
+	"page-conflict-description": "Ein anderer Benutzer hat in der Zwischenzeit die Seite aktualisiert. Möchtest du die Seite neuladen und deine Änderungen verwerfen?",
 	"button-confirm": "Ja",
 	"button-cancle": "Nein",
 	"link-title": "Link-Titel",

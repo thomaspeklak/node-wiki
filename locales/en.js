@@ -54,7 +54,7 @@
 	"error-404": "Not found",
 	"error-400": "Bad request",
 	"page-conflict-title": "Page could not be saved",
-	"page-conflict-description": "Another user saved this page in the meantime. Do you want to reload the page?",
+	"page-conflict-description": "Another user saved this page in the meantime. Do you want to reload the page and lose all your changes?",
 	"button-confirm": "Yes",
 	"button-cancle": "No",
 	"link-title": "Link title",

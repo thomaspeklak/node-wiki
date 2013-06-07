@@ -1,7 +1,6 @@
 "use strict";
 
 //@todos
-// - use templateing system
 //   all dialogs should use this module
 
 var modalTemplate = require("./templates/modal.hbs");
