@@ -28,11 +28,11 @@ module.exports = function (CKEDITOR) {
         if (changed) {
             data = newData;
             $.post(document.location.href, {
-                content: $(".content.editable").html(),
-                title: $("h1.title").html(),
-                tags: $(".tags div").html(),
-                lastModified: $("h1.title").data().lastModified
-            })
+                    content: $(".content.editable").html(),
+                    title: $("h1.title").html(),
+                    tags: $(".tags div").html(),
+                    lastModified: $("h1.title").data().lastModified
+                })
                 .success(saved)
                 .error(savingError);
         }
@@ -43,20 +43,20 @@ module.exports = function (CKEDITOR) {
         .bind("save", save);
 
     CKEDITOR.inline("content", {
-        on: {
-            blur: save
-        }
-    });
+            on: {
+                blur: save
+            }
+        });
 
     $(".edit")
         .blur(save)
         .keydown(function (e) {
-        if (e.keyCode == 13) {
-            e.preventDefault();
-            $(this)
-                .blur();
-        }
-    });
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                $(this)
+                    .blur();
+            }
+        });
 
     var saved = function (data) {
         message("success", __("page-saved"), 2e3);
@@ -66,13 +66,16 @@ module.exports = function (CKEDITOR) {
     };
     var savingError = function (xhr, error, type) {
         if (type == "Conflict") {
-            return modal(__("page-conflict-title"), __("page-conflict-description"))
+            return modal({
+                    title: __("page-conflict-title"),
+                    description: __("page-conflict-description")
+                })
                 .on("click", "btn-confirm", function () {
-                location.reload();
-            })
+                    location.reload();
+                })
                 .on("click", "btn-cancle", function () {
-                $(this).closest("modal").modal("hide").remove();
-            });
+                    $(this).closest("modal").modal("hide").remove();
+                });
         }
         if (xhr.responseText) {
             return message("error", __(xhr.responseText), 2e3);
