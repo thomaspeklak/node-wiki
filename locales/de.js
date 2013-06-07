@@ -42,6 +42,7 @@
 	"identify-yourself": "Gib einen Buntzernamen ein!",
 	"provide-username": "Du brauchst nur einen Benutzernamen. Dieses Wiki ist keine Hochsichheitsanstalt.",
 	"username": "Benutzername",
+    "username-placeholder": "Max Mustermann",
 	"save-changes": "Änderungen speichern",
 	"page-saved": "Ich habe die Seite gespeichert",
 	"page-could-not-be-saved": "Die Seite konnte nicht gespeichert werden. Bitte versuche es später noch einmal.",

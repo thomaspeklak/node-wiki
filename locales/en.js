@@ -45,6 +45,7 @@
 	"identify-yourself": "Identify yourself",
 	"provide-username": "Just type a username, node wiki ain't no high security vault.",
 	"username": "Username",
+    "username-placeholder": "John Doe",
 	"save-changes": "Save changes",
 	"page-saved": "Page saved",
 	"page-could-not-be-saved": "Page could not be saved, please try again later",

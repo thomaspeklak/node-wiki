@@ -2,6 +2,7 @@
 
 var cookies = require("./cookies");
 var __ = require("./translate");
+var modal = require("./modal");
 
 //prompt user for a username if he has not already provided one
 
@@ -16,23 +17,19 @@ function handleSubmit(e) {
             .addClass("error");
     }
     cookies.set("username", username, 720);
-    modal.modal("hide");
+    $(this).modal("hide");
 
 }
 
-var modal = $('<form id="saveUsername" class="modal hide fade">\
-        <div class="modal-header">\
-        <h3>' + __('identify-yourself') + '</h3>\
-        </div>\
-        <div class="modal-body">\
-        <p>' + __('provide-username') + '</p>\
-        <p class="control-group"><input placeholder="' + __('username') + '" name="username" required/><br/><br/></p>\
-        </div>\
-        <div class="modal-footer">\
-        <button type="submit" class="btn btn-primary">' + __('save-changes') + '</button>\
-        </div>\
-    </form>')
-    .appendTo("body")
-    .modal("show");
-$("#saveUsername")
-    .on("submit", handleSubmit);
+modal({
+        title: __('identify-yourself'),
+        description: __('provide-username'),
+        fields: [{
+                name: "username",
+                label: __("username"),
+                placeholder: __("username-placeholder")
+            }
+        ],
+        cancle: false,
+        confirm: __("save-changes")
+    }).on("submit", handleSubmit);

@@ -1,12 +1,20 @@
-<form class="modal hide fade">
+<form class="modal hide fade form form-horizontal">
     <div class="modal-header">
         <h3>{{title}}</h3>
     </div>
     <div class="modal-body">
         <p>{{description}}</p>
+        {{#each fields}}
+            <div class="control-group">
+                <label class="control-label" for="control-{{this.name}}">{{this.label}}</label>
+                <input class="control" type="text" id="control-{{this.name}}" name="{{this.name}}" placeholder="{{this.placeholder}}"/>
+            </div>
+        {{/each}}
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-warning">{{confirm}}</button>
-        <button type="submit" class="btn btn-cancle">{{cancle}}</button>
+        {{#if cancle}}
+            <button type="submit" class="btn btn-cancle">{{cancle}}</button>
+        {{/if}}
     </div>
 </form>
