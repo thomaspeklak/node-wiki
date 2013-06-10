@@ -98,12 +98,12 @@ Fork the project and send me a pull request. As long as it is aligned with node-
 
 As of version v0.4.0 a solid test base has been created. To run the tests you need to have mongod running, then fire up `npm test`.
 
-###Feontend
+###Frontend
 
 Node Wiki uses browserify to modularize it's frontend. All frontend code is located in
 `/frontend` and is compiled into `/public/javascripts/app.js`. This is
 automatically done once if you start a server under production environment. If
-you start the dev server with `./dev.sh`, watchify is used to watch for
+you start the dev server with `./dev`, watchify is used to watch for
 changes and recompile when needed.
 
 ##What to expect next?
