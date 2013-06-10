@@ -1,8 +1,5 @@
 "use strict";
 
-//@todos
-//   all dialogs should use this module
-
 var modalTemplate = require("./templates/modal.hbs");
 var __ = require("./translate");
 var defaults = {
