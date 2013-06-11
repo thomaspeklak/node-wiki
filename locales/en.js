@@ -45,7 +45,7 @@
 	"identify-yourself": "Identify yourself",
 	"provide-username": "Just type a username, node wiki ain't no high security vault.",
 	"username": "Username",
-    "username-placeholder": "John Doe",
+	"username-placeholder": "John Doe",
 	"save-changes": "Save changes",
 	"page-saved": "Page saved",
 	"page-could-not-be-saved": "Page could not be saved, please try again later",
@@ -71,5 +71,7 @@
 	"archive-description": "To restore a page open it and choose restore from the tasks menu",
 	"no-deleted-pages": "There are currently no archived pages.",
 	"page-status-deleted": "This page is deleted. To restore it click restore from the tasks menu.",
-	"no-versions-yet": "No versions yet"
+	"no-versions-yet": "No versions yet",
+	"help": "Help",
+	"pages": "Pages"
 }

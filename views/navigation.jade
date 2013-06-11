@@ -1,0 +1,54 @@
+mixin navigation
+    .navbar.navbar-static-top.navbar-inverse
+        .navbar-inner
+            a.brand(href="/")= siteName
+            ul.nav
+                li.dropdown
+                    a.dropdown-toggle(href="#", data-toggle="dropdown")
+                        = __("pages")
+                        b.caret
+                    ul.dropdown-menu
+                        li: a(href="/pages")= __("all-pages")
+                        li: a(href="/tags")= __("all-tags")
+                        li: a(href="/versions")= __("version-history")
+                        li: a(href="/deleted-pages")= __("deleted-pages")
+                li.dropdown
+                    a.dropdown-toggle(href="#", data-toggle="dropdown")
+                        = __("changes")
+                        b.caret
+
+                    ul.dropdown-menu
+
+                        li.nav-header= __("latest-pages")
+                        each page in latest
+                            li
+                                a(href=page.path)= page.title
+
+                        li.nav-header= __("recent-changes")
+                        each page in recentChanges
+                            li
+                                a(href=page.path)= page.title
+
+                if (page)
+                    li.dropdown
+                        a.dropdown-toggle(href="#", data-toggle="dropdown")
+                            = __("tasks")
+                            b.caret
+                        ul.dropdown-menu
+                            if (!page.deleted)
+                                li: a#move-page(href="#")= __("move-page")
+                            if (page.deleted)
+                                li: a#restore-page(href="#")= __("restore-page")
+                            else
+                                li: a#delete-page(href="#")= __("delete-page")
+
+
+            ul.nav.pull-right
+                mixin languageSwitcher
+                li: a(href="/wiki/help", title=__("help"))
+                    span.icon-question-sign.icon-white
+
+            form.navbar-search.pull-right(action="/search", method="GET")
+                input.search-query(type="text", placeholder="Search", name="q", id="q")
+
+
