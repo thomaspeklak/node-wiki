@@ -1,7 +1,6 @@
 "use strict";
 
 var express = require("express");
-var http    = require("http");
 var I18n    = require("i18n-2");
 var config  = require("./config");
 
