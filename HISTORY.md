@@ -1,5 +1,9 @@
-0.4.0
+0.4.0 / 2013-06-11
 =====
+- enhance page layout for non content pages
+- create wiki help page
+- modularized fronted with browserify, scripts are built automatically and
+  accoringly to the environment
 - tests for page creation
 - ATTENTION: start script changed from `app.js` to `index.js`
 
