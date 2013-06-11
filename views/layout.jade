@@ -24,24 +24,7 @@ html
     body
         mixin navigation
         .container(class=page && page.deleted ? "deleted" : "")
-            #messages.messages
-            if page && page.deleted
-                .alert.alert-warning= __("page-status-deleted")
-            .row
-                .span3
-                    block navigation
-                        mixin renderNavigation(navigation)
-                    block pagemeta
-
-                .span9
-                    -if (breadcrumbs.length)
-                        ul.breadcrumb
-                            each breadcrumb in breadcrumbs
-                                li
-                                    a(href=breadcrumb.path)= breadcrumb.segment
-                                    span.divider #
-
-                    block content
+            block main
 
         .scripts
             script(type="text/javascript", src='/vendor/ckeditor/ckeditor.js')

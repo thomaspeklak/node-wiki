@@ -1,4 +1,4 @@
-extends layout
+extends layout-page
 
 block content
     h1.title.edit(contenteditable=!page.deleted, data-last-modified=page.lastModified && page.lastModified.getTime())= page.title
