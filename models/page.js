@@ -6,6 +6,11 @@ var Schema = mongoose.Schema;
 var version = require("mongoose-version");
 var textSearch = require("mongoose-text-search");
 var config = require("../config");
+var sanitze = require("validator").sanitize;
+
+var filterOutput = function (value) {
+    return sanitze(value).xss(false, ["iframe"]);
+};
 
 var Page = new Schema({
     title: {
@@ -14,7 +19,8 @@ var Page = new Schema({
     },
     content: {
         type: String,
-        required: true
+        required: true,
+        get: filterOutput
     },
     path: {
         type: String,
