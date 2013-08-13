@@ -15,7 +15,7 @@ Contrary to other wikis you simply type an URL and if the page does not exist, e
     git clone git@github.com:thomaspeklak/node-wiki.git
     cd node-wiki
     npm install
-    node app.js
+    ./dev
 
 Then simply open http://localhost:3000 and edit the page. Or go to another url (e.g. http://localhost:3000/new-entry) and edit this page.
 
