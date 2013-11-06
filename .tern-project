@@ -1,14 +1,14 @@
 {
     "libs": [
-        "browser",
-        "node"
+        "browser"
     ],
-    "plugins": [
-        "node"
-    ],
+    "plugins": {
+        "node": {
+            "load": true
+        }
+    },
     "loadEagerly": [
         "models/**/*.js",
-        "lib/**/*.js",
-        "node_modules/**/*.js"
+        "lib/**/*.js"
     ]
 }
