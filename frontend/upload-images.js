@@ -27,7 +27,7 @@ function handleDrop(evt) {
     $("body").trigger("save");
 
     var uri = evt.dataTransfer.getData("text/uri-list");
-    if (uri) {
+    if (uri && !uri.match('^file:\/\//')) {
         return injectMedia(uri, evt.target);
     }
 
