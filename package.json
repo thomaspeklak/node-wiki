@@ -11,21 +11,21 @@
     "url": "https://github.com/thomaspeklak/node-wiki"
   },
   "dependencies": {
-    "express": "3.2.x",
-    "jade": "*",
-    "mongoose": "3.6.x",
-    "express-mongoose": "0.1.x",
     "async": "*",
-    "mkdirp": "0.3.x",
-    "request": "2.21.x",
-    "validator": "git://github.com/thomaspeklak/node-validator.git",
-    "mongoose-version": "0.2.2",
-    "i18n-2": "0.4.x",
-    "mongoose-text-search": "0.0.2",
-    "semver": "~1.1.4",
     "browserify": "~2.17.3",
+    "express": "3.2.x",
+    "express-mongoose": "0.1.x",
     "hbsfy": "~0.1.2",
-    "markdown": "~0.4.0"
+    "i18n-2": "0.4.x",
+    "jade": "*",
+    "markdown": "~0.4.0",
+    "mkdirp": "0.3.x",
+    "mongoose": "3.6.x",
+    "mongoose-text-search": "0.0.2",
+    "mongoose-version": "0.2.2",
+    "request": "2.21.x",
+    "semver": "^4.3.3",
+    "validator": "git://github.com/thomaspeklak/node-validator.git"
   },
   "devDependencies": {
     "livereload": "*",
